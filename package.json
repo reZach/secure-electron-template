@@ -1,0 +1,80 @@
+{
+  "name": "secure-electron-template",
+  "productName": "secure-electron-template",
+  "version": "1.0.0",
+  "description": "My Electron application description",
+  "main": ".webpack/main",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\""
+  },
+  "keywords": [],
+  "license": "GPL-3.0-only",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "secure_electron_template"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ],
+      "plugins": [
+        [
+          "@electron-forge/plugin-webpack",
+          {
+            "mainConfig": "./webpack.main.config.js",
+            "renderer": {
+              "config": "./webpack.renderer.config.js",
+              "entryPoints": [
+                {
+                  "html": "./src/index.html",
+                  "js": "./src/renderer.js",
+                  "name": "main_window"
+                }
+              ]
+            }
+          }
+        ]
+      ]
+    }
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "6.0.0-beta.47",
+    "@electron-forge/maker-deb": "6.0.0-beta.47",
+    "@electron-forge/maker-rpm": "6.0.0-beta.47",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.47",
+    "@electron-forge/maker-zip": "6.0.0-beta.47",
+    "@electron-forge/plugin-webpack": "6.0.0-beta.47",
+    "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "babel-loader": "^8.0.6",
+    "csp-html-webpack-plugin": "3.0.4",
+    "css-loader": "^3.4.0",
+    "electron": "7.1.7",
+    "html-webpack-plugin": "^3.2.0",
+    "node-loader": "^0.6.0",
+    "style-loader": "^1.1.2"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0"
+  }
+}
