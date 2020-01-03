@@ -23,12 +23,6 @@ function createWindow() {
 
     // Load app
     win.loadFile(path.join(__dirname, "../dist/index.html"));
-    // if (isDevelopment){
-    //     win.webContents.openDevTools();
-    //     win.loadURL(`http://localhost:${port}`);
-    // } else {
-    //     win.loadFile("./dist/index.html");
-    // }
     
     // Emitted when the window is closed.
     win.on("closed", () => {

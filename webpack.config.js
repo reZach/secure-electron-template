@@ -4,8 +4,8 @@ const path = require("path");
 
 module.exports = {
   mode: "production",
-  target: "node",
-  entry: [/*"webpack/hot/dev-server",*/ "./app/src/index.jsx"],
+  target: "web",
+  entry: ["./app/src/index.jsx"],
   output: {
     path: path.resolve(__dirname, "app/dist"),
     filename: "bundle.js",
@@ -50,9 +50,11 @@ module.exports = {
     })
   ],
   devServer: {
+    host: "localhost",
+    port: "40992",
     hot: true,
     compress: true,
-    contentBase: path.join(__dirname, "app/dist"),
+    contentBase: path.resolve(__dirname, "app/dist"),
     watchContentBase: true,
     watchOptions: {
       ignored: /node_modules/

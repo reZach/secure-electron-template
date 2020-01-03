@@ -5,8 +5,8 @@
   "private": true,
   "main": "app/electron/main.js",
   "scripts": {
-    "dev": "npx webpack",
-    "electron": "npm run dev && electron ."
+    "dev": "concurrently \"webpack-dev-server\" \"opener http://localhost:40992\"",
+    "electron": "npx webpack && electron ."
   },
   "repository": {
     "type": "git",
@@ -25,10 +25,12 @@
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
     "babel-loader": "^8.0.6",
+    "concurrently": "^5.0.2",
     "csp-html-webpack-plugin": "^3.0.4",
     "electron": "^7.1.7",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "opener": "^1.5.1",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.1"

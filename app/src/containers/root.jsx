@@ -1,0 +1,1 @@
+export default root => <h1>Hello, world!!</h1>;
