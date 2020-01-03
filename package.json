@@ -6,7 +6,7 @@
   "main": "app/electron/main.js",
   "scripts": {
     "dev": "npx webpack",
-    "electron": "npm run webpack && electron ./app/electron/main.js"
+    "electron": "npm run dev && electron ."
   },
   "repository": {
     "type": "git",

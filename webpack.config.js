@@ -5,7 +5,7 @@ const path = require("path");
 module.exports = {
   mode: "production",
   target: "node",
-  entry: ["webpack/hot/dev-server", "./app/src/index.jsx"],
+  entry: [/*"webpack/hot/dev-server",*/ "./app/src/index.jsx"],
   output: {
     path: path.resolve(__dirname, "app/dist"),
     filename: "bundle.js",
