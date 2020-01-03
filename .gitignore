@@ -88,4 +88,5 @@ typings/
 # Electron-Forge
 out/
 
+# Bundled files
 app/dist/
