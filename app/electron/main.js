@@ -8,11 +8,28 @@ const isDev = process.env.NODE_ENV === "development";
 const port = 40992; // Hardcoded; needs to match webpack.development.js and package.json
 const selfHost = `http://localhost:${port}`;
 
+// Installs extensions useful for development;
+// https://github.com/electron-react-boilerplate/electron-react-boilerplate/blob/master/app/main.dev.js
+// NOTE - if you'd like to run w/ these extensions when testing w/o electron, you need browser extensions to be installed (React Developer Tools & Redux DevTools)
+const installExtensions = async () => {
+  const installer = require("electron-devtools-installer");
+  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
+  const extensions = ["REACT_DEVELOPER_TOOLS", "REDUX_DEVTOOLS"];
+
+  return Promise.all(
+    extensions.map(name => installer.default(installer[name], forceDownload))
+  ).catch(console.log);
+};
+
 // Keep a global reference of the window object, if you don"t, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 
-function createWindow() {
+async function createWindow() {
+  if (isDev){
+    await installExtensions();
+  }
+
   // Create the browser window.
   win = new BrowserWindow({
     width: 800,
@@ -31,9 +48,14 @@ function createWindow() {
   // Load app
   if (isDev) {
     win.loadURL(selfHost);
-    win.webContents.openDevTools();
   } else {
     win.loadFile(path.join(__dirname, "../dist/index.html"));
+  }
+
+  // Only do these things when in development
+  if (isDev) {
+    win.webContents.openDevTools();
+    require("electron-debug")(); // https://github.com/sindresorhus/electron-debug
   }
 
   // Emitted when the window is closed.
