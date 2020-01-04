@@ -5,15 +5,18 @@
   "private": true,
   "main": "app/electron/main.js",
   "scripts": {
-    "dev": "concurrently \"webpack-dev-server --config ./webpack.development.js\" \"opener http://localhost:40992\"",
-    "electron": "npx webpack --config ./webpack.production.js && electron ."
+    "dev-server": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack.development.js",
+    "open-local": "opener http://localhost:40992",
+    "dev-slim": "concurrently \"npm run dev-server\" \"npm run open-local\"",
+    "dev": "concurrently \"npm run dev-server\" \"cross-env NODE_ENV=development electron .\"",
+    "prod": "cross-env NODE_ENV=production npx webpack --mode=production --config ./webpack.production.js && electron ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/reZach/secure-electron-template.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "reZach",
   "license": "GPL-3.0-only",
   "bugs": {
     "url": "https://github.com/reZach/secure-electron-template/issues"
@@ -27,6 +30,7 @@
     "babel-loader": "^8.0.6",
     "babel-plugin-module-resolver": "^4.0.0",
     "concurrently": "^5.0.2",
+    "cross-env": "^6.0.3",
     "csp-html-webpack-plugin": "^3.0.4",
     "electron": "^7.1.7",
     "html-loader": "^0.5.5",
@@ -40,8 +44,10 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.2.1",
     "connected-react-router": "^6.6.1",
+    "i18next-node-fs-backend": "^2.1.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-i18next": "^11.2.7",
     "react-redux": "^7.1.3",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
