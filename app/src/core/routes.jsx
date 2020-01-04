@@ -1,15 +1,15 @@
 import React from "react";
 import { Switch, Route } from "react-router";
-import routes from "../../constants/routes";
-import App from "../app/app";
-import Page2 from "../page2/page2";
+import ROUTES from "Constants/routes";
+import Welcome from "Pages/welcome/welcome";
+import Main from "Pages/main/main";
 
 class Routes extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path={routes.ENTRY} component={App}></Route>
-        <Route path={routes.MAIN} component={Page2}></Route>
+        <Route exact path={ROUTES.WELCOME} component={Welcome}></Route>
+        <Route path={ROUTES.MAIN} component={Main}></Route>
       </Switch>
     );
   }

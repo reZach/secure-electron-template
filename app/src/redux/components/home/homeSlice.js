@@ -5,7 +5,7 @@ import {
 const homeSlice = createSlice({
   name: "home",
   initialState: {
-    message: "hello world"
+    message: "Hello and welcome to the template!"
   },
   reducers: {
     changeMessage(state, action) {

@@ -1,7 +1,7 @@
 import React from "react";
 import { ConnectedRouter } from "connected-react-router";
 import { Provider, connect } from "react-redux";
-import Routes from "./routes";
+import Routes from "Core/routes";
 
 class Root extends React.Component {
   render() {

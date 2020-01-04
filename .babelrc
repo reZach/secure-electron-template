@@ -1,4 +1,19 @@
 {
+    "plugins": [
+        [
+            "module-resolver",
+            {
+                "cwd": "babelrc",                
+                "alias": {
+                    "Constants": "./app/src/constants",
+                    "Components": "./app/src/components",
+                    "Core": "./app/src/core",
+                    "Pages": "./app/src/pages",
+                    "Redux": "./app/src/redux"
+                }
+            }
+        ]
+    ],
     "presets": [
         "@babel/preset-env",
         "@babel/preset-react"
