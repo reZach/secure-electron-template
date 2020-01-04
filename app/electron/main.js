@@ -15,6 +15,10 @@ function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
+      devTools: true, // todo set to false in prod
+      nodeIntegration: false,
+      nodeIntegrationInWorker: false,
+      nodeIntegrationInSubFrames: false,
       contextIsolation: true,
       enableRemoteModule: false,
       preload: path.join(__dirname, "preload.js")
@@ -35,7 +39,16 @@ function createWindow() {
   // https://electronjs.org/docs/tutorial/security#4-handle-session-permission-requests-from-remote-content
   const ses = session;
   ses.fromPartition("default").setPermissionRequestHandler((webContents, permission, callback) => {
-    return callback(false);
+
+    let allowedPermissions = []; // Full list here: https://developer.chrome.com/extensions/declare_permissions#manifest
+
+    if (allowedPermissions.includes(permission)) {
+      callback(true); // Approve permission request
+    } else {
+      console.error(`The application tried to request permission for '${permission}'. This permission was not whitelisted and has been blocked.`);
+      
+      callback(false); // Deny
+    }
   });
 }
 
@@ -65,7 +78,6 @@ app.on("activate", () => {
 app.on("web-contents-created", (event, contents) => {
   contents.on("will-navigate", (event, navigationUrl) => {
     const parsedUrl = new URL(navigationUrl);
-    console.log(JSON.stringify(parsedUrl));
     const validOrigins = [];
 
     // Log and prevent the app from navigating to a new page if that page's origin is not whitelisted
@@ -77,12 +89,16 @@ app.on("web-contents-created", (event, contents) => {
     }
   });
   contents.on("will-redirect", (event, navigationUrl) => {
+    const parsedUrl = new URL(navigationUrl);
+    const validOrigins = [];
 
     // Log and prevent the app from redirecting to a new page
-    console.error(`The application tried to redirect to the following address: '${navigationUrl}'. This attempt was blocked.`);
+    if (!validOrigins.includes(parsedUrl.origin)) {
+      console.error(`The application tried to redirect to the following address: '${navigationUrl}'. This attempt was blocked.`);
 
-    event.preventDefault();
-    return;
+      event.preventDefault();
+      return;
+    }
   });
 });
 

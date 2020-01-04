@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CspHtmlWebpackPlugin = require("csp-html-webpack-plugin");
 const path = require("path");
 
-module.exports = {  
+module.exports = {
   target: "web",
   entry: ["./app/src/index.jsx"],
   output: {
@@ -29,7 +29,7 @@ module.exports = {
         ],
         loader: "babel-loader",
         resolve: {
-          extensions: [".js", ".jsx"]
+          extensions: [".js", ".jsx", ".json"]
         }
       }
     ]
