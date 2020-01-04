@@ -2,8 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CspHtmlWebpackPlugin = require("csp-html-webpack-plugin");
 const path = require("path");
 
-module.exports = {
-  mode: "production",
+module.exports = {  
   target: "web",
   entry: ["./app/src/index.jsx"],
   output: {
@@ -48,16 +47,5 @@ module.exports = {
       "frame-src": ["'none'"],
       "worker-src": ["'none'"]
     })
-  ],
-  devServer: {
-    host: "localhost",
-    port: "40992",
-    hot: true,
-    compress: true,
-    contentBase: path.resolve(__dirname, "app/dist"),
-    watchContentBase: true,
-    watchOptions: {
-      ignored: /node_modules/
-    }
-  }
+  ]
 }
