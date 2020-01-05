@@ -1,9 +1,11 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 class Detail extends React.Component {
   render() {
+    const { t } = useTranslation();    
     return <div>
-        (A sample of rendering a component)
+        {t("Detail.SampleText")}
     </div>;
   }
 }
