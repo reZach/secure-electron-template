@@ -90,3 +90,6 @@ out/
 
 # Bundled files
 app/dist/
+
+# Packed apps
+dist/
