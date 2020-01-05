@@ -9,7 +9,8 @@
                     "Components": "./app/src/components",
                     "Core": "./app/src/core",
                     "Pages": "./app/src/pages",
-                    "Redux": "./app/src/redux"
+                    "Redux": "./app/src/redux",
+                    "I18n": "./app/localization"
                 }
             }
         ]
