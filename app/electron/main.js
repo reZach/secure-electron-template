@@ -1,7 +1,8 @@
 const {
   app,
   BrowserWindow,
-  session
+  session,
+  ipcMain
 } = require("electron");
 const MenuBuilder = require("./menu");
 const path = require("path");
@@ -29,7 +30,7 @@ let menuBuilder;
 
 
 async function createWindow() {
-  if (isDev){
+  if (isDev) {
     await installExtensions();
   }
 
@@ -148,3 +149,14 @@ app.on("web-contents-created", (event, contents) => {
     return;
   });
 });
+
+
+
+// i18n-electron-fs-backend
+ipcMain.on("ReadFile", (IpcMainEvent, args) => {
+  console.log("main ReadFile");
+});
+
+ipcMain.on("WriteFile", (IpcMainEvent, args) => {
+  console.log("main writeFile");
+})

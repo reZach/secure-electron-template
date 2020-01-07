@@ -1,13 +1,13 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class Detail extends React.Component {
   render() {
-    const { t } = useTranslation();    
+    const { t } = this.props;
     return <div>
         {t("Detail.SampleText")}
     </div>;
   }
 }
 
-export default Detail;
+export default withTranslation()(Detail);
