@@ -143,6 +143,7 @@ class Backend {
                 data[updates[i][key]] = updates[i][fallbackValue];
                 callbacks.push(updates[i].callback);
             }
+            delete this.writeQueue[filename];
 
             this.requestFileWrite(filename, data, callbacks, () => {
                 
@@ -150,7 +151,7 @@ class Backend {
                 let bufferKeys = Object.keys(this.writeQueueBuffer);
                 for (let j = 0; j < bufferKeys; j++){
                     this.writeQueue[bufferKeys[j]] = this.writeQueueBuffer[bufferKeys[j]];
-                    delete this.writeQueueBuffer[bufferKeys[j]];
+                    delete this.writeQueueBuffer[bufferKeys[j]];                    
                 }
 
                 // Unlock filename
