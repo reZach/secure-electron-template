@@ -1,12 +1,8 @@
-const { contextBridge } = require("electron");
-const fs = require("fs");
-
-console.log("ABC");
-console.log(fs);
+const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld(
-    "test",
+    "electron",
     {
-        fs: fs
+        ipcRenderer: ipcRenderer
     }
 );

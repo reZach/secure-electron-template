@@ -1,7 +1,4 @@
-const electron = require("electron");
-const Menu = electron.Menu;
-const MenuItem = electron.MenuItem;
-const BrowserWindow = electron.BrowserWindow;
+const { Menu, MenuItem, BrowserWindow } = require("electron");
 const isMac = process.platform === "darwin";
 
 var MenuBuilder = function (mainWindow) {
