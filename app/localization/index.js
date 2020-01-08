@@ -43,7 +43,7 @@ const writeChannel = "WriteFile";
 
 // Template is found at: https://www.i18next.com/misc/creating-own-plugins#backend;
 // also took code from: https://github.com/i18next/i18next-node-fs-backend
-class Backend {
+class Backend {    
     constructor(services, backendOptions = {}, i18nextOptions = {}) {
         console.log("constructor");
         if (typeof this.backendOptions.ipcRenderer === "undefined") {
@@ -305,5 +305,6 @@ class Backend {
         }
     }
 }
+Backend.type = "backend";
 
 export default Backend;
