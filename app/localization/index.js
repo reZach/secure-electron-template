@@ -30,8 +30,10 @@ const defaultOptions = {
     delay: 300
 };
 // Electron-specific; must match mainIpc
-const readChannel = "ReadFile";
-const writeChannel = "WriteFile";
+const readFileRequest = "ReadFile-Request";
+const writeFileRequest = "WriteFile-Request";
+const readFileResponse = "ReadFile-Response";
+const writeFileResponse = "WriteFile-Response";
 
 // // Writes to the translation .json files
 // let _writeFile = function (fs, filename, data, callback) {
@@ -45,12 +47,8 @@ const writeChannel = "WriteFile";
 // also took code from: https://github.com/i18next/i18next-node-fs-backend
 class Backend {    
     constructor(services, backendOptions = {}, i18nextOptions = {}) {
-        console.log("constructor");
-        if (typeof this.backendOptions.ipcRenderer === "undefined") {
-            throw "Could not initialize because the 'ipcRenderer' option was not set!";
-        }
-
         this.init(services, backendOptions, i18nextOptions);
+        
         this.readCallbacks = {};
         this.writeCallbacks = {};
         this.writeQueue = {};
@@ -58,12 +56,16 @@ class Backend {
     }
 
     init(services, backendOptions, i18nextOptions) {
+        debugger;
         this.services = services;
         this.backendOptions = {
             ...defaultOptions,
-            ...backendOptions
+            ...backendOptions,
+            ipcRenderer: window.electron.ipcRenderer
         };
         this.i18nextOptions = i18nextOptions;
+
+        this.setupIpcBindings();
     }
 
     // Sets up Ipc bindings so that we can keep any node-specific
@@ -73,13 +75,16 @@ class Backend {
             ipcRenderer
         } = this.backendOptions;
 
-        ipcRenderer.on(readChannel, (IpcRendererEvent, args) => {
+        debugger;
+        ipcRenderer.on(readFileResponse, (IpcRendererEvent, args) => {
             // args:
             // {
             //   key
             //   error
             //   data
             // }
+            console.error("readFileResponse");
+
             let callback;
 
             if (args.error) {
@@ -103,7 +108,7 @@ class Backend {
             }
         });
 
-        ipcRenderer.on(writeChannel, (IpcRendererEvent, args) => {
+        ipcRenderer.on(writeFileResponse, (IpcRendererEvent, args) => {
             // args:
             // {
             //   key
@@ -235,7 +240,7 @@ class Backend {
             };
     
             // Send out the message to the ipcMain process
-            ipcRenderer.send(writeChannel, {
+            ipcRenderer.send(writeFileRequest, {
                 key,
                 filename,
                 data
@@ -261,7 +266,7 @@ class Backend {
         };
 
         // Send out the message to the ipcMain process
-        ipcRenderer.send(readChannel, {
+        ipcRenderer.send(readFileRequest, {
             key,
             filename
         });
