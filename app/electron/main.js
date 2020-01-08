@@ -6,6 +6,7 @@ const {
 } = require("electron");
 const MenuBuilder = require("./menu");
 const path = require("path");
+const fs = require("fs");
 const isDev = process.env.NODE_ENV === "development";
 const port = 40992; // Hardcoded; needs to match webpack.development.js and package.json
 const selfHost = `http://localhost:${port}`;
@@ -153,10 +154,32 @@ app.on("web-contents-created", (event, contents) => {
 
 
 // i18n-electron-fs-backend
-ipcMain.on("ReadFile", (IpcMainEvent, args) => {
-  console.log("main ReadFile");
+ipcMain.on("ReadFile-Request", (IpcMainEvent, args) => {
+  //console.log("main ReadFile");
+  //console.log(JSON.stringify(args));
+  // let callback = function(error, data){
+  //   this.webContents.send("ReadFile-Response", {
+  //     key: args.key,
+  //     error,
+  //     data
+  //   });
+  // }.bind(win);
+  // fs.readFile(args.filename, callback);
+
+  if (fs.existsSync(args.filename)){
+    console.log("exists");
+  } else {
+    console.warn("win");
+    console.warn(win);
+    win.webContents.send("ReadFile-Response", {
+      key: args.key,
+      error: "Doesn't exist",
+      data: {}
+    });
+    console.log("doesn't exist");
+  }
 });
 
-ipcMain.on("WriteFile", (IpcMainEvent, args) => {
+ipcMain.on("WriteFile-Request", (IpcMainEvent, args) => {
   console.log("main writeFile");
 })
