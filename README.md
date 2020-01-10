@@ -14,7 +14,7 @@ Taken from the [best-practices](https://electronjs.org/docs/tutorial/security) o
 8. [Do not enable expirimental features](https://electronjs.org/docs/tutorial/security#8-do-not-enable-experimental-features) - ✅
 9. [Do not use enableBlinkFeatures](https://electronjs.org/docs/tutorial/security#9-do-not-use-enableblinkfeatures) - ✅
 10. [Do not use allowpopups](https://electronjs.org/docs/tutorial/security#10-do-not-use-allowpopups) - ✅
-11. [<webview> verify options and params](https://electronjs.org/docs/tutorial/security#11-verify-webview-options-before-creation) - ✅
+11. [&lt;webview&gt; verify options and params](https://electronjs.org/docs/tutorial/security#11-verify-webview-options-before-creation) - ✅
 12. [Disable or limit navigation](https://electronjs.org/docs/tutorial/security#12-disable-or-limit-navigation) - ✅
 13. [Disable or limit creation of new windows](https://electronjs.org/docs/tutorial/security#13-disable-or-limit-creation-of-new-windows) - ✅
 14. [Do not use openExternal with untrusted content](https://electronjs.org/docs/tutorial/security#14-do-not-use-openexternal-with-untrusted-content) - ✅
@@ -32,3 +32,14 @@ Built-in to this template are a number of popular frameworks already wired up to
 - [Webpack](https://webpack.js.org/) (with [webpack-dev-server](https://github.com/webpack/webpack-dev-server))
 - [Electron builder](https://www.electron.build/) (for packaging up your app)
 - [i18next](https://www.i18next.com/) (for localization; we [need help](https://github.com/electron/electron/issues/21437) in order to implement this)
+
+## Architecture
+For a more detailed view of the architecture of the template, please check out [here](https://github.com/reZach/secure-electron-template/blob/master/docs/architecture.md). I would _highly_ recommend reading this document to get yourself familiarized with this template.
+
+## How to get started
+```
+git clone https://github.com/reZach/secure-electron-template.git
+cd secure-electron-template
+npm i
+npm run dev
+```
