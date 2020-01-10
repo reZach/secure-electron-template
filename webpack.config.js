@@ -31,6 +31,23 @@ module.exports = {
         resolve: {
           extensions: [".js", ".jsx", ".json"]
         }
+      },
+      {
+        test: /\.css$/,
+        include: [
+          path.resolve(__dirname, "app/src")
+        ],
+        use: [
+          {
+            loader: "style-loader"
+          },
+          {
+            loader: "css-loader"
+          }
+        ],
+        resolve: {
+          extensions: [".css"]
+        }
       }
     ]
   },
