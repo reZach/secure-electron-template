@@ -23,16 +23,3 @@ i18n
   });
 
 export default i18n;
-
-// if (!i18n.isInitialized) {
-//   i18n.use(i18nextBackend).init(i18nextOptions).then(function () {
-//     i18n.changeLanguage(config.fallbackLng, (err) => {
-//       if (err) {
-//         return console.log("couldn't change language");
-//       }
-//     });
-//     return true;
-//   }).catch(function (err) {
-//     console.error(err);
-//   });
-// }

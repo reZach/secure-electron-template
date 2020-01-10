@@ -1,3 +1,13 @@
+/** i18next-electron-fs-backend
+ * @author reZach (github)
+ * @license MIT license
+ * @link https://github.com/reZach/i18next-electron-fs-backend
+ * 
+ * THIS IS STILL A WIP BACKEND. DUE TO https://github.com/electron/electron/issues/21437 THIS BACKEND STILL CANNOT BE IMPLEMENTED!
+ */
+
+
+
 /**
  * Fast UUID generator, RFC4122 version 4 compliant.
  * @author Jeff Ward (jcward.com).
