@@ -24,7 +24,7 @@ const installExtensions = async () => {
   ).catch(console.log);
 };
 
-// Keep a global reference of the window object, if you don"t, the window will
+// Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 let menuBuilder;
@@ -73,7 +73,8 @@ async function createWindow() {
 
   // https://electronjs.org/docs/tutorial/security#4-handle-session-permission-requests-from-remote-content
   const ses = session;
-  ses.fromPartition("default").setPermissionRequestHandler((webContents, permission, callback) => {
+  const partition = "default";
+  ses.fromPartition(partition).setPermissionRequestHandler((webContents, permission, callback) => {
 
     let allowedPermissions = []; // Full list here: https://developer.chrome.com/extensions/declare_permissions#manifest
 
@@ -85,6 +86,16 @@ async function createWindow() {
       callback(false); // Deny
     }
   });
+
+  // https://electronjs.org/docs/tutorial/security#1-only-load-secure-content;
+  // todo not currently working!
+  // ses.fromPartition(partition).webRequest.onBeforeRequest(["*://*./*"], (listener) => {   
+  //   if (listener.url.indexOf("http://") >= 0) {
+  //     listener.callback({
+  //       cancel: true
+  //     });
+  //   }
+  // });
 
   menuBuilder = MenuBuilder(win);
   menuBuilder.buildMenu();
@@ -140,6 +151,16 @@ app.on("web-contents-created", (event, contents) => {
     }
   });
 
+  // https://electronjs.org/docs/tutorial/security#11-verify-webview-options-before-creation
+  contents.on("will-attach-webview", (event, webPreferences, params) => {
+    // Strip away preload scripts if unused or verify their location is legitimate
+    delete webPreferences.preload;
+    delete webPreferences.preloadURL;
+
+    // Disable Node.js integration
+    webPreferences.nodeIntegration = false;
+  });
+
   // https://electronjs.org/docs/tutorial/security#13-disable-or-limit-creation-of-new-windows
   contents.on("new-window", async (event, navigationUrl) => {
 
@@ -152,34 +173,21 @@ app.on("web-contents-created", (event, contents) => {
 });
 
 
+// THIS CODE BELOW CAN BE UNCOMMENTED WHEN
+// https://github.com/electron/electron/issues/21437 IS SOLVED AND THIS TEMPLATE
+// IS ENABLED WITH I18N SUPPORT. (STILL A WIP)
 
-// i18n-electron-fs-backend
-ipcMain.on("ReadFile-Request", (IpcMainEvent, args) => {
-  //console.log("main ReadFile");
-  //console.log(JSON.stringify(args));
-  // let callback = function(error, data){
-  //   this.webContents.send("ReadFile-Response", {
-  //     key: args.key,
-  //     error,
-  //     data
-  //   });
-  // }.bind(win);
-  // fs.readFile(args.filename, callback);
+// ipcMain.on("ReadFile-Request", (IpcMainEvent, args) => {
+// let callback = function(error, data){
+//   this.webContents.send("ReadFile-Response", {
+//     key: args.key,
+//     error,
+//     data
+//   });
+// }.bind(win);
+// fs.readFile(args.filename, callback);
+// });
 
-  if (fs.existsSync(args.filename)){
-    console.log("exists");
-  } else {
-    console.warn("win");
-    console.warn(win);
-    win.webContents.send("ReadFile-Response", {
-      key: args.key,
-      error: "Doesn't exist",
-      data: {}
-    });
-    console.log("doesn't exist");
-  }
-});
-
-ipcMain.on("WriteFile-Request", (IpcMainEvent, args) => {
-  console.log("main writeFile");
-})
+// ipcMain.on("WriteFile-Request", (IpcMainEvent, args) => {
+//   console.log("main writeFile");
+// });
