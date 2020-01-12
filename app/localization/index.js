@@ -40,10 +40,10 @@ const defaultOptions = {
     delay: 300
 };
 // Electron-specific; must match mainIpc
-const readFileRequest = "ReadFile-Request";
-const writeFileRequest = "WriteFile-Request";
-const readFileResponse = "ReadFile-Response";
-const writeFileResponse = "WriteFile-Response";
+export const readFileRequest = "ReadFile-Request";
+export const writeFileRequest = "WriteFile-Request";
+export const readFileResponse = "ReadFile-Response";
+export const writeFileResponse = "WriteFile-Response";
 
 // // Writes to the translation .json files
 // let _writeFile = function (fs, filename, data, callback) {
@@ -55,10 +55,10 @@ const writeFileResponse = "WriteFile-Response";
 
 // Template is found at: https://www.i18next.com/misc/creating-own-plugins#backend;
 // also took code from: https://github.com/i18next/i18next-node-fs-backend
-class Backend {    
+class Backend {
     constructor(services, backendOptions = {}, i18nextOptions = {}) {
         this.init(services, backendOptions, i18nextOptions);
-        
+
         this.readCallbacks = {};
         this.writeCallbacks = {};
         this.writeQueue = {};
@@ -66,12 +66,15 @@ class Backend {
     }
 
     init(services, backendOptions, i18nextOptions) {
-        debugger;
+        if (typeof window.api.ipc === "undefined") {
+            throw "'window.api.ipc' is not defined!"; // todo better error
+        }
+
         this.services = services;
         this.backendOptions = {
             ...defaultOptions,
             ...backendOptions,
-            ipcRenderer: window.electron.ipcRenderer
+            ipc: window.api.ipc
         };
         this.i18nextOptions = i18nextOptions;
 
@@ -82,17 +85,17 @@ class Backend {
     // modules; (ie. 'fs') out of the Electron renderer process
     setupIpcBindings() {
         const {
-            ipcRenderer
+            ipc
         } = this.backendOptions;
 
-        debugger;
-        ipcRenderer.on(readFileResponse, (IpcRendererEvent, args) => {
+        ipc.on(readFileResponse, (IpcRendererEvent, args) => {
             // args:
             // {
             //   key
             //   error
             //   data
             // }
+            debugger;
             console.error("readFileResponse");
 
             let callback;
@@ -100,7 +103,7 @@ class Backend {
             if (args.error) {
                 callback = this.readCallbacks[args.key].callback;
                 delete this.readCallbacks[args.key];
-                callback(error);
+                callback(null, {});
             } else {
                 let result;
                 args.data = data.replace(/^\uFEFF/, "");
@@ -118,18 +121,19 @@ class Backend {
             }
         });
 
-        ipcRenderer.on(writeFileResponse, (IpcRendererEvent, args) => {
+        ipc.on(writeFileResponse, (IpcRendererEvent, args) => {
             // args:
             // {
             //   key
             //   error
             // }
+            debugger;
             let callback;
 
             if (args.error) {
                 callback = this.writeCallbacks[args.key].callback;
                 delete this.writeCallbacks[args.key];
-                callback(error);
+                callback(args.error);
             } else {
                 callback = this.writeCallbacks[args.key].callback;
                 delete this.writeCallbacks[args.key];
@@ -139,41 +143,42 @@ class Backend {
     }
 
     writeWrapper(func, args, delay) {
-        setTimeout(func.apply(null, args), delay);
+        setTimeout(func.apply(this, args), delay);
     }
 
     write(filename) {
+        debugger;
         // Lock filename
         this.writeQueue[filename].locked = true;
 
         this.requestFileRead(filename, (error, data) => {
-            if (error){
+            debugger;
+            if (error) {
                 this.writeQueue[filename].locked = false;
                 throw "err!";
             }
 
             let updates = this.writeQueue[filename].updates;
             let callbacks = [];
-            for (let i = 0; i < updates.length; i++){
-                data[updates[i][key]] = updates[i][fallbackValue];
+            for (let i = 0; i < updates.length; i++) {
+                data[updates[i].key] = updates[i].fallbackValue;
                 callbacks.push(updates[i].callback);
             }
-            delete this.writeQueue[filename];
 
             this.requestFileWrite(filename, data, callbacks, () => {
-                
+                debugger;
                 // Move items from buffer
                 let bufferKeys = Object.keys(this.writeQueueBuffer);
-                for (let j = 0; j < bufferKeys; j++){
+                for (let j = 0; j < bufferKeys.length; j++) {
                     this.writeQueue[bufferKeys[j]] = this.writeQueueBuffer[bufferKeys[j]];
-                    delete this.writeQueueBuffer[bufferKeys[j]];                    
+                    delete this.writeQueueBuffer[bufferKeys[j]];
                 }
 
                 // Unlock filename
                 this.writeQueue[filename].locked = false;
 
                 // Re-add timeout if elements exist
-                if (Object.keys(this.writeQueue[filename]) > 0){
+                if (Object.keys(this.writeQueue[filename]).length > 0) {
                     this.writeQueue[filename].timeout = this.writeWrapper(this.write, [filename], this.backendOptions.delay);
                 }
             });
@@ -187,6 +192,7 @@ class Backend {
     addToWriteQueue(filename, key, fallbackValue, callback) {
         let obj; // holds properties for the queue
 
+        debugger;
         if (typeof this.writeQueue[filename] === "undefined") {
             obj = {
                 updates: [{
@@ -198,8 +204,8 @@ class Backend {
             };
 
             // re-update timeout
-            obj.timeout = this.writeWrapper(this.write, [filename], this.backendOptions.delay);
             this.writeQueue[filename] = obj;
+            obj.timeout = this.writeWrapper(this.write, [filename], this.backendOptions.delay);            
         } else if (!this.writeQueue[filename].locked) {
             obj = this.writeQueue[filename];
             obj.updates.push({
@@ -209,8 +215,8 @@ class Backend {
             });
 
             // re-update timeout
-            obj.timeout = this.writeWrapper(this.write, [filename], this.backendOptions.delay);
             this.writeQueue[filename] = obj;
+            obj.timeout = this.writeWrapper(this.write, [filename], this.backendOptions.delay);            
         } else {
 
             // Hold any updates if we are currently locked on that filename;
@@ -235,36 +241,36 @@ class Backend {
         }
     }
 
-    requestFileWrite(filename, data, callbacks, onCompleteCallback = null){
+    requestFileWrite(filename, data, callbacks, onCompleteCallback = null) {
         const {
-            ipcRenderer
+            ipc
         } = this.backendOptions;
 
         // Save the callback for this request so we
         // can execute once the ipcRender process returns
         // with a value from the ipcMain process
-        for (let i = 0; i < callbacks.length; i++){
+        for (let i = 0; i < callbacks.length; i++) {
             var key = `${UUID.generate()}`;
             this.writeCallbacks[key] = {
                 callback: callbacks[i]
             };
-    
+
             // Send out the message to the ipcMain process
-            ipcRenderer.send(writeFileRequest, {
+            ipc.send(writeFileRequest, {
                 key,
                 filename,
                 data
             });
         }
 
-        if (onCompleteCallback !== null){
+        if (onCompleteCallback !== null) {
             onCompleteCallback();
         }
     }
 
     requestFileRead(filename, callback) {
         const {
-            ipcRenderer
+            ipc
         } = this.backendOptions;
 
         // Save the callback for this request so we
@@ -276,7 +282,7 @@ class Backend {
         };
 
         // Send out the message to the ipcMain process
-        ipcRenderer.send(readFileRequest, {
+        ipc.send(readFileRequest, {
             key,
             filename
         });
@@ -284,7 +290,7 @@ class Backend {
 
     // Reads a given translation file
     read(language, namespace, callback) {
-        console.log("read");
+        debugger;
         const {
             loadPath
         } = this.backendOptions;
@@ -303,7 +309,7 @@ class Backend {
 
     // Writes a missing translation to file
     create(languages, namespace, key, fallbackValue, callback) {
-        console.log("create");
+        debugger;
         const {
             loadPath
         } = this.backendOptions;
