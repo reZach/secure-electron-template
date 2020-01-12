@@ -1,6 +1,8 @@
 # secure-electron-template
 The best way to build Electron apps with security in mind.
 
+> If you are curious about what makes an electron app secure, please check out [this page]().
+
 ## Features
 Taken from the [best-practices](https://electronjs.org/docs/tutorial/security) official page, here is what this repository offers!
 
@@ -9,7 +11,7 @@ Taken from the [best-practices](https://electronjs.org/docs/tutorial/security) o
 3. [Enable context isolation for remote content](https://electronjs.org/docs/tutorial/security#3-enable-context-isolation-for-remote-content) - ✅
 4. [Handle session permission requests from remote content](https://electronjs.org/docs/tutorial/security#4-handle-session-permission-requests-from-remote-content) - ✅
 5. [Do not disable websecurity](https://electronjs.org/docs/tutorial/security#5-do-not-disable-websecurity) - ✅
-6. [Define a content security policy](https://electronjs.org/docs/tutorial/security#6-define-a-content-security-policy) - (Only setup for js/x right now)
+6. [Define a content security policy](https://electronjs.org/docs/tutorial/security#6-define-a-content-security-policy) - ✅
 7. [Do not set allowRunningInsecureContent to true](https://electronjs.org/docs/tutorial/security#7-do-not-set-allowrunninginsecurecontent-to-true) - ✅
 8. [Do not enable expirimental features](https://electronjs.org/docs/tutorial/security#8-do-not-enable-experimental-features) - ✅
 9. [Do not use enableBlinkFeatures](https://electronjs.org/docs/tutorial/security#9-do-not-use-enableblinkfeatures) - ✅
@@ -31,7 +33,17 @@ Built-in to this template are a number of popular frameworks already wired up to
 - [Babel](https://babeljs.io/)
 - [Webpack](https://webpack.js.org/) (with [webpack-dev-server](https://github.com/webpack/webpack-dev-server))
 - [Electron builder](https://www.electron.build/) (for packaging up your app)
-- [i18next](https://www.i18next.com/) (for localization; we [need help](https://github.com/electron/electron/issues/21437) in order to implement this)
+
+
+## Roadmap
+There are a number of additions that I'd like to implement in this repository, namely:
+
+- [i18next](https://www.i18next.com/) (for localization). A package is [already been started](https://github.com/reZach/i18next-electron-fs-backend) for this work.
+- An [electron store](https://github.com/reZach/secure-electron-store) (to save user data), similar to [this package](https://github.com/sindresorhus/electron-store)
+
+Both of these plans are being held back by [this issue](https://github.com/electron/electron/issues/21437) - so if you would be willing to help we would appreciate it!! There's a [bounty available](https://www.bountysource.com/issues/85135915-ipcrenderer-does-not-execute-normally-in-preload-js) if that helps motivate you.
+
+> I'd also like to get features such as [auto-updating](https://www.electron.build/auto-update) and more release-focused enhancements as well as a [redux undo/redo history](https://github.com/linn/redux-undoable) and test suites, but those are lower priority (but I welcome PRs!).
 
 ## Architecture
 For a more detailed view of the architecture of the template, please check out [here](https://github.com/reZach/secure-electron-template/blob/master/docs/architecture.md). I would _highly_ recommend reading this document to get yourself familiarized with this template.

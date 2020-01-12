@@ -12,7 +12,7 @@ resources/
 Where the bundled scripts will live. Unless you need to do something advanced you probably should leave this folder alone.
 
 #### app
-Contains everything for your app. All of your js/css files will go here as well as the electron-specific code.
+Contains everything for your app. All of your js/css files will go here as well as the electron-specific code. You can go [here](https://github.com/reZach/secure-electron-template/blob/master/docs/app.md) to find more information about this directory.
 
 #### docs
 Houses documentation pages such as this one.
