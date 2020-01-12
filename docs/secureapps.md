@@ -5,7 +5,7 @@ Before electron v5, this concept wasn't followed as closely as it probably shoul
 
 ![Pre-v5 electron apps](https://github.com/reZach/secure-electron-template/blob/master/docs/imgs/pre-v5.png "Electron apps before version 5")
 
-The bridge between the renderer and main components were the remote module and nodeIntegration. Node integration is what makes electron so powerful, but also [very vulnerable to hacking](https://snyk.io/vuln/npm:electron). Tightly integrating the node modules in the renderer (or interactible/visible parts of your app expose you to RCE and XSS, to name a few problems).
+The bridge between the renderer and main components were the remote module and nodeIntegration. Node integration is what makes electron so powerful, but also [very vulnerable to hacking](https://snyk.io/vuln/npm:electron). Tightly integrating the node modules in the renderer (or interactible/visible parts of your app) expose you to RCE and XSS, to name a few problems.
 
 [Beginning with version 5](https://electronjs.org/docs/api/breaking-changes#planned-breaking-api-changes-50), electron by default is turning off these unsafe options and preferring more safe ones by default. The communication that happens between the renderer and main process is decoupled, and more secure:
 
