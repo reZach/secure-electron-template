@@ -1,7 +1,7 @@
 # secure-electron-template
 The best way to build Electron apps with security in mind.
 
-> If you are curious about what makes an electron app secure, please check out [this page]().
+> If you are curious about what makes an electron app secure, please check out [this page](https://github.com/reZach/secure-electron-template/blob/master/docs/secureapps.md).
 
 ## Features
 Taken from the [best-practices](https://electronjs.org/docs/tutorial/security) official page, here is what this repository offers!
