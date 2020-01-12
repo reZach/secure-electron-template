@@ -11,7 +11,7 @@ i18n
     backend: {
       loadPath: "./app/localization/locales/{{lng}}/{{ns}}.json",
       addPath: "./app/localization/locales/{{lng}}/{{ns}}.missing.json",
-      ipcRenderer: window.electron.ipcRenderer
+      ipcRenderer: window.api.ipcRenderer
     },
     debug: true,
     namespace: "translation",

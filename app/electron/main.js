@@ -44,7 +44,7 @@ async function createWindow() {
       nodeIntegration: false,
       nodeIntegrationInWorker: false,
       nodeIntegrationInSubFrames: false,
-      contextIsolation: true,
+      // contextIsolation: true, // turning off until https://github.com/electron/electron/issues/21437 is fixed
       enableRemoteModule: false,
       preload: path.join(__dirname, "preload.js")
     }
@@ -177,17 +177,46 @@ app.on("web-contents-created", (event, contents) => {
 // https://github.com/electron/electron/issues/21437 IS SOLVED AND THIS TEMPLATE
 // IS ENABLED WITH I18N SUPPORT. (STILL A WIP)
 
-// ipcMain.on("ReadFile-Request", (IpcMainEvent, args) => {
-// let callback = function(error, data){
-//   this.webContents.send("ReadFile-Response", {
-//     key: args.key,
-//     error,
-//     data
-//   });
-// }.bind(win);
-// fs.readFile(args.filename, callback);
-// });
+ipcMain.on("ReadFile-Request", (IpcMainEvent, args) => {
+  console.log("MAIN - ReadFile-Request");
+  let callback = function (error, data) {
+    console.log(`MAIN - ReadFile-Request error: '${error}'`);
+    let retData = {};
+    try {
+      retData = JSON.parse(data);
+    } catch (error) {
+      retData = {};
+      console.log(`Failed to parse data from ReadFile-Request: '${error}'`)
+    }
 
-// ipcMain.on("WriteFile-Request", (IpcMainEvent, args) => {
-//   console.log("main writeFile");
-// });
+    this.webContents.send("ReadFile-Response", {
+      key: args.key,
+      error,
+      data: retData
+    });
+  }.bind(win);
+  fs.readFile(args.filename, callback);
+});
+
+ipcMain.on("WriteFile-Request", (IpcMainEvent, args) => {
+  console.log("MAIN - WriteFile-Request");
+  let callback = function (error) {
+    console.log(`MAIN - WriteFile-Request error: '${error}'`);
+    this.webContents.send("WriteFile-Response", {
+      key: args.key,
+      error
+    });
+  }.bind(win);
+  
+
+  // https://stackoverflow.com/a/51721295/1837080
+  let separator = "/";
+  const windowsSeparator = "\\";
+  if (args.filename.includes(windowsSeparator)) separator = windowsSeparator;  
+  let root = args.filename.slice(0, args.filename.lastIndexOf(separator));
+  console.log(`root: '${root}'`);
+
+  fs.mkdir(root, { recursive: true }, (error) => {
+    fs.writeFile(args.filename, JSON.stringify(args.data), callback);
+  });
+});
