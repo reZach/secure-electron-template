@@ -181,18 +181,10 @@ ipcMain.on("ReadFile-Request", (IpcMainEvent, args) => {
   console.log("MAIN - ReadFile-Request");
   let callback = function (error, data) {
     console.log(`MAIN - ReadFile-Request error: '${error}'`);
-    let retData = {};
-    try {
-      retData = JSON.parse(data);
-    } catch (error) {
-      retData = {};
-      console.log(`Failed to parse data from ReadFile-Request: '${error}'`)
-    }
-
     this.webContents.send("ReadFile-Response", {
       key: args.key,
       error,
-      data: retData
+      data: typeof data !== "undefined" && data !== null ? data.toString() : ""
     });
   }.bind(win);
   fs.readFile(args.filename, callback);
