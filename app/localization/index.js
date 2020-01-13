@@ -95,29 +95,36 @@ class Backend {
             //   error
             //   data
             // }
-            debugger;
-            console.error("readFileResponse");
+            //debugger;
+
+            // Don't know why we need this line;
+            // upon initialization, the i18next library
+            // ends up in this .on([channel], args) method twice
+            if (typeof this.readCallbacks[args.key] === "undefined") return;
 
             let callback;
 
             if (args.error) {
+                // Failed to read translation file;
+                // we pass back a fake "success" response
+                // so that we create a translation file
                 callback = this.readCallbacks[args.key].callback;
                 delete this.readCallbacks[args.key];
-                callback(null, {});
+                if (callback !== null && typeof callback === "function") callback(null, {});
             } else {
                 let result;
-                args.data = data.replace(/^\uFEFF/, "");
+                args.data = args.data.replace(/^\uFEFF/, "");
                 try {
                     result = JSON.parse(args.data);
                 } catch (parseError) {
                     parseError.message = `Error parsing '${filename}'. Message: '${parseError}'.`;
                     callback = this.readCallbacks[args.key].callback;
                     delete this.readCallbacks[args.key];
-                    callback(parseError);
+                    if (callback !== null && typeof callback === "function") callback(parseError);
                 }
                 callback = this.readCallbacks[args.key].callback;
                 delete this.readCallbacks[args.key];
-                callback(null, result);
+                if (callback !== null && typeof callback === "function") callback(null, result);
             }
         });
 
@@ -127,7 +134,7 @@ class Backend {
             //   key
             //   error
             // }
-            debugger;
+            //debugger;
             let callback;
 
             if (args.error) {
@@ -147,12 +154,12 @@ class Backend {
     }
 
     write(filename) {
-        debugger;
+        //debugger;
         // Lock filename
         this.writeQueue[filename].locked = true;
 
         this.requestFileRead(filename, (error, data) => {
-            debugger;
+            //debugger;
             if (error) {
                 this.writeQueue[filename].locked = false;
                 throw "err!";
@@ -162,11 +169,13 @@ class Backend {
             let callbacks = [];
             for (let i = 0; i < updates.length; i++) {
                 data[updates[i].key] = updates[i].fallbackValue;
-                callbacks.push(updates[i].callback);
+                if (updates[i].callback !== null) callbacks.push(updates[i].callback);
             }
+            delete this.writeQueue[filename];
 
-            this.requestFileWrite(filename, data, callbacks, () => {
-                debugger;
+            
+            let anonymousBind = function(){
+                //debugger;
                 // Move items from buffer
                 let bufferKeys = Object.keys(this.writeQueueBuffer);
                 for (let j = 0; j < bufferKeys.length; j++) {
@@ -174,14 +183,17 @@ class Backend {
                     delete this.writeQueueBuffer[bufferKeys[j]];
                 }
 
-                // Unlock filename
-                this.writeQueue[filename].locked = false;
+                if (typeof this.writeQueue[filename] !== "undefined" && Object.keys(this.writeQueue[filename]).length > 0) {
+                    // Unlock filename
+                    this.writeQueue[filename].locked = false;
 
-                // Re-add timeout if elements exist
-                if (Object.keys(this.writeQueue[filename]).length > 0) {
-                    this.writeQueue[filename].timeout = this.writeWrapper(this.write, [filename], this.backendOptions.delay);
+                    // Re-add timeout if elements exist
+                    if (Object.keys(this.writeQueue[filename]).length > 0) {
+                        this.writeQueue[filename].timeout = this.writeWrapper(this.write, [filename], this.backendOptions.delay);
+                    }
                 }
-            });
+            }.bind(this);
+            this.requestFileWrite(filename, data, callbacks, anonymousBind);
         });
 
         // Unlock filename
@@ -192,7 +204,7 @@ class Backend {
     addToWriteQueue(filename, key, fallbackValue, callback) {
         let obj; // holds properties for the queue
 
-        debugger;
+        //debugger;
         if (typeof this.writeQueue[filename] === "undefined") {
             obj = {
                 updates: [{
@@ -205,7 +217,7 @@ class Backend {
 
             // re-update timeout
             this.writeQueue[filename] = obj;
-            obj.timeout = this.writeWrapper(this.write, [filename], this.backendOptions.delay);            
+            obj.timeout = this.writeWrapper(this.write, [filename], this.backendOptions.delay);
         } else if (!this.writeQueue[filename].locked) {
             obj = this.writeQueue[filename];
             obj.updates.push({
@@ -216,7 +228,7 @@ class Backend {
 
             // re-update timeout
             this.writeQueue[filename] = obj;
-            obj.timeout = this.writeWrapper(this.write, [filename], this.backendOptions.delay);            
+            obj.timeout = this.writeWrapper(this.write, [filename], this.backendOptions.delay);
         } else {
 
             // Hold any updates if we are currently locked on that filename;
@@ -282,6 +294,7 @@ class Backend {
         };
 
         // Send out the message to the ipcMain process
+        //debugger;
         ipc.send(readFileRequest, {
             key,
             filename
@@ -290,7 +303,7 @@ class Backend {
 
     // Reads a given translation file
     read(language, namespace, callback) {
-        debugger;
+        //debugger;
         const {
             loadPath
         } = this.backendOptions;
@@ -299,7 +312,11 @@ class Backend {
             ns: namespace
         });
 
-        this.requestFileRead(filename, callback);
+        this.requestFileRead(filename, (error, data) => {
+            //debugger;
+            if (error) return callback(error, false); // no retry
+            callback(null, data);
+        });
     }
 
     // Not implementing at this time
@@ -309,7 +326,7 @@ class Backend {
 
     // Writes a missing translation to file
     create(languages, namespace, key, fallbackValue, callback) {
-        debugger;
+        //debugger;
         const {
             loadPath
         } = this.backendOptions;
