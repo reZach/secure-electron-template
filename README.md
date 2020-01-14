@@ -41,7 +41,7 @@ There are a number of additions that I'd like to implement in this repository, n
 - [i18next](https://www.i18next.com/) (for localization). A package is [already been started](https://github.com/reZach/i18next-electron-fs-backend) for this work.
 - An [electron store](https://github.com/reZach/secure-electron-store) (to save user data), similar to [this package](https://github.com/sindresorhus/electron-store)
 
-Both of these plans are being held back by some enhancements I'm going to tackle detailed in [this issue](https://github.com/electron/electron/issues/21437). They will come soon
+Both of these plans are being held back by some enhancements I'm going to tackle detailed in [this issue](https://github.com/electron/electron/issues/21437). They will come soon.
 
 > I'd also like to get features such as [auto-updating](https://www.electron.build/auto-update) and more release-focused enhancements as well as a [redux undo/redo history](https://github.com/linn/redux-undoable) and test suites, but those are lower priority (but I welcome PRs!).
 
