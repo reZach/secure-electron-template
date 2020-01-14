@@ -46,7 +46,7 @@
   },
   "keywords": [],
   "author": "reZach",
-  "license": "GPL-3.0-only",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/reZach/secure-electron-template/issues"
   },
