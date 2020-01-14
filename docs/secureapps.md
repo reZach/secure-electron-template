@@ -17,6 +17,4 @@ The trouble that I've found with electron, is that their [release schedule is cr
 
 What's even more troubling is many of the frameworks that work with electron are still built using these old/insecure (pre v5) patterns in mind. If you want to be secure that means you might have to begin re-writing some of them. 
 
-As of today, the electron framework _mostly_ supports IPC between renderer and main processes but in the middle of rewriting an [i18next](https://github.com/reZach/i18next-electron-fs-backend) and [store](https://github.com/reZach/secure-electron-store) plugin for this repository to work with IPC - I've discovered a [bug](https://github.com/electron/electron/issues/21437) in electron that prevents us from listening to messages from the main process inside the renderer process. It's unfortunately blocking all progress in creating post-v5 secure libraries, (but maybe a [bounty on the issue](https://www.bountysource.com/issues/85135915-ipcrenderer-does-not-execute-normally-in-preload-js) will motivate you?). 
-
-Regardless, electron has come a great deal of the way to secure apps and we have almost crossed the finish line!
+There is just a little bit more work needed to use IPC, and I'm working on it! Regardless, electron has come a great deal of the way to secure apps and we have almost crossed the finish line!
