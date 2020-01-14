@@ -178,9 +178,7 @@ app.on("web-contents-created", (event, contents) => {
 // IS ENABLED WITH I18N SUPPORT. (STILL A WIP)
 
 ipcMain.on("ReadFile-Request", (IpcMainEvent, args) => {
-  console.log("MAIN - ReadFile-Request");
   let callback = function (error, data) {
-    console.log(`MAIN - ReadFile-Request error: '${error}'`);
     this.webContents.send("ReadFile-Response", {
       key: args.key,
       error,
@@ -191,9 +189,7 @@ ipcMain.on("ReadFile-Request", (IpcMainEvent, args) => {
 });
 
 ipcMain.on("WriteFile-Request", (IpcMainEvent, args) => {
-  console.log("MAIN - WriteFile-Request");
   let callback = function (error) {
-    console.log(`MAIN - WriteFile-Request error: '${error}'`);
     this.webContents.send("WriteFile-Response", {
       key: args.key,
       error
@@ -206,7 +202,6 @@ ipcMain.on("WriteFile-Request", (IpcMainEvent, args) => {
   const windowsSeparator = "\\";
   if (args.filename.includes(windowsSeparator)) separator = windowsSeparator;  
   let root = args.filename.slice(0, args.filename.lastIndexOf(separator));
-  console.log(`root: '${root}'`);
 
   fs.mkdir(root, { recursive: true }, (error) => {
     fs.writeFile(args.filename, JSON.stringify(args.data), callback);

@@ -95,7 +95,7 @@ class Backend {
             //   error
             //   data
             // }
-            //debugger;
+            
 
             // Don't know why we need this line;
             // upon initialization, the i18next library
@@ -117,10 +117,11 @@ class Backend {
                 try {
                     result = JSON.parse(args.data);
                 } catch (parseError) {
-                    parseError.message = `Error parsing '${filename}'. Message: '${parseError}'.`;
+                    parseError.message = `Error parsing '${args.filename}'. Message: '${parseError}'.`;
                     callback = this.readCallbacks[args.key].callback;
                     delete this.readCallbacks[args.key];
                     if (callback !== null && typeof callback === "function") callback(parseError);
+                    return;
                 }
                 callback = this.readCallbacks[args.key].callback;
                 delete this.readCallbacks[args.key];
@@ -134,8 +135,12 @@ class Backend {
             //   key
             //   error
             // }
-            //debugger;
+            
             let callback;
+
+            // Write methods don't have any callbacks from what I've seen,
+            // so this is called more than I thought; but necessary!
+            if (typeof this.writeCallbacks[args.key] === "undefined") return;
 
             if (args.error) {
                 callback = this.writeCallbacks[args.key].callback;
@@ -154,12 +159,12 @@ class Backend {
     }
 
     write(filename) {
-        //debugger;
+        
         // Lock filename
         this.writeQueue[filename].locked = true;
 
         this.requestFileRead(filename, (error, data) => {
-            //debugger;
+            
             if (error) {
                 this.writeQueue[filename].locked = false;
                 throw "err!";
@@ -175,7 +180,7 @@ class Backend {
 
             
             let anonymousBind = function(){
-                //debugger;
+                
                 // Move items from buffer
                 let bufferKeys = Object.keys(this.writeQueueBuffer);
                 for (let j = 0; j < bufferKeys.length; j++) {
@@ -204,7 +209,7 @@ class Backend {
     addToWriteQueue(filename, key, fallbackValue, callback) {
         let obj; // holds properties for the queue
 
-        //debugger;
+        
         if (typeof this.writeQueue[filename] === "undefined") {
             obj = {
                 updates: [{
@@ -258,14 +263,27 @@ class Backend {
             ipc
         } = this.backendOptions;
 
+        
         // Save the callback for this request so we
         // can execute once the ipcRender process returns
         // with a value from the ipcMain process
-        for (let i = 0; i < callbacks.length; i++) {
-            var key = `${UUID.generate()}`;
-            this.writeCallbacks[key] = {
-                callback: callbacks[i]
-            };
+        var key;
+        if (callbacks.length > 0){
+            for (let i = 0; i < callbacks.length; i++) {
+                key = `${UUID.generate()}`;
+                this.writeCallbacks[key] = {
+                    callback: callbacks[i]
+                };
+    
+                // Send out the message to the ipcMain process
+                ipc.send(writeFileRequest, {
+                    key,
+                    filename,
+                    data
+                });
+            }
+        } else {
+            key = `${UUID.generate()}`;
 
             // Send out the message to the ipcMain process
             ipc.send(writeFileRequest, {
@@ -274,6 +292,7 @@ class Backend {
                 data
             });
         }
+        
 
         if (onCompleteCallback !== null) {
             onCompleteCallback();
@@ -294,7 +313,7 @@ class Backend {
         };
 
         // Send out the message to the ipcMain process
-        //debugger;
+        
         ipc.send(readFileRequest, {
             key,
             filename
@@ -303,7 +322,7 @@ class Backend {
 
     // Reads a given translation file
     read(language, namespace, callback) {
-        //debugger;
+        
         const {
             loadPath
         } = this.backendOptions;
@@ -313,7 +332,7 @@ class Backend {
         });
 
         this.requestFileRead(filename, (error, data) => {
-            //debugger;
+            
             if (error) return callback(error, false); // no retry
             callback(null, data);
         });
@@ -326,15 +345,15 @@ class Backend {
 
     // Writes a missing translation to file
     create(languages, namespace, key, fallbackValue, callback) {
-        //debugger;
+        
         const {
-            loadPath
+            addPath
         } = this.backendOptions;
         let filename;
         languages = typeof languages === "string" ? [languages] : languages;
 
         for (let i = 0; i < languages.length; i++) {
-            filename = this.services.interpolator.interpolate(loadPath, {
+            filename = this.services.interpolator.interpolate(addPath, {
                 lng: languages[i],
                 ns: namespace
             });
