@@ -34,12 +34,12 @@ var UUID = (function () {
 })();
 
 
-var mergeNested = function(obj, path, split, val){    
+var mergeNested = function (obj, path, split, val) {
     let tokens = path.split(split);
     let temp = {};
     let temp2;
     temp[`${tokens[tokens.length - 1]}`] = val;
-    for(var i = tokens.length - 2; i >= 0; i--) {
+    for (var i = tokens.length - 2; i >= 0; i--) {
         temp2 = {};
         temp2[`${tokens[i]}`] = temp;
         temp = temp2;
@@ -59,13 +59,7 @@ export const writeFileRequest = "WriteFile-Request";
 export const readFileResponse = "ReadFile-Response";
 export const writeFileResponse = "WriteFile-Response";
 
-// // Writes to the translation .json files
-// let _writeFile = function (fs, filename, data, callback) {
-//     fs.writeFile(filename, JSON.stringify(data), (error) => {
-//         callback(error);
-//     });
-//     callback(null, "success");
-// }
+
 
 // Template is found at: https://www.i18next.com/misc/creating-own-plugins#backend;
 // also took code from: https://github.com/i18next/i18next-node-fs-backend
@@ -80,15 +74,15 @@ class Backend {
     }
 
     init(services, backendOptions, i18nextOptions) {
-        if (typeof window.api.ipc === "undefined") {
-            throw "'window.api.ipc' is not defined!"; // todo better error
+        if (typeof window.api.i18nextElectronBackend === "undefined") {
+            throw "'window.api.i18nextElectronBackend' is not defined!"; // todo better error
         }
 
         this.services = services;
         this.backendOptions = {
             ...defaultOptions,
             ...backendOptions,
-            ipc: window.api.ipc
+            i18nextElectronBackend: window.api.i18nextElectronBackend
         };
         this.i18nextOptions = i18nextOptions;
 
@@ -99,17 +93,17 @@ class Backend {
     // modules; (ie. 'fs') out of the Electron renderer process
     setupIpcBindings() {
         const {
-            ipc
+            i18nextElectronBackend
         } = this.backendOptions;
 
-        ipc.on(readFileResponse, (IpcRendererEvent, args) => {
+        i18nextElectronBackend.onReceive(readFileResponse, (args) => {
             // args:
             // {
             //   key
             //   error
             //   data
             // }
-            
+
 
             // Don't know why we need this line;
             // upon initialization, the i18next library
@@ -143,13 +137,14 @@ class Backend {
             }
         });
 
-        ipc.on(writeFileResponse, (IpcRendererEvent, args) => {
+
+        i18nextElectronBackend.onReceive(writeFileResponse, (args) => {
             // args:
             // {
             //   key
             //   error
             // }
-            
+
             let callback;
 
             // Write methods don't have any callbacks from what I've seen,
@@ -173,12 +168,12 @@ class Backend {
     }
 
     write(filename) {
-        
+
         // Lock filename
         this.writeQueue[filename].locked = true;
 
         this.requestFileRead(filename, (error, data) => {
-            
+
             if (error) {
                 this.writeQueue[filename].locked = false;
                 throw "err!";
@@ -188,20 +183,20 @@ class Backend {
             let updates = this.writeQueue[filename].updates;
             let callbacks = [];
             for (let i = 0; i < updates.length; i++) {
-                if (!keySeparator){
+                if (!keySeparator) {
                     data[updates[i].key] = updates[i].fallbackValue;
                 } else {
                     // drill down and create nested structure
                     data = mergeNested(data, updates[i].key, this.i18nextOptions.keySeparator, updates[i].fallbackValue);
                 }
-                
+
                 if (updates[i].callback !== null) callbacks.push(updates[i].callback);
             }
             delete this.writeQueue[filename];
 
-            
-            let anonymousBind = function(){
-                
+
+            let anonymousBind = function () {
+
                 // Move items from buffer
                 let bufferKeys = Object.keys(this.writeQueueBuffer);
                 for (let j = 0; j < bufferKeys.length; j++) {
@@ -230,7 +225,7 @@ class Backend {
     addToWriteQueue(filename, key, fallbackValue, callback) {
         let obj; // holds properties for the queue
 
-        
+
         if (typeof this.writeQueue[filename] === "undefined") {
             obj = {
                 updates: [{
@@ -281,23 +276,23 @@ class Backend {
 
     requestFileWrite(filename, data, callbacks, onCompleteCallback = null) {
         const {
-            ipc
+            i18nextElectronBackend
         } = this.backendOptions;
 
-        
+
         // Save the callback for this request so we
         // can execute once the ipcRender process returns
         // with a value from the ipcMain process
         var key;
-        if (callbacks.length > 0){
+        if (callbacks.length > 0) {
             for (let i = 0; i < callbacks.length; i++) {
                 key = `${UUID.generate()}`;
                 this.writeCallbacks[key] = {
                     callback: callbacks[i]
                 };
-    
+
                 // Send out the message to the ipcMain process
-                ipc.send(writeFileRequest, {
+                i18nextElectronBackend.send(writeFileRequest, {
                     key,
                     filename,
                     data
@@ -307,13 +302,13 @@ class Backend {
             key = `${UUID.generate()}`;
 
             // Send out the message to the ipcMain process
-            ipc.send(writeFileRequest, {
+            i18nextElectronBackend.send(writeFileRequest, {
                 key,
                 filename,
                 data
             });
         }
-        
+
 
         if (onCompleteCallback !== null) {
             onCompleteCallback();
@@ -322,7 +317,7 @@ class Backend {
 
     requestFileRead(filename, callback) {
         const {
-            ipc
+            i18nextElectronBackend
         } = this.backendOptions;
 
         // Save the callback for this request so we
@@ -334,8 +329,8 @@ class Backend {
         };
 
         // Send out the message to the ipcMain process
-        
-        ipc.send(readFileRequest, {
+
+        i18nextElectronBackend.send(readFileRequest, {
             key,
             filename
         });
@@ -343,7 +338,7 @@ class Backend {
 
     // Reads a given translation file
     read(language, namespace, callback) {
-        
+
         const {
             loadPath
         } = this.backendOptions;
@@ -353,7 +348,7 @@ class Backend {
         });
 
         this.requestFileRead(filename, (error, data) => {
-            
+
             if (error) return callback(error, false); // no retry
             callback(null, data);
         });
@@ -366,7 +361,7 @@ class Backend {
 
     // Writes a missing translation to file
     create(languages, namespace, key, fallbackValue, callback) {
-        
+
         const {
             addPath
         } = this.backendOptions;

@@ -44,7 +44,7 @@ async function createWindow() {
       nodeIntegration: false,
       nodeIntegrationInWorker: false,
       nodeIntegrationInSubFrames: false,
-      // contextIsolation: true, // turning off until https://github.com/electron/electron/issues/21437 is fixed
+      contextIsolation: true,
       enableRemoteModule: false,
       preload: path.join(__dirname, "preload.js")
     }

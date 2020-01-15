@@ -1,20 +1,18 @@
-const { ipcRenderer } = require("electron");
+const {
+    contextBridge,
+    ipcRenderer
+} = require("electron");
 
-window.api = {
-    ipc: ipcRenderer
-};
-
-// // Once https://github.com/electron/electron/issues/21437 is fixed, use this code pattern instead!
-// const {
-//     contextBridge,
-//     ipcRenderer
-// } = require("electron");
-
-// contextBridge.exposeInMainWorld(
-//     "api", {
-//         ipc: {
-//             on: ipcRenderer.on,
-//             send: ipcRenderer.send
-//         }
-//     }
-// );
+// Expose protected methods that allow the renderer process to use
+// the ipcRenderer without exposing the entire object
+contextBridge.exposeInMainWorld(
+    "api", {
+        i18nextElectronBackend: {
+            send: (channel, data) => ipcRenderer.send(channel, data),
+            onReceive: (channel, func) => {
+                // Deliberately strip event as it includes "sender"
+                ipcRenderer.on(channel, (event, args) => func(args));
+            }
+        }
+    }
+);
