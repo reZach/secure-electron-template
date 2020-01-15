@@ -1,7 +1,7 @@
 # secure-electron-template
 The best way to build Electron apps with security in mind.
 
-_(Please note this repo is still in active development (80% complete) - be sure to leave any bugs or feature's you'd like as issues)_
+_(Please note this repo is still in active development (80% complete) - be sure to leave any bugs or features you'd like as issues)_
 
 > If you are curious about what makes an electron app secure, please check out [this page](https://github.com/reZach/secure-electron-template/blob/master/docs/secureapps.md).
 
@@ -40,7 +40,7 @@ Built-in to this template are a number of popular frameworks already wired up to
 ## Roadmap
 There are a number of additions that I'd like to implement in this repository, namely:
 
-- [i18next](https://www.i18next.com/) (for localization). A package is [already been started](https://github.com/reZach/i18next-electron-fs-backend) for this work.
+- [i18next](https://www.i18next.com/) (for localization). A package is [already been started](https://github.com/reZach/i18next-electron-fs-backend) for this work
 - An [electron store](https://github.com/reZach/secure-electron-store) (to save user data), similar to [this package](https://github.com/sindresorhus/electron-store)
 
 Both of these plans are being held back by some enhancements I'm going to tackle detailed in [this issue](https://github.com/electron/electron/issues/21437). They will come soon.
