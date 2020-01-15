@@ -5,7 +5,7 @@ class Detail extends React.Component {
   render() {
     const { t } = this.props;
     return <div>
-        {t("Detail.SampleText")}
+        {t("pickle")}
     </div>;
   }
 }
