@@ -6,7 +6,7 @@
  * THIS IS STILL A WIP BACKEND. DUE TO https://github.com/electron/electron/issues/21437 THIS BACKEND STILL CANNOT BE IMPLEMENTED!
  */
 
-
+const merge = require("lodash.merge");
 
 /**
  * Fast UUID generator, RFC4122 version 4 compliant.
@@ -32,6 +32,20 @@ var UUID = (function () {
     }
     return self;
 })();
+
+
+var mergeNested = function(obj, path, split, val){    
+    let tokens = path.split(split);
+    let temp = {};
+    let temp2;
+    temp[`${tokens[tokens.length - 1]}`] = val;
+    for(var i = tokens.length - 2; i >= 0; i--) {
+        temp2 = {};
+        temp2[`${tokens[i]}`] = temp;
+        temp = temp2;
+    }
+    return merge(obj, temp);
+}
 
 
 const defaultOptions = {
@@ -170,10 +184,17 @@ class Backend {
                 throw "err!";
             }
 
+            let keySeparator = !!this.i18nextOptions.keySeparator;
             let updates = this.writeQueue[filename].updates;
             let callbacks = [];
             for (let i = 0; i < updates.length; i++) {
-                data[updates[i].key] = updates[i].fallbackValue;
+                if (!keySeparator){
+                    data[updates[i].key] = updates[i].fallbackValue;
+                } else {
+                    // drill down and create nested structure
+                    data = mergeNested(data, updates[i].key, this.i18nextOptions.keySeparator, updates[i].fallbackValue);
+                }
+                
                 if (updates[i].callback !== null) callbacks.push(updates[i].callback);
             }
             delete this.writeQueue[filename];
