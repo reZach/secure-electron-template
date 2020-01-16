@@ -13,7 +13,7 @@ The bridge between the renderer and main components were the remote module and n
 
 IPC (inter-process communication) is used to send messages between processes, and the preload script can inject modules or behavior that the renderer process can then use. This separation of concern gives us the ability to practice **the principle of least priviledge**.
 
-The trouble that I've found with electron, is that their [release schedule is crazy](https://electronjs.org/docs/tutorial/electron-timelines), with only a few months before each major release. We know that electron is a young framework, but it is hard to keep up so quickly!
+The trouble that I've found with electron, is that their [release schedule is crazy](https://electronjs.org/docs/tutorial/electron-timelines), with only a few months between each major release. We know that electron is a young framework, but it is hard to keep up so quickly! This quick release cadence is in part in place to keep [bugs fixed sooner than later](https://electronjs.org/docs/tutorial/security#17-use-a-current-version-of-electron); this cadence is good for security but sometimes hard for developers to keep on updating the framework.
 
 What's even more troubling is many of the frameworks that work with electron are still built using these old/insecure (pre v5) patterns in mind. If you want to be secure that means you might have to begin re-writing some of them. 
 
