@@ -5,6 +5,7 @@ const {
   ipcMain
 } = require("electron");
 const MenuBuilder = require("./menu");
+const i18nextBackend = require("i18next-electron-fs-backend");
 const path = require("path");
 const fs = require("fs");
 const isDev = process.env.NODE_ENV === "development";
@@ -49,6 +50,9 @@ async function createWindow() {
       preload: path.join(__dirname, "preload.js")
     }
   });
+
+  // Sets up main.js bindings for our i18next backend
+  i18nextBackend.mainBindings(ipcMain, win, fs);
 
   // Load app
   if (isDev) {
@@ -169,41 +173,5 @@ app.on("web-contents-created", (event, contents) => {
 
     event.preventDefault();
     return;
-  });
-});
-
-
-// THIS CODE BELOW CAN BE UNCOMMENTED WHEN
-// https://github.com/electron/electron/issues/21437 IS SOLVED AND THIS TEMPLATE
-// IS ENABLED WITH I18N SUPPORT. (STILL A WIP)
-
-ipcMain.on("ReadFile-Request", (IpcMainEvent, args) => {
-  let callback = function (error, data) {
-    this.webContents.send("ReadFile-Response", {
-      key: args.key,
-      error,
-      data: typeof data !== "undefined" && data !== null ? data.toString() : ""
-    });
-  }.bind(win);
-  fs.readFile(args.filename, callback);
-});
-
-ipcMain.on("WriteFile-Request", (IpcMainEvent, args) => {
-  let callback = function (error) {
-    this.webContents.send("WriteFile-Response", {
-      key: args.key,
-      error
-    });
-  }.bind(win);
-  
-
-  // https://stackoverflow.com/a/51721295/1837080
-  let separator = "/";
-  const windowsSeparator = "\\";
-  if (args.filename.includes(windowsSeparator)) separator = windowsSeparator;  
-  let root = args.filename.slice(0, args.filename.lastIndexOf(separator));
-
-  fs.mkdir(root, { recursive: true }, (error) => {
-    fs.writeFile(args.filename, JSON.stringify(args.data), callback);
   });
 });
