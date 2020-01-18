@@ -1,9 +1,11 @@
 const {
   app,
+  protocol,
   BrowserWindow,
   session,
   ipcMain
 } = require("electron");
+const Protocol = require("./protocol");
 const MenuBuilder = require("./menu");
 const i18nextBackend = require("i18next-electron-fs-backend");
 const path = require("path");
@@ -34,6 +36,11 @@ let menuBuilder;
 async function createWindow() {
   if (isDev) {
     await installExtensions();
+  } else {
+    // Needs to happen before creating/loading the browser window;
+    // not necessarily instead of extensions, just using this code block
+    // so I don't have to write another 'if' statement
+    protocol.registerBufferProtocol(Protocol.scheme, Protocol.requestHandler);    
   }
 
   // Create the browser window.
@@ -58,7 +65,7 @@ async function createWindow() {
   if (isDev) {
     win.loadURL(selfHost);
   } else {
-    win.loadFile(path.join(__dirname, "../dist/index.html"));
+    win.loadURL(`${Protocol.scheme}://rse/index-prod.html`);
   }
 
   // Only do these things when in development
@@ -104,6 +111,15 @@ async function createWindow() {
   menuBuilder = MenuBuilder(win);
   menuBuilder.buildMenu();
 }
+
+// Needs to be called before app is ready;
+// gives our scheme access to load relative files,
+// as well as local storage, cookies, etc. 
+// https://electronjs.org/docs/api/protocol#protocolregisterschemesasprivilegedcustomschemes
+protocol.registerSchemesAsPrivileged([{
+  scheme: Protocol.scheme,
+  privileges: { standard: true, secure: true }
+}]);
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
