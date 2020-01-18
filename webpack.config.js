@@ -1,5 +1,3 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CspHtmlWebpackPlugin = require("csp-html-webpack-plugin");
 const path = require("path");
 
 module.exports = {
@@ -53,19 +51,5 @@ module.exports = {
         }
       }
     ]
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: "app/src/index.html"
-    }),
-    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
-    new CspHtmlWebpackPlugin({
-      "base-uri": ["'self'"],
-      "object-src": ["'none'"],
-      "script-src": ["'self'"],
-      "style-src": ["'self'"],
-      "frame-src": ["'none'"],
-      "worker-src": ["'none'"]
-    })
-  ]
+  }
 }
