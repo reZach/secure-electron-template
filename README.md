@@ -1,7 +1,7 @@
 # secure-electron-template
 The best way to build Electron apps with security in mind.
 
-_(Please note this repo is still in active development (82% complete) - be sure to leave any bugs or features you'd like as issues)_
+_(Please note this repo is still in active development (86% complete) - be sure to leave any bugs or features you'd like as issues)_
 
 > If you are curious about what makes an electron app secure, please check out [this page](https://github.com/reZach/secure-electron-template/blob/master/docs/secureapps.md).
 
@@ -23,7 +23,7 @@ Taken from the [best-practices](https://electronjs.org/docs/tutorial/security) o
 13. [Disable or limit creation of new windows](https://electronjs.org/docs/tutorial/security#13-disable-or-limit-creation-of-new-windows) - ✅
 14. [Do not use openExternal with untrusted content](https://electronjs.org/docs/tutorial/security#14-do-not-use-openexternal-with-untrusted-content) - ✅
 15. [Disable remote module](https://electronjs.org/docs/tutorial/security#15-disable-the-remote-module) - ✅
-16. [Filter the remote module](https://electronjs.org/docs/tutorial/security#16-filter-the-remote-module) - todo!
+16. [Filter the remote module](https://electronjs.org/docs/tutorial/security#16-filter-the-remote-module) - ✅
 17. [Use a current version of electron](https://electronjs.org/docs/tutorial/security#17-use-a-current-version-of-electron) - ✅
 
 ## Included frameworks
