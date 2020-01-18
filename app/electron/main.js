@@ -191,3 +191,26 @@ app.on("web-contents-created", (event, contents) => {
     return;
   });
 });
+
+// Filter loading any module via remote;
+// you shouldn't be using remote at all, though
+// https://electronjs.org/docs/tutorial/security#16-filter-the-remote-module
+app.on("remote-require", (event, webContents, moduleName) => {
+  event.preventDefault();
+});
+
+app.on("remote-get-builtin", (event, webContents, moduleName) => {
+  event.preventDefault();
+});
+
+app.on("remote-get-global", (event, webContents, globalName) => {
+  event.preventDefault();
+});
+
+app.on("remote-get-current-window", (event, webContents) => {
+  event.preventDefault()
+});
+
+app.on("remote-get-current-web-contents", (event, webContents) => {
+  event.preventDefault()
+});
