@@ -99,8 +99,9 @@ async function createWindow() {
   });
 
   // https://electronjs.org/docs/tutorial/security#1-only-load-secure-content;
-  // todo not currently working!
-  // ses.fromPartition(partition).webRequest.onBeforeRequest(["*://*./*"], (listener) => {   
+  // The below code can only run when a scheme and host are defined, I thought
+  // we could use this over _all_ urls
+  // ses.fromPartition(partition).webRequest.onBeforeRequest({urls:["http://localhost./*"]}, (listener) => {   
   //   if (listener.url.indexOf("http://") >= 0) {
   //     listener.callback({
   //       cancel: true
