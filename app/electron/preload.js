@@ -8,7 +8,8 @@ const Store = require("secure-electron-store").default;
 let store;
 let storePath = "";
 try {
-    storePath = process.argv.filter(p => p.indexOf("storePath:") >= 0)[0].split(":")[1];    
+    let arg = process.argv.filter(p => p.indexOf("storePath:") >= 0)[0];
+    storePath = arg.substr(arg.indexOf(":") + 1);    
 } catch (error) {
     throw "Could not find 'additionalArguments' value beginning with 'storePath:' in your BrowserWindow. Please ensure this is set!";
 } finally {
