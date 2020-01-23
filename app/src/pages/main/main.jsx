@@ -9,7 +9,7 @@ class Main extends React.Component {
     super(props);
 
     this.state = {
-      message: props.home.message
+      message: props.home.message,
     };
 
     this.onChangeMessage = this.onChangeMessage.bind(this);
@@ -37,7 +37,7 @@ class Main extends React.Component {
   }
 
   onSubmitMessage(event) {
-    event.preventDefault();
+    event.preventDefault(); // prevent navigation
     this.props.changeMessage(this.state.message);
     window.api.store.send(writeConfigRequest, "motd", this.state.message);
   }
@@ -49,6 +49,7 @@ class Main extends React.Component {
         <br />
         <form onSubmit={this.onSubmitMessage}>
           <input
+            placeholder="New message of the day"
             value={this.state.message}
             onChange={this.onChangeMessage}
           ></input>
