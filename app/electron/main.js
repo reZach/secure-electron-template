@@ -15,7 +15,7 @@ const isDev = process.env.NODE_ENV === "development";
 const port = 40992; // Hardcoded; needs to match webpack.development.js and package.json
 const selfHost = `http://localhost:${port}`;
 
-console.log(`App path is at: ${app.getPath("userData")}`);
+
 
 // Installs extensions useful for development;
 // https://github.com/electron-react-boilerplate/electron-react-boilerplate/blob/master/app/main.dev.js

@@ -16,19 +16,6 @@ class Main extends React.Component {
     this.onSubmitMessage = this.onSubmitMessage.bind(this);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // Object.entries(this.props).forEach(
-    //   ([key, val]) =>
-    //     prevProps[key] !== val && console.log(`Prop '${key}' changed`)
-    // );
-    // if (this.state) {
-    //   Object.entries(this.state).forEach(
-    //     ([key, val]) =>
-    //       prevState[key] !== val && console.log(`State '${key}' changed`)
-    //   );
-    // }
-  }
-
   onChangeMessage(event) {
     const { value } = event.target;
     this.setState(state => ({
@@ -53,7 +40,7 @@ class Main extends React.Component {
             value={this.state.message}
             onChange={this.onChangeMessage}
           ></input>
-          <input type="submit"></input>
+          <input type="submit" value="Save"></input>
         </form>
         <Detail></Detail>
       </div>

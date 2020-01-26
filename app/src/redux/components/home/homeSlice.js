@@ -5,7 +5,7 @@ import {
 const homeSlice = createSlice({
   name: "home",
   initialState: {
-    message: typeof window.api.store.initial["motd"] !== "undefined" ? window.api.store.initial["motd"] : "Hello and welcome to the template!"
+    message: typeof window.api.store.initial()["motd"] !== "undefined" ? window.api.store.initial()["motd"] : "Hello and welcome to the template!"
   },
   reducers: {
     changeMessage(state, action) {
