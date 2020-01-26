@@ -33,7 +33,7 @@ Built-in to this template are a number of popular frameworks already wired up to
 - [Babel](https://babeljs.io/)
 - [Webpack](https://webpack.js.org/) (with [webpack-dev-server](https://github.com/webpack/webpack-dev-server))
 - [i18next](https://www.i18next.com/) (with [this plugin](https://github.com/reZach/i18next-electron-fs-backend) for localization).
-- [electron store](https://github.com/reZach/secure-electron-store) (for saving config/data)
+- [Store](https://github.com/reZach/secure-electron-store) (for saving config/data)
 - [Electron builder](https://www.electron.build/) (for packaging up your app)
 
 
