@@ -6,8 +6,7 @@ class Detail extends React.Component {
     const { t } = this.props;
     return (
       <div>
-        {t("found")}
-        {t("pickle")}
+        <p>In this component, we render a simple translation: {t("Hello")}</p>        
       </div>
     );
   }

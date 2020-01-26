@@ -1,20 +1,55 @@
 import React from "react";
 import { connect } from "react-redux";
 import { changeMessage } from "Redux/components/home/homeSlice";
+import { writeConfigRequest } from "secure-electron-store";
 import Detail from "Components/detail/detail";
 
 class Main extends React.Component {
+  constructor(props) {
+    super(props);
 
-    render() {
-        return <div>
-            Message of the day: {this.props.home.message}<br />
-            <Detail></Detail>
-        </div>;
-    }
+    this.state = {
+      message: props.home.message,
+    };
+
+    this.onChangeMessage = this.onChangeMessage.bind(this);
+    this.onSubmitMessage = this.onSubmitMessage.bind(this);
+  }
+
+  onChangeMessage(event) {
+    const { value } = event.target;
+    this.setState(state => ({
+      message: value
+    }));
+  }
+
+  onSubmitMessage(event) {
+    event.preventDefault(); // prevent navigation
+    this.props.changeMessage(this.state.message);
+    window.api.store.send(writeConfigRequest, "motd", this.state.message);
+  }
+
+  render() {
+    return (
+      <div>
+        Message of the day: {this.props.home.message}
+        <br />
+        <form onSubmit={this.onSubmitMessage}>
+          <input
+            placeholder="New message of the day"
+            value={this.state.message}
+            onChange={this.onChangeMessage}
+          ></input>
+          <input type="submit" value="Save"></input>
+        </form>
+        <Detail></Detail>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = (state, props) => ({
-    home: state.home
+  home: state.home
 });
 const mapDispatch = { changeMessage };
 

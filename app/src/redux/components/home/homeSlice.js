@@ -5,11 +5,11 @@ import {
 const homeSlice = createSlice({
   name: "home",
   initialState: {
-    message: "Hello and welcome to the template!"
+    message: typeof window.api.store.initial()["motd"] !== "undefined" ? window.api.store.initial()["motd"] : "Hello and welcome to the template!"
   },
   reducers: {
     changeMessage(state, action) {
-      state.message = action.payload.message;
+      state.message = action.payload;
     }
   }
 });

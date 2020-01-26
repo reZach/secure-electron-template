@@ -33,15 +33,12 @@ Built-in to this template are a number of popular frameworks already wired up to
 - [Babel](https://babeljs.io/)
 - [Webpack](https://webpack.js.org/) (with [webpack-dev-server](https://github.com/webpack/webpack-dev-server))
 - [i18next](https://www.i18next.com/) (with [this plugin](https://github.com/reZach/i18next-electron-fs-backend) for localization).
+- [electron store](https://github.com/reZach/secure-electron-store) (for saving config/data)
 - [Electron builder](https://www.electron.build/) (for packaging up your app)
 
 
 ## Roadmap
-There are a number of additions that I'd like to implement in this repository, namely:
-
-- An [electron store](https://github.com/reZach/secure-electron-store) (to save user data), similar to [this package](https://github.com/sindresorhus/electron-store)
-
-> I'd also like to get features such as [auto-updating](https://www.electron.build/auto-update) and more release-focused enhancements as well as a [redux undo/redo history](https://github.com/linn/redux-undoable) and test suites, but those are lower priority (but I welcome PRs!).
+There are a number of additions that I'd like to implement in this repository, namely [auto-updating](https://www.electron.build/auto-update) and more release-focused enhancements as well as a [redux undo/redo history](https://github.com/linn/redux-undoable) and test suites, but those are lower priority (but I welcome PRs!).
 
 ## Architecture
 For a more detailed view of the architecture of the template, please check out [here](https://github.com/reZach/secure-electron-template/blob/master/docs/architecture.md). I would _highly_ recommend reading this document to get yourself familiarized with this template.

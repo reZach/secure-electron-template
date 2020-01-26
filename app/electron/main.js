@@ -8,11 +8,14 @@ const {
 const Protocol = require("./protocol");
 const MenuBuilder = require("./menu");
 const i18nextBackend = require("i18next-electron-fs-backend");
+const Store = require("secure-electron-store").default;
 const path = require("path");
 const fs = require("fs");
 const isDev = process.env.NODE_ENV === "development";
 const port = 40992; // Hardcoded; needs to match webpack.development.js and package.json
 const selfHost = `http://localhost:${port}`;
+
+
 
 // Installs extensions useful for development;
 // https://github.com/electron-react-boilerplate/electron-react-boilerplate/blob/master/app/main.dev.js
@@ -54,12 +57,19 @@ async function createWindow() {
       nodeIntegrationInSubFrames: false,
       contextIsolation: true,
       enableRemoteModule: false,
+      additionalArguments: [`storePath:${app.getPath("userData")}`],
       preload: path.join(__dirname, "preload.js")
     }
   });
 
   // Sets up main.js bindings for our i18next backend
   i18nextBackend.mainBindings(ipcMain, win, fs);
+
+  // Sets up main.js bindings for our electron store
+  const store = new Store({
+    path: app.getPath("userData")
+  });
+  store.mainBindings(ipcMain, win, fs);
 
   // Load app
   if (isDev) {
@@ -196,10 +206,11 @@ app.on("web-contents-created", (event, contents) => {
 // Filter loading any module via remote;
 // you shouldn't be using remote at all, though
 // https://electronjs.org/docs/tutorial/security#16-filter-the-remote-module
-app.on("remote-require", (event, webContents, moduleName) => {
+app.on("remote-require", (event, webContents, moduleName) => {  
   event.preventDefault();
 });
 
+// built-ins are modules such as "app"
 app.on("remote-get-builtin", (event, webContents, moduleName) => {
   event.preventDefault();
 });
