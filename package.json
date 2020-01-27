@@ -79,7 +79,7 @@
     "@reduxjs/toolkit": "^1.2.2",
     "connected-react-router": "^6.6.1",
     "i18next": "^19.0.3",
-    "i18next-electron-fs-backend": "^1.0.2",
+    "i18next-electron-fs-backend": "^1.1.0",
     "lodash.merge": "^4.6.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
