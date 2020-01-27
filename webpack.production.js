@@ -12,13 +12,20 @@ module.exports = merge(base, {
       template: path.resolve(__dirname, "app/src/index-prod.html"),
       filename: "index-prod.html"
     }),
-    new CspHtmlWebpackPlugin({
-      "base-uri": ["'self'"],
-      "object-src": ["'none'"],
-      "script-src": ["'self'"],
-      "style-src": ["'self'"],
-      "frame-src": ["'none'"],
-      "worker-src": ["'none'"]
-    })
+    new CspHtmlWebpackPlugin(
+      {
+        "base-uri": ["'self'"],
+        "object-src": ["'none'"],
+        "script-src": ["'self'"],
+        "style-src": ["'self' 'unsafe-inline'"],
+        "frame-src": ["'none'"],
+        "worker-src": ["'none'"]
+      },
+      {
+        hashEnabled: {
+          "style-src": false
+        }
+      }
+    )
   ]
 });

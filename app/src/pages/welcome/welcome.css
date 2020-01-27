@@ -1,0 +1,12 @@
+#welcome {
+    display: grid;
+    height: 100%;
+    justify-items: center;
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 10fr 1fr;     
+}
+
+.header {
+    grid-column: 1;
+    grid-row: 1;
+}

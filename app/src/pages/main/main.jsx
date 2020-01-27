@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { changeMessage } from "Redux/components/home/homeSlice";
 import { writeConfigRequest } from "secure-electron-store";
 import Detail from "Components/detail/detail";
+import "./main.css";
 
 class Main extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="testclass">
         Message of the day: {this.props.home.message}
         <br />
         <form onSubmit={this.onSubmitMessage}>
