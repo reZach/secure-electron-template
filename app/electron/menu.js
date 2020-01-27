@@ -3,74 +3,80 @@ const i18nBackend = require("i18next-electron-fs-backend");
 const whitelist = require("../localization/whitelist");
 const isMac = process.platform === "darwin";
 
-var MenuBuilder = function (mainWindow) {
-
-  let setupDevelopmentEnvironment = function () {
+var MenuBuilder = function(mainWindow) {
+  let setupDevelopmentEnvironment = function() {
     mainWindow.webContents.on("context-menu", (e, props) => {
-      const {
-        x,
-        y
-      } = props;
+      const { x, y } = props;
 
-      Menu.buildFromTemplate([{
-        label: "Inspect element",
-        click: () => {
-          mainWindow.inspectElement(x, y);
+      Menu.buildFromTemplate([
+        {
+          label: "Inspect element",
+          click: () => {
+            mainWindow.inspectElement(x, y);
+          }
         }
-      }]).popup(mainWindow);
+      ]).popup(mainWindow);
     });
-  }
+  };
 
   // https://electronjs.org/docs/api/menu#main-process
   let defaultTemplate = function() {
     return [
       // { role: "appMenu" }
-      ...(isMac ? [{
-        label: app.name,
-        submenu: [{
-            role: "about"
-          },
-          {
-            type: "separator"
-          },
-          {
-            role: "services"
-          },
-          {
-            type: "separator"
-          },
-          {
-            role: "hide"
-          },
-          {
-            role: "hideothers"
-          },
-          {
-            role: "unhide"
-          },
-          {
-            type: "separator"
-          },
-          {
-            role: "quit"
-          }
-        ]
-      }] : []),
+      ...(isMac
+        ? [
+            {
+              label: app.name,
+              submenu: [
+                {
+                  role: "about"
+                },
+                {
+                  type: "separator"
+                },
+                {
+                  role: "services"
+                },
+                {
+                  type: "separator"
+                },
+                {
+                  role: "hide"
+                },
+                {
+                  role: "hideothers"
+                },
+                {
+                  role: "unhide"
+                },
+                {
+                  type: "separator"
+                },
+                {
+                  role: "quit"
+                }
+              ]
+            }
+          ]
+        : []),
       // { role: "fileMenu" }
       {
         label: "File",
         submenu: [
-          isMac ? {
-            role: "close"
-          } : {
-            role: "quit"
-          }
+          isMac
+            ? {
+                role: "close"
+              }
+            : {
+                role: "quit"
+              }
         ]
       },
       // { role: "editMenu" }
       {
         label: "Edit",
-        submenu: [{
+        submenu: [
+          {
             role: "undo"
           },
           {
@@ -88,44 +94,50 @@ var MenuBuilder = function (mainWindow) {
           {
             role: "paste"
           },
-          ...(isMac ? [{
-              role: "pasteAndMatchStyle"
-            },
-            {
-              role: "delete"
-            },
-            {
-              role: "selectAll"
-            },
-            {
-              type: "separator"
-            },
-            {
-              label: "Speech",
-              submenu: [{
-                  role: "startspeaking"
+          ...(isMac
+            ? [
+                {
+                  role: "pasteAndMatchStyle"
                 },
                 {
-                  role: "stopspeaking"
+                  role: "delete"
+                },
+                {
+                  role: "selectAll"
+                },
+                {
+                  type: "separator"
+                },
+                {
+                  label: "Speech",
+                  submenu: [
+                    {
+                      role: "startspeaking"
+                    },
+                    {
+                      role: "stopspeaking"
+                    }
+                  ]
                 }
               ]
-            }
-          ] : [{
-              role: "delete"
-            },
-            {
-              type: "separator"
-            },
-            {
-              role: "selectAll"
-            }
-          ])
+            : [
+                {
+                  role: "delete"
+                },
+                {
+                  type: "separator"
+                },
+                {
+                  role: "selectAll"
+                }
+              ])
         ]
       },
       // { role: "viewMenu" }
       {
         label: "View",
-        submenu: [{
+        submenu: [
+          {
             role: "reload"
           },
           {
@@ -162,46 +174,52 @@ var MenuBuilder = function (mainWindow) {
       // { role: "windowMenu" }
       {
         label: "Window",
-        submenu: [{
+        submenu: [
+          {
             role: "minimize"
           },
           {
             role: "zoom"
           },
-          ...(isMac ? [{
-              type: "separator"
-            },
-            {
-              role: "front"
-            },
-            {
-              type: "separator"
-            },
-            {
-              role: "window"
-            }
-          ] : [{
-            role: "close"
-          }])
+          ...(isMac
+            ? [
+                {
+                  type: "separator"
+                },
+                {
+                  role: "front"
+                },
+                {
+                  type: "separator"
+                },
+                {
+                  role: "window"
+                }
+              ]
+            : [
+                {
+                  role: "close"
+                }
+              ])
         ]
       },
       {
         role: "help",
-        submenu: [{
-          label: "Learn More",
-          click: async () => {
-            const {
-              shell
-            } = require("electron")
-            await shell.openExternal("https://electronjs.org")
+        submenu: [
+          {
+            label: "Learn More",
+            click: async () => {
+              const { shell } = require("electron");
+              await shell.openExternal("https://electronjs.org");
+            }
           }
-        }]
+        ]
       }
-    ]
-  }
+    ];
+  };
 
   return {
-    buildMenu: function () {
+    buildMenu: function() {
       if (process.env.NODE_ENV === "development") {
         setupDevelopmentEnvironment();
       }
@@ -211,7 +229,7 @@ var MenuBuilder = function (mainWindow) {
 
       return menu;
     }
-  }
-}
+  };
+};
 
 module.exports = MenuBuilder;
