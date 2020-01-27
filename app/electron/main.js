@@ -1,10 +1,4 @@
-const {
-  app,
-  protocol,
-  BrowserWindow,
-  session,
-  ipcMain
-} = require("electron");
+const { app, protocol, BrowserWindow, session, ipcMain } = require("electron");
 const Protocol = require("./protocol");
 const MenuBuilder = require("./menu");
 const i18nextBackend = require("i18next-electron-fs-backend");
@@ -15,8 +9,6 @@ const isDev = process.env.NODE_ENV === "development";
 const port = 40992; // Hardcoded; needs to match webpack.development.js and package.json
 const selfHost = `http://localhost:${port}`;
 
-
-
 // Installs extensions useful for development;
 // https://github.com/electron-react-boilerplate/electron-react-boilerplate/blob/master/app/main.dev.js
 // NOTE - if you'd like to run w/ these extensions when testing w/o electron, you need browser extensions to be installed (React Developer Tools & Redux DevTools)
@@ -26,7 +18,7 @@ const installExtensions = async () => {
   const extensions = ["REACT_DEVELOPER_TOOLS", "REDUX_DEVTOOLS"];
 
   return Promise.all(
-    extensions.map(name => installer.default(installer[name], forceDownload))
+    extensions.map((name) => installer.default(installer[name], forceDownload))
   ).catch(console.log);
 };
 
@@ -35,7 +27,6 @@ const installExtensions = async () => {
 let win;
 let menuBuilder;
 
-
 async function createWindow() {
   if (isDev) {
     await installExtensions();
@@ -43,7 +34,7 @@ async function createWindow() {
     // Needs to happen before creating/loading the browser window;
     // not necessarily instead of extensions, just using this code block
     // so I don't have to write another 'if' statement
-    protocol.registerBufferProtocol(Protocol.scheme, Protocol.requestHandler);    
+    protocol.registerBufferProtocol(Protocol.scheme, Protocol.requestHandler);
   }
 
   // Create the browser window.
@@ -89,29 +80,32 @@ async function createWindow() {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    win = null
+    win = null;
   });
 
   // https://electronjs.org/docs/tutorial/security#4-handle-session-permission-requests-from-remote-content
   const ses = session;
   const partition = "default";
-  ses.fromPartition(partition).setPermissionRequestHandler((webContents, permission, callback) => {
+  ses
+    .fromPartition(partition)
+    .setPermissionRequestHandler((webContents, permission, callback) => {
+      let allowedPermissions = []; // Full list here: https://developer.chrome.com/extensions/declare_permissions#manifest
 
-    let allowedPermissions = []; // Full list here: https://developer.chrome.com/extensions/declare_permissions#manifest
+      if (allowedPermissions.includes(permission)) {
+        callback(true); // Approve permission request
+      } else {
+        console.error(
+          `The application tried to request permission for '${permission}'. This permission was not whitelisted and has been blocked.`
+        );
 
-    if (allowedPermissions.includes(permission)) {
-      callback(true); // Approve permission request
-    } else {
-      console.error(`The application tried to request permission for '${permission}'. This permission was not whitelisted and has been blocked.`);
-
-      callback(false); // Deny
-    }
-  });
+        callback(false); // Deny
+      }
+    });
 
   // https://electronjs.org/docs/tutorial/security#1-only-load-secure-content;
   // The below code can only run when a scheme and host are defined, I thought
   // we could use this over _all_ urls
-  // ses.fromPartition(partition).webRequest.onBeforeRequest({urls:["http://localhost./*"]}, (listener) => {   
+  // ses.fromPartition(partition).webRequest.onBeforeRequest({urls:["http://localhost./*"]}, (listener) => {
   //   if (listener.url.indexOf("http://") >= 0) {
   //     listener.callback({
   //       cancel: true
@@ -125,12 +119,14 @@ async function createWindow() {
 
 // Needs to be called before app is ready;
 // gives our scheme access to load relative files,
-// as well as local storage, cookies, etc. 
+// as well as local storage, cookies, etc.
 // https://electronjs.org/docs/api/protocol#protocolregisterschemesasprivilegedcustomschemes
-protocol.registerSchemesAsPrivileged([{
-  scheme: Protocol.scheme,
-  privileges: { standard: true, secure: true }
-}]);
+protocol.registerSchemesAsPrivileged([
+  {
+    scheme: Protocol.scheme,
+    privileges: { standard: true, secure: true }
+  }
+]);
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -162,7 +158,9 @@ app.on("web-contents-created", (event, contents) => {
 
     // Log and prevent the app from navigating to a new page if that page's origin is not whitelisted
     if (!validOrigins.includes(parsedUrl.origin)) {
-      console.error(`The application tried to redirect to the following address: '${parsedUrl}'. This origin is not whitelisted and the attempt to navigate was blocked.`);
+      console.error(
+        `The application tried to redirect to the following address: '${parsedUrl}'. This origin is not whitelisted and the attempt to navigate was blocked.`
+      );
 
       event.preventDefault();
       return;
@@ -175,7 +173,9 @@ app.on("web-contents-created", (event, contents) => {
 
     // Log and prevent the app from redirecting to a new page
     if (!validOrigins.includes(parsedUrl.origin)) {
-      console.error(`The application tried to redirect to the following address: '${navigationUrl}'. This attempt was blocked.`);
+      console.error(
+        `The application tried to redirect to the following address: '${navigationUrl}'. This attempt was blocked.`
+      );
 
       event.preventDefault();
       return;
@@ -194,9 +194,10 @@ app.on("web-contents-created", (event, contents) => {
 
   // https://electronjs.org/docs/tutorial/security#13-disable-or-limit-creation-of-new-windows
   contents.on("new-window", async (event, navigationUrl) => {
-
-    // Log and prevent opening up a new window        
-    console.error(`The application tried to open a new window at the following address: '${navigationUrl}'. This attempt was blocked.`);
+    // Log and prevent opening up a new window
+    console.error(
+      `The application tried to open a new window at the following address: '${navigationUrl}'. This attempt was blocked.`
+    );
 
     event.preventDefault();
     return;
@@ -206,7 +207,7 @@ app.on("web-contents-created", (event, contents) => {
 // Filter loading any module via remote;
 // you shouldn't be using remote at all, though
 // https://electronjs.org/docs/tutorial/security#16-filter-the-remote-module
-app.on("remote-require", (event, webContents, moduleName) => {  
+app.on("remote-require", (event, webContents, moduleName) => {
   event.preventDefault();
 });
 
@@ -220,9 +221,9 @@ app.on("remote-get-global", (event, webContents, globalName) => {
 });
 
 app.on("remote-get-current-window", (event, webContents) => {
-  event.preventDefault()
+  event.preventDefault();
 });
 
 app.on("remote-get-current-web-contents", (event, webContents) => {
-  event.preventDefault()
+  event.preventDefault();
 });

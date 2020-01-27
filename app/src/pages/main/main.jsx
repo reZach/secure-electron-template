@@ -9,7 +9,7 @@ class Main extends React.Component {
     super(props);
 
     this.state = {
-      message: props.home.message,
+      message: props.home.message
     };
 
     this.onChangeMessage = this.onChangeMessage.bind(this);
@@ -18,7 +18,7 @@ class Main extends React.Component {
 
   onChangeMessage(event) {
     const { value } = event.target;
-    this.setState(state => ({
+    this.setState((state) => ({
       message: value
     }));
   }
@@ -38,8 +38,7 @@ class Main extends React.Component {
           <input
             placeholder="New message of the day"
             value={this.state.message}
-            onChange={this.onChangeMessage}
-          ></input>
+            onChange={this.onChangeMessage}></input>
           <input type="submit" value="Save"></input>
         </form>
         <Detail></Detail>
