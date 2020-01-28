@@ -10,7 +10,7 @@ class Main extends React.Component {
     super(props);
 
     this.state = {
-      message: props.home.message
+      message: ""
     };
 
     this.onChangeMessage = this.onChangeMessage.bind(this);
@@ -26,23 +26,36 @@ class Main extends React.Component {
 
   onSubmitMessage(event) {
     event.preventDefault(); // prevent navigation
-    this.props.changeMessage(this.state.message);
-    window.api.store.send(writeConfigRequest, "motd", this.state.message);
+    this.props.changeMessage(this.state.message); // update redux store
+    window.api.store.send(writeConfigRequest, "motd", this.state.message); // save message to store (persist)
+
+    // reset
+    this.setState((state) => ({
+      message: ""
+    }));
   }
 
   render() {
     return (
-      <div className="testclass">
-        Message of the day: {this.props.home.message}
+      <div id="main">
+        <div className="motd">{this.props.home.message}</div>
         <br />
-        <form onSubmit={this.onSubmitMessage}>
-          <input
-            placeholder="New message of the day"
-            value={this.state.message}
-            onChange={this.onChangeMessage}></input>
-          <input type="submit" value="Save"></input>
-        </form>
-        <Detail></Detail>
+        <div>
+          <form onSubmit={this.onSubmitMessage}>
+            <input
+              placeholder="New message of the day"
+              value={this.state.message}
+              onChange={this.onChangeMessage}></input>
+            <input type="submit" value="Save"></input>
+          </form>
+          <div className="tip">
+            Your message of the day will persist
+            <br /> if you close and re-open the app.
+          </div>
+        </div>
+        <div id="translation">
+          <Detail></Detail>
+        </div>
       </div>
     );
   }
