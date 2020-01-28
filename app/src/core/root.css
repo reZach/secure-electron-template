@@ -1,0 +1,14 @@
+html {
+  height: 100%;
+  background: rgb(255, 200, 200);
+  background: linear-gradient(180deg, rgba(255, 200, 200, 1) 0%, rgba(252, 118, 118, 1) 40%, rgba(255, 0, 0, 1) 100%);
+}
+
+body {
+  margin: 0px;
+  height: -webkit-fill-available;
+}
+
+#target {
+  height: -webkit-fill-available;
+}
