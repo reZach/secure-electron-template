@@ -1,9 +1,11 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CspHtmlWebpackPlugin = require("csp-html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const merge = require("webpack-merge");
 const base = require("./webpack.config");
 const path = require("path");
 
+// consider https://webpack.js.org/plugins/mini-css-extract-plugin/ for css loading?
 module.exports = merge(base, {
   mode: "development",
   devtool: "source-map", // Show the source map so we can debug when developing locally
@@ -19,6 +21,7 @@ module.exports = merge(base, {
     }
   },
   plugins: [
+    new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "app/src/index.html"),
       filename: "index.html"
