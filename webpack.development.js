@@ -5,7 +5,6 @@ const merge = require("webpack-merge");
 const base = require("./webpack.config");
 const path = require("path");
 
-// consider https://webpack.js.org/plugins/mini-css-extract-plugin/ for css loading?
 module.exports = merge(base, {
   mode: "development",
   devtool: "source-map", // Show the source map so we can debug when developing locally
