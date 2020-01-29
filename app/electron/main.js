@@ -113,7 +113,7 @@ async function createWindow() {
   //   }
   // });
 
-  menuBuilder = MenuBuilder(win);
+  menuBuilder = MenuBuilder(win, app.name);
   menuBuilder.buildMenu();
 }
 
