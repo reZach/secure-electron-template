@@ -3,7 +3,7 @@ const i18nBackend = require("i18next-electron-fs-backend");
 const whitelist = require("../localization/whitelist");
 const isMac = process.platform === "darwin";
 
-var MenuBuilder = function(mainWindow) {
+var MenuBuilder = function(mainWindow, appName) {
   let setupDevelopmentEnvironment = function() {
     mainWindow.webContents.on("context-menu", (e, props) => {
       const { x, y } = props;
@@ -26,7 +26,7 @@ var MenuBuilder = function(mainWindow) {
       ...(isMac
         ? [
             {
-              label: app.name,
+              label: appName,
               submenu: [
                 {
                   role: "about"
