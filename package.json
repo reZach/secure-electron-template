@@ -79,6 +79,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.2.2",
     "connected-react-router": "^6.6.1",
+    "easy-redux-undo": "file:../easy-redux-undo",
     "i18next": "^19.0.3",
     "i18next-electron-fs-backend": "^1.1.2",
     "lodash.merge": "^4.6.2",
