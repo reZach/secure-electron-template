@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { changeMessage } from "Redux/components/home/homeSlice";
 import { writeConfigRequest } from "secure-electron-store";
 import Detail from "Components/detail/detail";
-import Counter from "Components/counter/counter";
+import Undo from "Components/undo/undo";
 import "./main.css";
 
 class Main extends React.Component {
@@ -57,8 +57,8 @@ class Main extends React.Component {
         <div id="translation">
           <Detail></Detail>
         </div>
-        <div id="counter">
-          <Counter></Counter>
+        <div id="undo">
+          <Undo></Undo>
         </div>
       </div>
     );
