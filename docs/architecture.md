@@ -2,14 +2,10 @@
 This template is laid out in order to maintain a clear separation-of-concerns (SoC) and composability in order for you to take the template in any way you need to build your app. At the root level we have a few folders:
 
 ```
-.webpack/
 app/
 docs/
 resources/
 ```
-
-#### .webpack
-Where the bundled scripts will live. Unless you need to do something advanced you probably should leave this folder alone.
 
 #### app
 Contains everything for your app. All of your js/css files will go here as well as the electron-specific code. You can go [here](https://github.com/reZach/secure-electron-template/blob/master/docs/app.md) to find more information about this directory.
