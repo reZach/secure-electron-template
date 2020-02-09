@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
+import ROUTES from "Constants/routes";
+import { Link } from "react-router-dom";
 import { changeMessage } from "Redux/components/home/homeSlice";
 import { writeConfigRequest } from "secure-electron-store";
-import Detail from "Components/detail/detail";
-import "./main.css";
+import "./motd.css";
 
-class Main extends React.Component {
+class Motd extends React.Component {
   constructor(props) {
     super(props);
 
@@ -37,9 +38,9 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div id="main">
+      <div id="motd">
+        <Link to={ROUTES.WELCOME} className="left">Go back</Link>
         <div className="motd">{this.props.home.message}</div>
-        <br />
         <div>
           <form onSubmit={this.onSubmitMessage}>
             <input
@@ -53,9 +54,6 @@ class Main extends React.Component {
             <br /> if you close and re-open the app.
           </div>
         </div>
-        <div id="translation">
-          <Detail></Detail>
-        </div>
       </div>
     );
   }
@@ -66,4 +64,4 @@ const mapStateToProps = (state, props) => ({
 });
 const mapDispatch = { changeMessage };
 
-export default connect(mapStateToProps, mapDispatch)(Main);
+export default connect(mapStateToProps, mapDispatch)(Motd);

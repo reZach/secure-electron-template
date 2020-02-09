@@ -1,4 +1,6 @@
 {
   "WELCOME": "/",
-  "MAIN": "/main"
+  "MOTD": "/motd",
+  "LOCALIZATION": "/localization",
+  "UNDOREDO": "/undoredo"
 }

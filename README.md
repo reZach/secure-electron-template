@@ -3,6 +3,8 @@ The best way to build Electron apps with security in mind.
 
 > If you are curious about what makes an electron app secure, please check out [this page](https://github.com/reZach/secure-electron-template/blob/master/docs/secureapps.md).
 
+![Picture of template](https://github.com/reZach/secure-electron-template/blob/master/docs/imgs/templatepic.png "Picture of template")
+
 ## Features
 Taken from the [best-practices](https://electronjs.org/docs/tutorial/security) official page, here is what this repository offers!
 
@@ -35,18 +37,25 @@ Built-in to this template are a number of popular frameworks already wired up to
 - [i18next](https://www.i18next.com/) (with [this plugin](https://github.com/reZach/i18next-electron-fs-backend) for localization).
 - [Store](https://github.com/reZach/secure-electron-store) (for saving config/data)
 - [Electron builder](https://www.electron.build/) (for packaging up your app)
+- [Easy redux undo](https://github.com/reZach/easy-redux-undo) (for undo/redoing your redux actions)
 
 
 ## Roadmap
-There are a number of additions that I'd like to implement in this repository, namely [auto-updating](https://www.electron.build/auto-update) and more release-focused enhancements as well as a [redux undo/redo history](https://github.com/linn/redux-undoable) and test suites, but those are lower priority (but I welcome PRs!).
+There are a number of additions that I'd like to implement in this repository, namely [auto-updating](https://www.electron.build/auto-update) and more release-focused enhancements and test suites, but those are lower priority (but I welcome PRs!).
 
 ## Architecture
 For a more detailed view of the architecture of the template, please check out [here](https://github.com/reZach/secure-electron-template/blob/master/docs/architecture.md). I would _highly_ recommend reading this document to get yourself familiarized with this template.
 
 ## How to get started
+Click the ![Use this template](https://github.com/reZach/secure-electron-template/blob/master/docs/imgs/usethistemplate.png "Use this template") button to get started.
+
+Alternatively, if you want to fork and contribute to the template, you can follow these commands:
 ```
 git clone https://github.com/reZach/secure-electron-template.git
 cd secure-electron-template
 npm i
 npm run dev
 ```
+
+## FAQ
+Please see [our faq](https://github.com/reZach/secure-electron-template/blob/master/docs/faq.md) for any common questions you might have.

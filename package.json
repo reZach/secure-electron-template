@@ -7,8 +7,6 @@
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "dev-server": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack.development.js",
-    "open-local": "opener http://localhost:40992",
-    "dev-slim": "concurrently \"npm run dev-server\" \"npm run open-local\" -k",
     "dev": "concurrently \"npm run dev-server\" \"cross-env NODE_ENV=development electron .\" -k",
     "prod-build": "cross-env NODE_ENV=production npx webpack --mode=production --config ./webpack.production.js",
     "prod": "npm run prod-build && electron .",
@@ -44,7 +42,7 @@
     "type": "git",
     "url": "git+https://github.com/reZach/secure-electron-template.git"
   },
-  "keywords": [],
+  "keywords": ["electron", "security", "template", "react", "redux", "webpack", "i18next", "boilerplate"],
   "author": "reZach",
   "license": "MIT",
   "bugs": {
@@ -79,6 +77,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.2.2",
     "connected-react-router": "^6.6.1",
+    "easy-redux-undo": "^1.0.0",
     "i18next": "^19.0.3",
     "i18next-electron-fs-backend": "^1.1.2",
     "lodash.merge": "^4.6.2",
