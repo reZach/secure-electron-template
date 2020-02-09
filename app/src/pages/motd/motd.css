@@ -1,0 +1,31 @@
+#motd {
+    display: grid;
+    height: 100%;
+    justify-items: center;
+    grid-template-columns: auto;
+    grid-template-rows: 40px 2fr 4fr 2fr 1fr 40px;     
+}
+
+form {
+    margin-bottom:10px;
+}
+
+.motd {
+    font-size: 50px;
+    text-align: center;
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.tip {
+    text-align: center;
+}
+
+.left {
+    justify-self: start;
+}
+
+#translation {    
+    grid-column: 1;
+    grid-row: 4;
+}
