@@ -1,10 +1,14 @@
 # App
-The main location where all of your application code lives. Inside this folder are 3 sub-folders:
+The main location where all of your application code lives. Inside this folder are 4 sub-folders:
 ```
+dist/
 electron/
 localization/
 src/
 ```
+
+#### dist
+This folder holds bundled files from webpack. You shouldn't be modifying anything in this folder, the files contained within will be regenerated upon build (dev or production).
 
 #### electron
 Electron-specific files. These would be the main file that creates the window (`main.js`), the menu bar (`menu.js`) or the preload script (`preload.js`).
