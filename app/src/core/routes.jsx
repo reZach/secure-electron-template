@@ -4,7 +4,7 @@ import ROUTES from "Constants/routes";
 import Welcome from "Pages/welcome/welcome";
 import Motd from "Pages/motd/motd";
 import Localization from "Pages/localization/localization";
-import UndoRedo from "Pages/undo-redo/undo-redo";
+import UndoRedo from "Pages/undoredo/undoredo";
 
 class Routes extends React.Component {
   render() {
