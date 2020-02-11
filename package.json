@@ -88,6 +88,6 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "redux": "^4.0.5",
-    "secure-electron-store": "1.0.1"
+    "secure-electron-store": "1.0.5"
   }
 }
