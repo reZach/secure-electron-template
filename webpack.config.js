@@ -43,6 +43,11 @@ module.exports = {
         resolve: {
           extensions: [".css"]
         }
+      },
+      // loads common image formats
+      {
+        test: /\.(eot|woff|woff2|ttf|svg|png|jpg|gif)$/,
+        use: "url-loader"
       }
     ]
   }
