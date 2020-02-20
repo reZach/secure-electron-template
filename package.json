@@ -1,6 +1,6 @@
 {
   "name": "secure-electron-template",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "The best way to build Electron apps with security in mind.",
   "private": true,
   "main": "app/electron/main.js",
@@ -88,8 +88,8 @@
     "@reduxjs/toolkit": "^1.2.2",
     "connected-react-router": "^6.6.1",
     "easy-redux-undo": "^1.0.0",
-    "i18next": "^19.0.3",
-    "i18next-electron-fs-backend": "^1.1.2",
+    "i18next": "^19.2.0",
+    "i18next-electron-fs-backend": "^1.3.1",
     "lodash.merge": "^4.6.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
