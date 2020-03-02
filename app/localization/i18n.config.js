@@ -12,7 +12,7 @@ i18n
       addPath: "./app/localization/locales/{{lng}}/{{ns}}.missing.json",
       ipcRenderer: window.api.i18nextElectronBackend
     },
-    debug: true,
+    debug: false,
     namespace: "translation",
     saveMissing: true,
     saveMissingTo: "current",

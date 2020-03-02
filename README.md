@@ -1,9 +1,13 @@
 # secure-electron-template
-The best way to build Electron apps with security in mind.
+A current electron app template with the most popular frameworks, designed and built with security in mind.
+
+![Banner](https://github.com/reZach/secure-electron-template/blob/master/docs/imgs/banner-image.png "Banner")
+
+_Banner built with [banner-maker](https://github.com/banner-maker/banner-maker)!_
 
 > If you are curious about what makes an electron app secure, please check out [this page](https://github.com/reZach/secure-electron-template/blob/master/docs/secureapps.md).
 
-![Picture of template](https://github.com/reZach/secure-electron-template/blob/master/docs/imgs/templatepic.png "Picture of template")
+![Demo](https://github.com/reZach/secure-electron-template/blob/master/docs/imgs/intro.gif "Demo")
 
 ## Features
 Taken from the [best-practices](https://electronjs.org/docs/tutorial/security) official page, here is what this repository offers!
