@@ -72,38 +72,10 @@ async function createWindow() {
   store.mainBindings(ipcMain, win, fs);
 
   // Sets up bindings for our custom context menu
-  const customContextMenu = new ContextMenu();
-  customContextMenu.mainBindings(ipcMain, win, Menu, isDev, {
-    "category": [{
-      label: 'Edit',
-      submenu: [{
-          role: 'undo'
-        },
-        {
-          role: 'redo'
-        },
-        {
-          type: 'separator'
-        },
-        {
-          role: 'cut'
-        },
-        {
-          role: 'copy'
-        },
-        {
-          role: 'paste'
-        },
-        {
-          role: 'pasteandmatchstyle'
-        },
-        {
-          role: 'delete'
-        },
-        {
-          role: 'selectall'
-        }
-      ]
+  ContextMenu.mainBindings(ipcMain, win, Menu, isDev, {
+    "exampleTemplate": [{
+      id: "alertme",
+      label: "AN ALERT!"
     }]
   });
 
