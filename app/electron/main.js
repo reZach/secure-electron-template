@@ -1,8 +1,16 @@
-const { app, protocol, BrowserWindow, session, ipcMain } = require("electron");
+const {
+  app,
+  protocol,
+  BrowserWindow,
+  session,
+  ipcMain,
+  Menu
+} = require("electron");
 const Protocol = require("./protocol");
 const MenuBuilder = require("./menu");
 const i18nextBackend = require("i18next-electron-fs-backend");
 const Store = require("secure-electron-store").default;
+const ContextMenu = require("secure-electron-context-menu").default;
 const path = require("path");
 const fs = require("fs");
 const isDev = process.env.NODE_ENV === "development";
@@ -63,6 +71,42 @@ async function createWindow() {
   });
   store.mainBindings(ipcMain, win, fs);
 
+  // Sets up bindings for our custom context menu
+  const customContextMenu = new ContextMenu();
+  customContextMenu.mainBindings(ipcMain, win, Menu, isDev, {
+    "category": [{
+      label: 'Edit',
+      submenu: [{
+          role: 'undo'
+        },
+        {
+          role: 'redo'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          role: 'cut'
+        },
+        {
+          role: 'copy'
+        },
+        {
+          role: 'paste'
+        },
+        {
+          role: 'pasteandmatchstyle'
+        },
+        {
+          role: 'delete'
+        },
+        {
+          role: 'selectall'
+        }
+      ]
+    }]
+  });
+
   // Load app
   if (isDev) {
     win.loadURL(selfHost);
@@ -122,12 +166,13 @@ async function createWindow() {
 // gives our scheme access to load relative files,
 // as well as local storage, cookies, etc.
 // https://electronjs.org/docs/api/protocol#protocolregisterschemesasprivilegedcustomschemes
-protocol.registerSchemesAsPrivileged([
-  {
-    scheme: Protocol.scheme,
-    privileges: { standard: true, secure: true }
+protocol.registerSchemesAsPrivileged([{
+  scheme: Protocol.scheme,
+  privileges: {
+    standard: true,
+    secure: true
   }
-]);
+}]);
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

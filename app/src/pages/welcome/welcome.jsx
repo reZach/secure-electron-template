@@ -7,7 +7,7 @@ class Welcome extends React.Component {
   render() {
     return (
       <div id="welcome">
-        <h1 className="header">
+        <h1 className="header" cm-option="category">
           Thank you for trying out the secure-electron-template!
         </h1>
         <div>
