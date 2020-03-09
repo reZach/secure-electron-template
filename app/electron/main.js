@@ -73,8 +73,8 @@ async function createWindow() {
 
   // Sets up bindings for our custom context menu
   ContextMenu.mainBindings(ipcMain, win, Menu, isDev, {
-    "exampleTemplate": [{
-      id: "alertme",
+    "alertTemplate": [{
+      id: "alert",
       label: "AN ALERT!"
     }]
   });
@@ -159,6 +159,7 @@ app.on("window-all-closed", () => {
     app.quit();
   } else {
     i18nextBackend.clearMainBindings(ipcMain);
+    ContextMenu.clearMainBindings(ipcMain);
   }
 });
 
