@@ -4,20 +4,6 @@ const whitelist = require("../localization/whitelist");
 const isMac = process.platform === "darwin";
 
 var MenuBuilder = function(mainWindow, appName) {
-  let setupDevelopmentEnvironment = function() {
-    mainWindow.webContents.on("context-menu", (e, props) => {
-      const { x, y } = props;
-
-      Menu.buildFromTemplate([
-        {
-          label: "Inspect element",
-          click: () => {
-            mainWindow.inspectElement(x, y);
-          }
-        }
-      ]).popup(mainWindow);
-    });
-  };
 
   // https://electronjs.org/docs/api/menu#main-process
   let defaultTemplate = function() {
@@ -220,10 +206,6 @@ var MenuBuilder = function(mainWindow, appName) {
 
   return {
     buildMenu: function() {
-      if (process.env.NODE_ENV === "development") {
-        setupDevelopmentEnvironment();
-      }
-
       const menu = Menu.buildFromTemplate(defaultTemplate());
       Menu.setApplicationMenu(menu);
 

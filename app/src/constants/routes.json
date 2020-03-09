@@ -2,5 +2,6 @@
   "WELCOME": "/",
   "MOTD": "/motd",
   "LOCALIZATION": "/localization",
-  "UNDOREDO": "/undoredo"
+  "UNDOREDO": "/undoredo",
+  "CONTEXTMENU": "/contextmenu"
 }
