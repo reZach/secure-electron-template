@@ -73,9 +73,13 @@ async function createWindow() {
 
   // Sets up bindings for our custom context menu
   ContextMenu.mainBindings(ipcMain, win, Menu, isDev, {
-    "alertTemplate": [{
-      id: "alert",
+    "loudAlertTemplate": [{
+      id: "loudAlert",
       label: "AN ALERT!"
+    }],
+    "softAlertTemplate": [{
+      id: "softAlert",
+      label: "Soft alert"
     }]
   });
 

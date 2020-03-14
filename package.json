@@ -1,6 +1,6 @@
 {
   "name": "secure-electron-template",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "The best way to build Electron apps with security in mind.",
   "private": true,
   "main": "app/electron/main.js",
@@ -97,7 +97,7 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "redux": "^4.0.5",
-    "secure-electron-context-menu": "^1.0.0",
+    "secure-electron-context-menu": "^1.1.0",
     "secure-electron-store": "1.1.0"
   }
 }

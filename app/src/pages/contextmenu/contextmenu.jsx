@@ -1,6 +1,7 @@
 import React from "react";
 import ROUTES from "Constants/routes";
 import { Link } from "react-router-dom";
+import SubItem from "Components/subitem/subitem";
 import "./contextmenu.css";
 
 class ContextMenu extends React.Component {
@@ -12,15 +13,17 @@ class ContextMenu extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentWillUnmount() {
     // Clear any existing bindings;
     // important on mac-os if the app is suspended
     // and resumed. Existing subscriptions must be cleared
     window.api.contextMenu.clearRendererBindings();
+  }
 
+  componentDidMount() {
     // Set up binding in code whenever the context menu item
     // of id "alert" is selected
-    window.api.contextMenu.onReceive("alert", function(args) {
+    window.api.contextMenu.onReceive("loudAlert", function(args) {
       alert(
         `This alert was brought to you by secure-electron-context-menu by ${args.attributes.name}`
       );
@@ -36,9 +39,18 @@ class ContextMenu extends React.Component {
         <Link to={ROUTES.WELCOME} className="left">
           Go back
         </Link>
-        <div className="contextmenu">Context menu</div>
-        <div cm-template="alertTemplate" cm-payload-name="reZach">
-          Try right-clicking me for a custom context menu
+        <div>
+          <div className="contextmenu" cm-template="loudAlertTemplate"
+            cm-payload-name="reZach">Context menu</div>
+          <div
+            className="italic">
+            right-click me!
+          </div>
+        </div>
+        <div>
+          {/* Demonstrating how to use the context menu with multiple items */}
+          <SubItem id="1"></SubItem>
+          <SubItem id="2"></SubItem>
         </div>
       </div>
     );
