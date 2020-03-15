@@ -5,6 +5,10 @@ class SubItem extends React.Component {
     super(props);
   }
 
+  componentWillUnmount() {
+    window.api.contextMenu.clearRendererBindings();
+  }
+
   componentDidMount() {
     // Set up binding in code whenever the context menu item
     // of id "alert" is selected
@@ -13,7 +17,7 @@ class SubItem extends React.Component {
 
       // Note - we have access to the "params" object as defined here: https://www.electronjs.org/docs/api/web-contents#event-context-menu
       // args.params
-    });
+    }, this.props.id);
   }
 
   render() {
