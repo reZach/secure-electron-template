@@ -11,10 +11,10 @@ The bridge between the renderer and main components were the remote module and n
 
 ![v5+ electron apps](https://github.com/reZach/secure-electron-template/blob/master/docs/imgs/post-v5.png "Electron apps beginning with version 5")
 
-IPC (inter-process communication) is used to send messages between processes, and the preload script can inject modules or behavior that the renderer process can then use. This separation of concern gives us the ability to practice **the principle of least priviledge**.
+IPC (inter-process communication) can be used to exchange messages between processes, and the preload script can extend the capabilites of the renderer process (e.g: inject modules from the main processes). This separation of concern gives us the ability to apply **the principle of least privilege**.
 
-The trouble that I've found with electron, is that their [release schedule is crazy](https://electronjs.org/docs/tutorial/electron-timelines), with only a few months between each major release. We know that electron is a young framework, but it is hard to keep up so quickly! This quick release cadence is in part in place to keep [bugs fixed sooner than later](https://electronjs.org/docs/tutorial/security#17-use-a-current-version-of-electron); this cadence is good for security but sometimes hard for developers to keep on updating the framework.
+My personal experience with electron, is that their [release schedule is crazy](https://electronjs.org/docs/tutorial/electron-timelines), with only a few months between each major release. Electron is a relatively young framework, but it's under very active development which makes it hard to keep up with! This quick release cadence is in part in place to keep [bugs fixed sooner than later](https://electronjs.org/docs/tutorial/security#17-use-a-current-version-of-electron). While it's good for security, it can sometimes be tedious for developers to keep up to date with the framework.
 
-What's even more troubling is many of the frameworks that work with electron are still built using these old/insecure (pre v5) patterns in mind. If you want to be secure that means you might have to begin re-writing some of them. 
+What's even more troubling is many of the frameworks that integrate with electron are still applying these old/insecure (pre v5) patterns. If you wish to be more secure then you might have to rewrite some of them. 
 
-There is just a little bit more work needed to use IPC, and I'm working on it! Regardless, electron has come a great deal of the way to secure apps and we have almost crossed the finish line!
+There is a little bit more work required to use IPC, but I'm working on it! Regardless, electron developers have worked hard to enable application developers to write more secure apps!
