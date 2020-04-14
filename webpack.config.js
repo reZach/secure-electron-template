@@ -17,7 +17,13 @@ module.exports = {
         use: {
           loader: "html-loader",
           options: {
-            attrs: [":data-src"]
+            attributes: {
+              "list": [{
+                "tag": "img",
+                "attribute": "data-src",
+                "type": "src"
+              }]
+            }
           }
         }
       },
