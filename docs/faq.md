@@ -10,7 +10,7 @@ Specifically, you can drop:
 * The docs folder
 * [At the root level, mostly config/github files]
     * .editorconfig
-    * prettierrc
+    * .prettierrc
     * CODE_OF_CONDUCT.md
     * README.md
 
