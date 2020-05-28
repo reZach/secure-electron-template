@@ -1,13 +1,13 @@
 {
   "name": "secure-electron-template",
-  "version": "4.0.6",
+  "version": "4.0.7",
   "description": "The best way to build Electron apps with security in mind.",
   "private": true,
   "main": "app/electron/main.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
     "dev-server": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack.development.js",
-    "dev": "concurrently \"npm run dev-server\" \"cross-env NODE_ENV=development electron .\" -k",
+    "dev": "concurrently --success first \"npm run dev-server\" \"cross-env NODE_ENV=development electron .\" -k",
     "prod-build": "cross-env NODE_ENV=production npx webpack --mode=production --config ./webpack.production.js",
     "prod": "npm run prod-build && electron .",
     "pack": "electron-builder --dir",
