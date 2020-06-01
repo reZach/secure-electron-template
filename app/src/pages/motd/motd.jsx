@@ -3,7 +3,10 @@ import { connect } from "react-redux";
 import ROUTES from "Constants/routes";
 import { Link } from "react-router-dom";
 import { changeMessage } from "Redux/components/home/homeSlice";
-import { writeConfigRequest } from "secure-electron-store";
+import {
+  writeConfigRequest,
+  useConfigInMainRequest,
+} from "secure-electron-store";
 import "./motd.css";
 
 class Motd extends React.Component {
@@ -11,17 +14,22 @@ class Motd extends React.Component {
     super(props);
 
     this.state = {
-      message: ""
+      message: "",
     };
 
     this.onChangeMessage = this.onChangeMessage.bind(this);
     this.onSubmitMessage = this.onSubmitMessage.bind(this);
   }
 
+  componentDidMount() {
+    // Request so that the main process can use the store
+    window.api.store.send(useConfigInMainRequest);
+  }
+
   onChangeMessage(event) {
     const { value } = event.target;
     this.setState((state) => ({
-      message: value
+      message: value,
     }));
   }
 
@@ -32,14 +40,16 @@ class Motd extends React.Component {
 
     // reset
     this.setState((state) => ({
-      message: ""
+      message: "",
     }));
   }
 
   render() {
     return (
       <div id="motd">
-        <Link to={ROUTES.WELCOME} className="left">Go back</Link>
+        <Link to={ROUTES.WELCOME} className="left">
+          Go back
+        </Link>
         <div className="motd">{this.props.home.message}</div>
         <div>
           <form onSubmit={this.onSubmitMessage}>
@@ -60,7 +70,7 @@ class Motd extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  home: state.home
+  home: state.home,
 });
 const mapDispatch = { changeMessage };
 

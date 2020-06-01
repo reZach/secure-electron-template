@@ -65,11 +65,17 @@ async function createWindow() {
   // Sets up main.js bindings for our i18next backend
   i18nextBackend.mainBindings(ipcMain, win, fs);
 
-  // Sets up main.js bindings for our electron store
+  // Sets up main.js bindings for our electron store;
+  // callback is optional and allows you to use store in main process
+  const callback = function (success, store) {
+    console.log(`${!success ? "Un-s" : "S"}uccessfully retrieved store in main process.`);
+    console.log(store); // {"key1": "value1", ... }
+  };
+
   const store = new Store({
     path: app.getPath("userData")
   });
-  store.mainBindings(ipcMain, win, fs);
+  store.mainBindings(ipcMain, win, fs, callback);
 
   // Sets up bindings for our custom context menu
   ContextMenu.mainBindings(ipcMain, win, Menu, isDev, {
