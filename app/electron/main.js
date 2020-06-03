@@ -6,6 +6,11 @@ const {
   ipcMain,
   Menu
 } = require("electron");
+const {
+  default: installExtension,
+  REDUX_DEVTOOLS,
+  REACT_DEVELOPER_TOOLS
+} = require('electron-devtools-installer');
 const Protocol = require("./protocol");
 const MenuBuilder = require("./menu");
 const i18nextBackend = require("i18next-electron-fs-backend");
@@ -17,19 +22,6 @@ const isDev = process.env.NODE_ENV === "development";
 const port = 40992; // Hardcoded; needs to match webpack.development.js and package.json
 const selfHost = `http://localhost:${port}`;
 
-// Installs extensions useful for development;
-// https://github.com/electron-react-boilerplate/electron-react-boilerplate/blob/master/app/main.dev.js
-// NOTE - if you'd like to run w/ these extensions when testing w/o electron, you need browser extensions to be installed (React Developer Tools & Redux DevTools)
-const installExtensions = async () => {
-  const installer = require("electron-devtools-installer");
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = ["REACT_DEVELOPER_TOOLS", "REDUX_DEVTOOLS"];
-
-  return Promise.all(
-    extensions.map((name) => installer.default(installer[name], forceDownload))
-  ).catch(console.log);
-};
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
@@ -37,7 +29,9 @@ let menuBuilder;
 
 async function createWindow() {
   if (isDev) {
-    await installExtensions();
+    await installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS])
+      .then((name) => console.log(`Added Extension:  ${name}`))
+      .catch((err) => console.log('An error occurred: ', err));
   } else {
     // Needs to happen before creating/loading the browser window;
     // not necessarily instead of extensions, just using this code block
@@ -49,7 +43,7 @@ async function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 600,
-    title: `Getting started with secure-electron-template (v.${app.getVersion()})`,
+    title: `Getting started with secure-electron-template (v${app.getVersion()})`,
     webPreferences: {
       devTools: isDev,
       nodeIntegration: false,
