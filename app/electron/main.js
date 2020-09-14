@@ -39,6 +39,16 @@ async function createWindow() {
     protocol.registerBufferProtocol(Protocol.scheme, Protocol.requestHandler);
   }
 
+  const store = new Store({
+    path: app.getPath("userData")
+  });
+
+  // Use saved config values for configuring your
+  // BrowserWindow, for instance.
+  // NOTE - this config is not passcode protected
+  // and stores plaintext values
+  //let savedConfig = store.mainIntialStore(fs);
+
   // Create the browser window.
   win = new BrowserWindow({
     width: 800,
@@ -65,10 +75,7 @@ async function createWindow() {
     console.log(`${!success ? "Un-s" : "S"}uccessfully retrieved store in main process.`);
     console.log(store); // {"key1": "value1", ... }
   };
-
-  const store = new Store({
-    path: app.getPath("userData")
-  });
+  
   store.mainBindings(ipcMain, win, fs, callback);
 
   // Sets up bindings for our custom context menu
