@@ -47,7 +47,7 @@ async function createWindow() {
   // BrowserWindow, for instance.
   // NOTE - this config is not passcode protected
   // and stores plaintext values
-  //let savedConfig = store.mainIntialStore(fs);
+  //let savedConfig = store.mainInitialStore(fs);
 
   // Create the browser window.
   win = new BrowserWindow({
