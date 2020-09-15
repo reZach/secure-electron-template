@@ -167,7 +167,7 @@ contextBridge.exposeInMainWorld(
 
 We expose an `api` property on the window object with two functions, **send** and **receive**. These functions allow us to talk to (ie. send messages to) the main ipc process and react to it's responses. Now, the renderer process has [indirect] access to Node apis!
 
-## What the preload.js _used_ to look like
+## What the preload.js _used_ to look like (advanced info)
 
 It's _important_ to recognize that older solutions before contextBridge were to set properties on the `window`, ie:
 
@@ -201,6 +201,6 @@ From the electron docs:
 In other terms, because we use `contextBridge.exposeInMainWorld`, our renderer process cannot modify the definition of the functions we expose, protecting us from a possible security attack vector.
 
 ## Wrapping up
-With these details, I hope I have explained the basics of electron to you and given you a quick run-down on how to _correctly_ set up a **secure** electron app. You should be well on your way to developing the next killer app!
+With these details, I hope I have explained the basics of electron to you and given you a quick run-down on how to _correctly_ set up a **secure** electron app [when you'd like to use Node apis]. You should be well on your way to developing the next killer app!
 
-In case you were looking for a good starting point, this template [`secure-electron-template`](https://github.com/reZach/secure-electron-template) has the security features we just described built-in. There are plenty of comments in the template describing these, and more, security enhancements. Check us out today!
+In case you were looking for a good starting point, this template [`secure-electron-template`](https://github.com/reZach/secure-electron-template) has the security features (and more!) we just described built-in. There are plenty of comments in the template describing these, and more, security enhancements. Check us out today!
