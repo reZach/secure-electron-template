@@ -1,6 +1,12 @@
 # secure-electron-template
 A current electron app template with the most popular frameworks, designed and built with security in mind. (If you are curious about what makes an electron app secure, please check out [this page](https://github.com/reZach/secure-electron-template/blob/master/docs/secureapps.md)).
 
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=reZach_secure-electron-template&metric=security_rating)](https://sonarcloud.io/dashboard?id=reZach_secure-electron-template)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=reZach_secure-electron-template&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=reZach_secure-electron-template)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=reZach_secure-electron-template&metric=bugs)](https://sonarcloud.io/dashboard?id=reZach_secure-electron-template)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=reZach_secure-electron-template&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=reZach_secure-electron-template)
+
+
 ![Banner](https://github.com/reZach/secure-electron-template/blob/master/docs/imgs/banner-image.png "Banner")
 
 _Banner built with [banner-maker](https://github.com/banner-maker/banner-maker)!_

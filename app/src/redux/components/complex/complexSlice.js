@@ -33,8 +33,8 @@ const complexSlice = createSlice({
       });
     },
     remove(state, action) {
-        let index = Math.floor(Math.random() * state.length);
-        state.splice(index, 1);
+        const randIndex = Math.floor(Math.random() * state.length);
+        state.splice(randIndex, 1);
     }
   }
 });
