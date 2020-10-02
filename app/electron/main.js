@@ -71,9 +71,9 @@ async function createWindow() {
 
   // Sets up main.js bindings for our electron store;
   // callback is optional and allows you to use store in main process
-  const callback = function (success, store) {
+  const callback = function (success, initialStore) {
     console.log(`${!success ? "Un-s" : "S"}uccessfully retrieved store in main process.`);
-    console.log(store); // {"key1": "value1", ... }
+    console.log(initialStore); // {"key1": "value1", ... }
   };
   
   store.mainBindings(ipcMain, win, fs, callback);
@@ -116,17 +116,17 @@ async function createWindow() {
   const partition = "default";
   ses
     .fromPartition(partition)
-    .setPermissionRequestHandler((webContents, permission, callback) => {
+    .setPermissionRequestHandler((webContents, permission, permCallback) => {
       let allowedPermissions = []; // Full list here: https://developer.chrome.com/extensions/declare_permissions#manifest
 
       if (allowedPermissions.includes(permission)) {
-        callback(true); // Approve permission request
+        permCallback(true); // Approve permission request
       } else {
         console.error(
           `The application tried to request permission for '${permission}'. This permission was not whitelisted and has been blocked.`
         );
 
-        callback(false); // Deny
+        permCallback(false); // Deny
       }
     });
 
@@ -184,7 +184,7 @@ app.on("activate", () => {
 
 // https://electronjs.org/docs/tutorial/security#12-disable-or-limit-navigation
 app.on("web-contents-created", (event, contents) => {
-  contents.on("will-navigate", (event, navigationUrl) => {
+  contents.on("will-navigate", (contentsEvent, navigationUrl) => {
     const parsedUrl = new URL(navigationUrl);
     const validOrigins = [selfHost];
 
@@ -194,12 +194,12 @@ app.on("web-contents-created", (event, contents) => {
         `The application tried to redirect to the following address: '${parsedUrl}'. This origin is not whitelisted and the attempt to navigate was blocked.`
       );
 
-      event.preventDefault();
+      contentsEvent.preventDefault();
       return;
     }
   });
 
-  contents.on("will-redirect", (event, navigationUrl) => {
+  contents.on("will-redirect", (contentsEvent, navigationUrl) => {
     const parsedUrl = new URL(navigationUrl);
     const validOrigins = [];
 
@@ -209,13 +209,13 @@ app.on("web-contents-created", (event, contents) => {
         `The application tried to redirect to the following address: '${navigationUrl}'. This attempt was blocked.`
       );
 
-      event.preventDefault();
+      contentsEvent.preventDefault();
       return;
     }
   });
 
   // https://electronjs.org/docs/tutorial/security#11-verify-webview-options-before-creation
-  contents.on("will-attach-webview", (event, webPreferences, params) => {
+  contents.on("will-attach-webview", (contentsEvent, webPreferences, params) => {
     // Strip away preload scripts if unused or verify their location is legitimate
     delete webPreferences.preload;
     delete webPreferences.preloadURL;
@@ -225,13 +225,13 @@ app.on("web-contents-created", (event, contents) => {
   });
 
   // https://electronjs.org/docs/tutorial/security#13-disable-or-limit-creation-of-new-windows
-  contents.on("new-window", async (event, navigationUrl) => {
+  contents.on("new-window", async (contentsEvent, navigationUrl) => {
     // Log and prevent opening up a new window
     console.error(
       `The application tried to open a new window at the following address: '${navigationUrl}'. This attempt was blocked.`
     );
 
-    event.preventDefault();
+    contentsEvent.preventDefault();
     return;
   });
 });
