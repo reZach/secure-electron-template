@@ -1,6 +1,6 @@
 {
   "name": "secure-electron-template",
-  "version": "5.1.7",
+  "version": "5.1.8",
   "description": "The best way to build Electron apps with security in mind.",
   "private": true,
   "main": "app/electron/main.js",
@@ -22,7 +22,8 @@
     "appId": "com.yourcompany|electron.yourproductname",
     "directories": {
       "buildResources": "resources"
-    },
+    },    
+    "extraFiles": ["app/localization/locales/**/*"],
     "win": {
       "target": [
         "nsis",
