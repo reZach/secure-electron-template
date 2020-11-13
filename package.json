@@ -56,7 +56,7 @@
     "boilerplate"
   ],
   "author": "reZach",
-  "license": "MIT",
+  "license": "GPL-2.0-or-later",
   "bugs": {
     "url": "https://github.com/reZach/secure-electron-template/issues"
   },
