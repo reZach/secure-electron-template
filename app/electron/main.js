@@ -99,8 +99,13 @@ async function createWindow() {
 
   // Only do these things when in development
   if (isDev) {
-    win.webContents.openDevTools();
-    require("electron-debug")(); // https://github.com/sindresorhus/electron-debug
+    
+    // Errors are thrown if the dev tools are opened
+    // before the DOM is ready
+    win.webContents.once("dom-ready", () => {
+      win.webContents.openDevTools();
+      require("electron-debug")(); // https://github.com/sindresorhus/electron-debug
+    });
   }
 
   // Emitted when the window is closed.

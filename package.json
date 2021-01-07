@@ -1,6 +1,6 @@
 {
   "name": "secure-electron-template",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "description": "The best way to build Electron apps with security in mind.",
   "private": true,
   "main": "app/electron/main.js",
