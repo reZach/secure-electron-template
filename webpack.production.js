@@ -11,8 +11,9 @@ module.exports = merge(base, {
   plugins: [
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "app/src/index-prod.html"),
-      filename: "index-prod.html"
+      template: path.resolve(__dirname, "app/src/index.html"),
+      filename: "index.html"
+      base: "app://rse"
     }),
     new CspHtmlWebpackPlugin(
       {

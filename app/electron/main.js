@@ -94,7 +94,7 @@ async function createWindow() {
   if (isDev) {
     win.loadURL(selfHost);
   } else {
-    win.loadURL(`${Protocol.scheme}://rse/index-prod.html`);
+    win.loadURL(`${Protocol.scheme}://rse/index.html`);
   }
 
   // Only do these things when in development
