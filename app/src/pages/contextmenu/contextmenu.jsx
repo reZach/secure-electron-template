@@ -1,6 +1,5 @@
 import React from "react";
 import SubItem from "Components/subitem/subitem";
-import "./contextmenu.css";
 
 class ContextMenu extends React.Component {
   constructor(props) {

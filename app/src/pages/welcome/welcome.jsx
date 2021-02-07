@@ -1,7 +1,6 @@
 import React from "react";
 import ROUTES from "Constants/routes";
 import { Link } from "react-router-dom";
-import "./welcome.css";
 
 class Welcome extends React.Component {
   render() {
