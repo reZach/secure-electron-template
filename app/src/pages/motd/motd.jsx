@@ -1,7 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import ROUTES from "Constants/routes";
-import { Link } from "react-router-dom";
 import { changeMessage } from "Redux/components/home/homeSlice";
 import {
   writeConfigRequest,
