@@ -47,7 +47,7 @@ Built-in to this template are a number of popular frameworks already wired up to
 
 
 ## Roadmap
-There are a number of additions that I'd like to implement in this repository, namely [auto-updating](https://www.electron.build/auto-update) and more release-focused enhancements and test suites, but those are lower priority (but I welcome PRs!).
+There are a number of additions that I'd like to implement in this repository, namely more release-focused enhancements and test suites, but those are lower priority (but I welcome PRs!).
 
 ## Architecture
 For a more detailed view of the architecture of the template, please check out [here](https://github.com/reZach/secure-electron-template/blob/master/docs/architecture.md). I would _highly_ recommend reading this document to get yourself familiarized with this template.

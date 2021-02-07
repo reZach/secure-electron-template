@@ -28,6 +28,12 @@ let win;
 let menuBuilder;
 
 async function createWindow() {
+
+  // If you'd like to set up auto-updating for your app,
+  // I'd recommend looking at https://github.com/iffy/electron-updater-example
+  // to use the method most suitable for you.
+  // eg. autoUpdater.checkForUpdatesAndNotify();
+
   if (!isDev) {
     // Needs to happen before creating/loading the browser window;
     // protocol is only used in prod
