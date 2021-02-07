@@ -3,10 +3,10 @@ const i18nBackend = require("i18next-electron-fs-backend");
 const whitelist = require("../localization/whitelist");
 const isMac = process.platform === "darwin";
 
-var MenuBuilder = function(mainWindow, appName) {
+const MenuBuilder = function(mainWindow, appName) {
 
   // https://electronjs.org/docs/api/menu#main-process
-  let defaultTemplate = function() {
+  const defaultTemplate = function(i18nextMainBackend) {
     return [
       // { role: "appMenu" }
       ...(isMac
@@ -47,7 +47,7 @@ var MenuBuilder = function(mainWindow, appName) {
         : []),
       // { role: "fileMenu" }
       {
-        label: "File",
+        label: i18nextMainBackend.t("File"),
         submenu: [
           isMac
             ? {
@@ -155,7 +155,7 @@ var MenuBuilder = function(mainWindow, appName) {
       // language menu
       {
         label: "Language",
-        submenu: whitelist.buildSubmenu(i18nBackend.changeLanguageRequest)
+        submenu: whitelist.buildSubmenu(i18nBackend.changeLanguageRequest, i18nextMainBackend)
       },
       // { role: "windowMenu" }
       {
@@ -205,8 +205,8 @@ var MenuBuilder = function(mainWindow, appName) {
   };
 
   return {
-    buildMenu: function() {
-      const menu = Menu.buildFromTemplate(defaultTemplate());
+    buildMenu: function(i18nextMainBackend) {
+      const menu = Menu.buildFromTemplate(defaultTemplate(i18nextMainBackend));
       Menu.setApplicationMenu(menu);
 
       return menu;

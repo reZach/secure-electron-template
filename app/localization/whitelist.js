@@ -50,10 +50,15 @@ const whitelistMap = {
   zh_CN: "越南文" // Chinese
 };
 
-var Whitelist = (function() {
-  let keys = Object.keys(whitelistMap);
-  let clickFunction = function(channel, lng) {
+const Whitelist = (function() {
+  const keys = Object.keys(whitelistMap);
+  const clickFunction = function(channel, lng, i18nextMainBackend) {
     return function(menuItem, browserWindow, event) {
+
+      // Solely within the top menu
+      i18nextMainBackend.changeLanguage(lng);
+
+      // Between renderer > main process
       browserWindow.webContents.send(channel, {
         lng
       });
@@ -62,13 +67,13 @@ var Whitelist = (function() {
 
   return {
     langs: keys,
-    buildSubmenu: function(channel) {
+    buildSubmenu: function(channel, i18nextMainBackend) {
       let submenu = [];
 
-      for (var i = 0; i < keys.length; i++) {
+      for (let i = 0; i < keys.length; i++) {
         submenu.push({
           label: whitelistMap[keys[i]],
-          click: clickFunction(channel, keys[i])
+          click: clickFunction(channel, keys[i], i18nextMainBackend)
         });
       }
 

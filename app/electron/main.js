@@ -14,6 +14,7 @@ const {
 const Protocol = require("./protocol");
 const MenuBuilder = require("./menu");
 const i18nextBackend = require("i18next-electron-fs-backend");
+const i18nextMainBackend = require("../localization/i18n.mainconfig");
 const Store = require("secure-electron-store").default;
 const ContextMenu = require("secure-electron-context-menu").default;
 const path = require("path");
@@ -157,7 +158,16 @@ async function createWindow() {
   // });
 
   menuBuilder = MenuBuilder(win, app.name);
-  menuBuilder.buildMenu();
+
+  i18nextMainBackend.on("loaded", (loaded) => {
+    i18nextMainBackend.changeLanguage("en");
+    i18nextMainBackend.off("loaded");
+  });
+
+  i18nextMainBackend.on("languageChanged", (lng) => {
+    i18nextMainBackend.changeLanguage(lng);
+    menuBuilder.buildMenu(i18nextMainBackend);
+  });
 }
 
 // Needs to be called before app is ready;
