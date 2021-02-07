@@ -28,14 +28,9 @@ let win;
 let menuBuilder;
 
 async function createWindow() {
-  if (isDev) {
-    await installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS])
-      .then((name) => console.log(`Added Extension:  ${name}`))
-      .catch((err) => console.log('An error occurred: ', err));
-  } else {
+  if (!isDev) {
     // Needs to happen before creating/loading the browser window;
-    // not necessarily instead of extensions, just using this code block
-    // so I don't have to write another 'if' statement
+    // protocol is only used in prod
     protocol.registerBufferProtocol(Protocol.scheme, Protocol.requestHandler);
   }
 
@@ -53,7 +48,7 @@ async function createWindow() {
   win = new BrowserWindow({
     width: 800,
     height: 600,
-    title: `Getting started with secure-electron-template (v${app.getVersion()})`,
+    title: "Application is currently initializing...",
     webPreferences: {
       devTools: isDev,
       nodeIntegration: false,
@@ -75,7 +70,7 @@ async function createWindow() {
     console.log(`${!success ? "Un-s" : "S"}uccessfully retrieved store in main process.`);
     console.log(initialStore); // {"key1": "value1", ... }
   };
-  
+
   store.mainBindings(ipcMain, win, fs, callback);
 
   // Sets up bindings for our custom context menu
@@ -97,14 +92,23 @@ async function createWindow() {
     win.loadURL(`${Protocol.scheme}://rse/index.html`);
   }
 
+  win.webContents.on("did-finish-load", () => {
+    win.setTitle(`Getting started with secure-electron-template (v${app.getVersion()})`);
+  });
+
   // Only do these things when in development
   if (isDev) {
-    
+
     // Errors are thrown if the dev tools are opened
     // before the DOM is ready
-    win.webContents.once("dom-ready", () => {
-      win.webContents.openDevTools();
-      require("electron-debug")(); // https://github.com/sindresorhus/electron-debug
+    win.webContents.once("dom-ready", async () => {
+      await installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS])
+        .then((name) => console.log(`Added Extension:  ${name}`))
+        .catch((err) => console.log("An error occurred: ", err))
+        .finally(() => {
+          win.webContents.openDevTools();
+          require("electron-debug")(); // https://github.com/sindresorhus/electron-debug
+        });
     });
   }
 
@@ -231,13 +235,18 @@ app.on("web-contents-created", (event, contents) => {
 
   // https://electronjs.org/docs/tutorial/security#13-disable-or-limit-creation-of-new-windows
   contents.on("new-window", async (contentsEvent, navigationUrl) => {
-    // Log and prevent opening up a new window
-    console.error(
-      `The application tried to open a new window at the following address: '${navigationUrl}'. This attempt was blocked.`
-    );
+    const parsedUrl = new URL(navigationUrl);
+    const validOrigins = [];
 
-    contentsEvent.preventDefault();
-    return;
+    // Log and prevent opening up a new window
+    if (!validOrigins.includes(parsedUrl.origin)) {
+      console.error(
+        `The application tried to open a new window at the following address: '${navigationUrl}'. This attempt was blocked.`
+      );
+
+      contentsEvent.preventDefault();
+      return;
+    }
   });
 });
 

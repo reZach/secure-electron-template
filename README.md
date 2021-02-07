@@ -7,11 +7,6 @@ A current electron app template with the most popular frameworks, designed and b
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=reZach_secure-electron-template&metric=bugs)](https://sonarcloud.io/dashboard?id=reZach_secure-electron-template)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=reZach_secure-electron-template&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=reZach_secure-electron-template)
 
-
-![Banner](https://github.com/reZach/secure-electron-template/blob/master/docs/imgs/banner-image.png "Banner")
-
-_Banner built with [banner-maker](https://github.com/banner-maker/banner-maker)!_
-
 ## Demo
 ![Demo](https://github.com/reZach/secure-electron-template/blob/master/docs/imgs/intro.gif "Demo")
 
