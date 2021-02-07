@@ -2,6 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router";
 import ROUTES from "Constants/routes";
 import Welcome from "Pages/welcome/welcome";
+import About from "Pages/about/about";
 import Motd from "Pages/motd/motd";
 import Localization from "Pages/localization/localization";
 import UndoRedo from "Pages/undoredo/undoredo";
@@ -12,6 +13,7 @@ class Routes extends React.Component {
     return (
       <Switch>
         <Route exact path={ROUTES.WELCOME} component={Welcome}></Route>
+        <Route path={ROUTES.ABOUT} component={About}></Route>
         <Route path={ROUTES.MOTD} component={Motd}></Route>
         <Route path={ROUTES.LOCALIZATION} component={Localization}></Route>
         <Route path={ROUTES.UNDOREDO} component={UndoRedo}></Route>

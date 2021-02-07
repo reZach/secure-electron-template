@@ -17,8 +17,8 @@
     justify-self: start;
 }
 
-.container {
-    max-height: 400px;
+.undo-container {
+    max-height: 300px;
     overflow-y: scroll;
     background-color: #282c34;
     color: #6d9cbe;
