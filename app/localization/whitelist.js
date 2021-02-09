@@ -1,12 +1,12 @@
 // Contains a whitelist of languages for our app
 const whitelistMap = {
-  af: "Afrikaans",
+  af: "Afrikaans", //Afrikaans
   ar: "عربى", // Arabic
   am: "አማርኛ", // Amharic
   bg: "български", // Bulgarian
   ca: "Català", // Catalan
   cs: "čeština", // Czech
-  da: "dansk", // Danish
+  da: "Dansk", // Danish
   de: "Deutsche", // German
   el: "Ελληνικά", // Greek
   en: "English",
@@ -36,10 +36,10 @@ const whitelistMap = {
   pl: "Polskie", // Polish
   pt_BR: "Português", // Portuguese
   ro: "Română", // Romanian
-  ru: "русский", // Russian
-  sk: "slovenský", // Slovak
+  ru: "Pусский", // Russian
+  sk: "Slovenský", // Slovak
   sr: "Српски", // Serbian
-  sv: "svenska", // Swedish
+  sv: "Svenska", // Swedish
   sw: "Kiswahili", // Swahili
   ta: "தமிழ்", // Tamil
   te: "తెలుగు", // Telugu

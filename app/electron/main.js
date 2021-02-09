@@ -112,9 +112,9 @@ async function createWindow() {
       await installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS])
         .then((name) => console.log(`Added Extension:  ${name}`))
         .catch((err) => console.log("An error occurred: ", err))
-        .finally(() => {
-          win.webContents.openDevTools();
+        .finally(() => {          
           require("electron-debug")(); // https://github.com/sindresorhus/electron-debug
+          win.webContents.openDevTools();
         });
     });
   }
@@ -165,7 +165,6 @@ async function createWindow() {
   });
 
   i18nextMainBackend.on("languageChanged", (lng) => {
-    i18nextMainBackend.changeLanguage(lng);
     menuBuilder.buildMenu(i18nextMainBackend);
   });
 }

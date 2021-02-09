@@ -9,7 +9,7 @@ i18n
       loadPath: "./app/localization/locales/{{lng}}/{{ns}}.json",
       addPath: "./app/localization/locales/{{lng}}/{{ns}}.missing.json"
     },
-    debug: true,
+    debug: false,
     namespace: "translation",
     saveMissing: true,
     saveMissingTo: "current",
