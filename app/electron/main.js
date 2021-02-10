@@ -14,6 +14,7 @@ const {
 const Protocol = require("./protocol");
 const MenuBuilder = require("./menu");
 const i18nextBackend = require("i18next-electron-fs-backend");
+const i18nextMainBackend = require("../localization/i18n.mainconfig");
 const Store = require("secure-electron-store").default;
 const ContextMenu = require("secure-electron-context-menu").default;
 const path = require("path");
@@ -111,9 +112,9 @@ async function createWindow() {
       await installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS])
         .then((name) => console.log(`Added Extension:  ${name}`))
         .catch((err) => console.log("An error occurred: ", err))
-        .finally(() => {
-          win.webContents.openDevTools();
+        .finally(() => {          
           require("electron-debug")(); // https://github.com/sindresorhus/electron-debug
+          win.webContents.openDevTools();
         });
     });
   }
@@ -157,7 +158,17 @@ async function createWindow() {
   // });
 
   menuBuilder = MenuBuilder(win, app.name);
-  menuBuilder.buildMenu();
+
+  // Set up necessary bindings to update the menu items
+  // based on the current language selected
+  i18nextMainBackend.on("loaded", (loaded) => {
+    i18nextMainBackend.changeLanguage("en");
+    i18nextMainBackend.off("loaded");
+  });
+
+  i18nextMainBackend.on("languageChanged", (lng) => {
+    menuBuilder.buildMenu(i18nextMainBackend);
+  });
 }
 
 // Needs to be called before app is ready;
