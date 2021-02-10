@@ -34,7 +34,7 @@ const whitelistMap = {
   nl: "Nederlands", // Dutch
   no: "norsk", // Norwegian
   pl: "Polskie", // Polish
-  pt_BR: "Português", // Portuguese
+  pt: "Português", // Portuguese
   ro: "Română", // Romanian
   ru: "Pусский", // Russian
   sk: "Slovenský", // Slovak
