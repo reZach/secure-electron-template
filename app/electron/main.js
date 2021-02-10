@@ -159,6 +159,8 @@ async function createWindow() {
 
   menuBuilder = MenuBuilder(win, app.name);
 
+  // Set up necessary bindings to update the menu items
+  // based on the current language selected
   i18nextMainBackend.on("loaded", (loaded) => {
     i18nextMainBackend.changeLanguage("en");
     i18nextMainBackend.off("loaded");
