@@ -38,7 +38,7 @@ async function createWindow() {
   if (!isDev) {
     // Needs to happen before creating/loading the browser window;
     // protocol is only used in prod
-    protocol.registerBufferProtocol(Protocol.scheme, Protocol.requestHandler);
+    protocol.registerBufferProtocol(Protocol.scheme, Protocol.requestHandler); /* eng-disable PROTOCOL_HANDLER_JS_CHECK */
   }
 
   const store = new Store({
@@ -64,7 +64,8 @@ async function createWindow() {
       contextIsolation: true,
       enableRemoteModule: false,
       additionalArguments: [`storePath:${app.getPath("userData")}`],
-      preload: path.join(__dirname, "preload.js")
+      preload: path.join(__dirname, "preload.js"), /* eng-disable PRELOAD_JS_CHECK */
+      disableBlinkFeatures: "Auxclick"
     }
   });
 
@@ -130,8 +131,7 @@ async function createWindow() {
   // https://electronjs.org/docs/tutorial/security#4-handle-session-permission-requests-from-remote-content
   const ses = session;
   const partition = "default";
-  ses
-    .fromPartition(partition)
+  ses.fromPartition(partition) /* eng-disable PERMISSION_REQUEST_HANDLER_JS_CHECK */    
     .setPermissionRequestHandler((webContents, permission, permCallback) => {
       let allowedPermissions = []; // Full list here: https://developer.chrome.com/extensions/declare_permissions#manifest
 
@@ -210,7 +210,7 @@ app.on("activate", () => {
 
 // https://electronjs.org/docs/tutorial/security#12-disable-or-limit-navigation
 app.on("web-contents-created", (event, contents) => {
-  contents.on("will-navigate", (contentsEvent, navigationUrl) => {
+  contents.on("will-navigate", (contentsEvent, navigationUrl) => { /* eng-disable LIMIT_NAVIGATION_JS_CHECK  */
     const parsedUrl = new URL(navigationUrl);
     const validOrigins = [selfHost];
 
@@ -251,7 +251,7 @@ app.on("web-contents-created", (event, contents) => {
   });
 
   // https://electronjs.org/docs/tutorial/security#13-disable-or-limit-creation-of-new-windows
-  contents.on("new-window", async (contentsEvent, navigationUrl) => {
+  contents.on("new-window", (contentsEvent, navigationUrl) => { /* eng-disable LIMIT_NAVIGATION_JS_CHECK */
     const parsedUrl = new URL(navigationUrl);
     const validOrigins = [];
 

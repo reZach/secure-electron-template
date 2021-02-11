@@ -31,5 +31,5 @@ In the babel configuration file we've set up aliases in order for you to import 
 #### package.json
 Where all the NPM modules are stored, as well as build and package scripts. If you want more detail on these scripts, [head over here](https://github.com/reZach/secure-electron-template/blob/master/docs/scripts.md).
 
-#### webpack[.config|development|production].js
+#### webpack[.config|.development|.production].js
 These files hold the webpack config for the template. The base template, `webpack.config.js` is used for both environments (development and production) while the other two are used for their respective environment.

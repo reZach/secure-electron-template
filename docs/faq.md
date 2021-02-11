@@ -14,9 +14,7 @@ Specifically, you can drop:
     * CODE_OF_CONDUCT.md
     * README.md
 
-_Note: you should keep the LICENSE file in your project. As part of the MIT license, the following statement is included:_
-> The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+_Note: you should keep the LICENSE file in your project.
 
 ## How do I use Node's fs in this template?
 Please check out [this guide](https://github.com/reZach/secure-electron-template/blob/master/docs/newtoelectron.md).
