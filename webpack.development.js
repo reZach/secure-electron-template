@@ -11,6 +11,7 @@ module.exports = merge(base, {
   devServer: {
     host: "localhost",
     port: "40992",
+    https: true, // Load content over HTTPS
     hot: true, // Hot-reload this server if changes are detected
     compress: true, // Compress (gzip) files that are served
     contentBase: path.resolve(__dirname, "app/dist"), // Where we serve the local dev server's files from
