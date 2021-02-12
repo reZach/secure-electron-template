@@ -15,6 +15,8 @@ module.exports = merge(base, {
       filename: "index.html",
       base: "app://rse"
     }),
+    // You can paste your CSP in this website https://csp-evaluator.withgoogle.com/
+    // for it to give you suggestions on how strong your CSP is
     new CspHtmlWebpackPlugin(
       {
         "base-uri": ["'self'"],

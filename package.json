@@ -1,12 +1,12 @@
 {
   "name": "secure-electron-template",
-  "version": "9.2.3",
+  "version": "9.2.4",
   "description": "The best way to build Electron apps with security in mind.",
   "private": true,
   "main": "app/electron/main.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
-    "audit-app": "npx electronegativity -i ./",
+    "audit-app": "npx electronegativity -i ./ -x LimitNavigationGlobalCheck,PermissionRequestHandlerGlobalCheck",
     "translate": "node ./app/localization/translateMissing.js",
     "dev-server": "cross-env NODE_ENV=development webpack serve --config ./webpack.development.js",
     "dev": "concurrently --success first \"npm run dev-server\" \"cross-env NODE_ENV=development electron .\" -k",
