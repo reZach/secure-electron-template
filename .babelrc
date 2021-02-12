@@ -12,7 +12,8 @@
                     "Redux": "./app/src/redux",
                     "I18n": "./app/localization"
                 }
-            }
+            },
+            "@babel/plugin-syntax-dynamic-import"
         ]
     ],
     "presets": [

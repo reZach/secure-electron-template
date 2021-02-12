@@ -1,6 +1,6 @@
 {
   "name": "secure-electron-template",
-  "version": "9.2.4",
+  "version": "9.3.0",
   "description": "The best way to build Electron apps with security in mind.",
   "private": true,
   "main": "app/electron/main.js",
@@ -68,6 +68,7 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.12.13",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-react-jsx": "^7.12.13",
     "@babel/preset-env": "^7.12.13",
     "@babel/preset-react": "^7.12.13",
@@ -97,6 +98,7 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
+    "@loadable/component": "^5.14.1",
     "@reduxjs/toolkit": "^1.5.0",
     "bulma": "^0.9.2",
     "connected-react-router": "^6.8.0",

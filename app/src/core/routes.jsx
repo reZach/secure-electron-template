@@ -1,12 +1,29 @@
 import React from "react";
 import { Switch, Route } from "react-router";
 import ROUTES from "Constants/routes";
-import Welcome from "Pages/welcome/welcome";
-import About from "Pages/about/about";
-import Motd from "Pages/motd/motd";
-import Localization from "Pages/localization/localization";
-import UndoRedo from "Pages/undoredo/undoredo";
-import ContextMenu from "Pages/contextmenu/contextmenu";
+import loadable from "@loadable/component";
+
+// Load bundles asynchronously so that the initial render happens faster
+const Welcome = loadable(() =>
+  import(/* webpackChunkName: "WelcomeChunk" */ "Pages/welcome/welcome")
+);
+const About = loadable(() =>
+  import(/* webpackChunkName: "AboutChunk" */ "Pages/about/about")
+);
+const Motd = loadable(() =>
+  import(/* webpackChunkName: "MotdChunk" */ "Pages/motd/motd")
+);
+const Localization = loadable(() =>
+  import(
+    /* webpackChunkName: "LocalizationChunk" */ "Pages/localization/localization"
+  )
+);
+const UndoRedo = loadable(() =>
+  import(/* webpackChunkName: "UndoRedoChunk" */ "Pages/undoredo/undoredo")
+);
+const ContextMenu = loadable(() =>
+  import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/contextmenu/contextmenu")
+);
 
 class Routes extends React.Component {
   render() {
