@@ -96,3 +96,6 @@ dist/
 
 # VSCode specific
 .vscode/
+
+# Logfile specific for development builds
+dev-scripts/webpack-dev-server.log

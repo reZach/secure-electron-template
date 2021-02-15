@@ -4,6 +4,8 @@ This page is specific to the scripts in the package.json file; what they do and 
 #### Running locally
 To run the template locally, run `npm run dev`.
 
+When this command is run, it will make use of code within the **dev-scripts** folder. [See here](https://github.com/reZach/secure-electron-template/blob/master/docs/architecture.md#dev-scripts) if you'd like additional information.
+
 #### Running production
 You can test your production builds with the `npm run prod` command, this will load your application with electron and the production config of webpack. It is the production build that is used when packaging your application (below).
 

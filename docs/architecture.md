@@ -5,6 +5,7 @@ This template is laid out in order to maintain a clear separation-of-concerns (S
 app/
 docs/
 resources/
+dev-scripts/
 ```
 
 #### app
@@ -15,6 +16,9 @@ Houses documentation pages such as this one.
 
 #### resources
 Any resources your electron app needs in for building/distributing executables should go here - icons are a great example.
+
+#### dev-scripts
+Due to limitations in running electron _after_ a webpack development server has been started [and successfully compiled], additional scripts that run the development Electron configuration are in this directory that ensure we only start our _development_ Electron configuration _after_ webpack has loaded completely.
 
 ## configs
 At the root level we also have some configuration files.
