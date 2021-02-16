@@ -63,6 +63,8 @@ npm i
 npm run dev
 ```
 
+> Are you using `yarn`? You'll want to [read this issue](https://github.com/reZach/secure-electron-template/issues/62).
+
 When you'd like to test your app in production, or package it for distribution, please navigate to [this page](https://github.com/reZach/secure-electron-template/blob/master/docs/scripts.md) for more details on how to do this.
 
 ## FAQ
