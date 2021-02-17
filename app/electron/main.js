@@ -50,6 +50,8 @@ async function createWindow() {
   // NOTE - this config is not passcode protected
   // and stores plaintext values
   //let savedConfig = store.mainInitialStore(fs);
+  console.log(`--i18nelectronbackend:${i18nextBackend.preloadBindingsSandbox}`);
+  //console.log(`i18nElectronBackend:function\(a\)`);
 
   // Create the browser window.
   win = new BrowserWindow({
@@ -58,17 +60,24 @@ async function createWindow() {
     title: "Application is currently initializing...",
     webPreferences: {
       devTools: isDev,
+      sandbox: true,
       nodeIntegration: false,
       nodeIntegrationInWorker: false,
       nodeIntegrationInSubFrames: false,
       contextIsolation: true,
       enableRemoteModule: false,
-      additionalArguments: [`storePath:${app.getPath("userData")}`],
+      additionalArguments: [
+        `--i18nelectronbackend:${i18nextBackend.preloadBindingsSandbox}`,
+        `storePath:${app.getPath("userData")}`
+      ],
       preload: path.join(__dirname, "preload.js"), /* eng-disable PRELOAD_JS_CHECK */
       disableBlinkFeatures: "Auxclick"
     }
   });
 
+  /*
+function(a){return{send:function send(b,c){["ReadFile-Request","WriteFile-Request"].includes(b)&&a.send(b,c)},onReceive:function onReceive(b,c){["ReadFile-Response","WriteFile-Response"].includes(b)&&a.on(b,function(a,b){return c(b)})},onLanguageChange:function onLanguageChange(b){a.on("ChangeLanguage-Request",function(a,c){return b(c)})}}}
+  */
   // Sets up main.js bindings for our i18next backend
   i18nextBackend.mainBindings(ipcMain, win, fs);
 

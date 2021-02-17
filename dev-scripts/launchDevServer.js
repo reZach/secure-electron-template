@@ -21,7 +21,17 @@ const intervalId = setInterval(function () {
         clearInterval(intervalId);
 
         // Start our electron app
-        exec("cross-env NODE_ENV=development electron .");
+        exec("cross-env NODE_ENV=development electron .", (error, stdout, stderr) => {
+          if (error){
+            console.error(error);
+          }
+          if (stdout) {
+            console.log(stdout);
+          }
+          if (stderr) {
+            console.error(stderr);
+          }
+        });
       }
     }
   } catch (error) {

@@ -3,10 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const homeSlice = createSlice({
   name: "home",
   initialState: {
-    message:
-      typeof window.api.store.initial()["motd"] !== "undefined"
-        ? window.api.store.initial()["motd"]
-        : "Hello and welcome to the template!"
+    message: "blah"
+    // message:
+    //   typeof window.api.store.initial()["motd"] !== "undefined"
+    //     ? window.api.store.initial()["motd"]
+    //     : "Hello and welcome to the template!"
   },
   reducers: {
     changeMessage(state, action) {
