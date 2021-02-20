@@ -22,25 +22,28 @@ const intervalId = setInterval(function () {
         clearInterval(intervalId);
 
         // Start our electron app
-        exec("cross-env NODE_ENV=development electron .");
-      } else if (log.indexOf("Failed to compile.") >= 0){
+        const electronProcess = exec("cross-env NODE_ENV=development electron .");
+        electronProcess.stdout.on("data", function(data) {
+          process.stdout.write(data);
+        });
+      } else if (log.indexOf("Failed to compile.") >= 0) {
 
-        if (fs.existsSync(errorLogFilePath)){
+        if (fs.existsSync(errorLogFilePath)) {
           const errorLog = fs.readFileSync(errorLogFilePath, {
             encoding: "utf8"
           });
-  
+
           console.log(errorLog);
           console.log(`Webpack failed to compile; this error has also been logged to '${errorLogFilePath}'.`);
           clearInterval(intervalId);
-  
+
           return process.exit(1);
         } else {
           console.log("Webpack failed to compile, but the error is unknown.")
           clearInterval(intervalId);
-  
+
           return process.exit(1);
-        }        
+        }
       }
     }
   } catch (error) {
