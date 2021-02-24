@@ -47,7 +47,7 @@ const whitelistMap = {
   tr: "Türk", // Turkish
   uk: "Українська", // Ukranian
   vi: "Tiếng Việt", // Vietnamese
-  zh_CN: "越南文" // Chinese
+  zh_CN: "简体中文" // Chinese
 };
 
 const Whitelist = (function() {
