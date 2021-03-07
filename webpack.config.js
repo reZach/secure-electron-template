@@ -1,4 +1,5 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require("webpack");
 const path = require("path");
 
 module.exports = {
@@ -7,6 +8,14 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "app/dist"), // Where all the output files get dropped after webpack is done with them
     filename: "bundle.js" // The name of the webpack bundle that's generated
+  },
+  resolve: {
+    fallback: {
+      "crypto": require.resolve("crypto-browserify"),
+      "buffer": require.resolve("buffer/"),
+      "path": require.resolve("path-browserify"),
+      "stream": require.resolve("stream-browserify")
+    }
   },
   module: {
     rules: [
@@ -39,12 +48,13 @@ module.exports = {
       // loads .css files
       {
         test: /\.css$/,
-        include: [path.resolve(__dirname, "app/src")],
+        include: [
+          path.resolve(__dirname, "app/src"),
+          path.resolve(__dirname, "node_modules/"),
+        ],
         use: [
           MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader"
-          }
+          "css-loader"
         ],
         resolve: {
           extensions: [".css"]
@@ -56,5 +66,12 @@ module.exports = {
         use: "url-loader"
       }
     ]
-  }
+  },
+  plugins: [
+    // fix "process is not defined" error;
+    // https://stackoverflow.com/a/64553486/1837080
+    new webpack.ProvidePlugin({
+      process: "process/browser",
+    }),
+  ]
 };

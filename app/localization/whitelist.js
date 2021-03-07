@@ -1,12 +1,12 @@
 // Contains a whitelist of languages for our app
 const whitelistMap = {
-  af: "Afrikaans",
+  af: "Afrikaans", //Afrikaans
   ar: "عربى", // Arabic
   am: "አማርኛ", // Amharic
   bg: "български", // Bulgarian
   ca: "Català", // Catalan
   cs: "čeština", // Czech
-  da: "dansk", // Danish
+  da: "Dansk", // Danish
   de: "Deutsche", // German
   el: "Ελληνικά", // Greek
   en: "English",
@@ -34,12 +34,12 @@ const whitelistMap = {
   nl: "Nederlands", // Dutch
   no: "norsk", // Norwegian
   pl: "Polskie", // Polish
-  pt_BR: "Português", // Portuguese
+  pt: "Português", // Portuguese
   ro: "Română", // Romanian
-  ru: "русский", // Russian
-  sk: "slovenský", // Slovak
+  ru: "Pусский", // Russian
+  sk: "Slovenský", // Slovak
   sr: "Српски", // Serbian
-  sv: "svenska", // Swedish
+  sv: "Svenska", // Swedish
   sw: "Kiswahili", // Swahili
   ta: "தமிழ்", // Tamil
   te: "తెలుగు", // Telugu
@@ -47,13 +47,18 @@ const whitelistMap = {
   tr: "Türk", // Turkish
   uk: "Українська", // Ukranian
   vi: "Tiếng Việt", // Vietnamese
-  zh_CN: "越南文" // Chinese
+  zh_CN: "简体中文" // Chinese
 };
 
-var Whitelist = (function() {
-  let keys = Object.keys(whitelistMap);
-  let clickFunction = function(channel, lng) {
+const Whitelist = (function() {
+  const keys = Object.keys(whitelistMap);
+  const clickFunction = function(channel, lng, i18nextMainBackend) {
     return function(menuItem, browserWindow, event) {
+
+      // Solely within the top menu
+      i18nextMainBackend.changeLanguage(lng);
+
+      // Between renderer > main process
       browserWindow.webContents.send(channel, {
         lng
       });
@@ -62,13 +67,13 @@ var Whitelist = (function() {
 
   return {
     langs: keys,
-    buildSubmenu: function(channel) {
+    buildSubmenu: function(channel, i18nextMainBackend) {
       let submenu = [];
 
-      for (var i = 0; i < keys.length; i++) {
+      for (let i = 0; i < keys.length; i++) {
         submenu.push({
           label: whitelistMap[keys[i]],
-          click: clickFunction(channel, keys[i])
+          click: clickFunction(channel, keys[i], i18nextMainBackend)
         });
       }
 

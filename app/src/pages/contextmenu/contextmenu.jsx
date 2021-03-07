@@ -1,15 +1,12 @@
 import React from "react";
-import ROUTES from "Constants/routes";
-import { Link } from "react-router-dom";
 import SubItem from "Components/subitem/subitem";
-import "./contextmenu.css";
 
 class ContextMenu extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      message: ""
+      message: "",
     };
   }
 
@@ -23,7 +20,7 @@ class ContextMenu extends React.Component {
   componentDidMount() {
     // Set up binding in code whenever the context menu item
     // of id "alert" is selected
-    window.api.contextMenu.onReceive("loudAlert", function(args) {
+    window.api.contextMenu.onReceive("loudAlert", function (args) {
       alert(
         `This alert was brought to you by secure-electron-context-menu by ${args.attributes.name}`
       );
@@ -35,24 +32,26 @@ class ContextMenu extends React.Component {
 
   render() {
     return (
-      <div id="contextmenu">
-        <Link to={ROUTES.WELCOME} className="left">
-          Go back
-        </Link>
-        <div>
-          <div className="contextmenu" cm-template="loudAlertTemplate"
-            cm-payload-name="reZach">Context menu</div>
-          <div
-            className="italic">
-            right-click me!
+      <React.Fragment>
+        <section className="section">
+          <div className="container has-text-centered">
+            <h1
+              className="title is-1"
+              cm-template="loudAlertTemplate"
+              cm-payload-name="reZach">
+              Context menu
+            </h1>
+            <div className="subtitle italic">Right-click the header above!</div>
           </div>
-        </div>
-        <div>
-          {/* Demonstrating how to use the context menu with multiple items */}
-          <SubItem id="1"></SubItem>
-          <SubItem id="2"></SubItem>
-        </div>
-      </div>
+        </section>
+        <section className="section">
+          <div className="container has-text-centered">
+            {/* Demonstrating how to use the context menu with multiple items */}
+            <SubItem id="1"></SubItem>
+            <SubItem id="2"></SubItem>
+          </div>
+        </section>
+      </React.Fragment>
     );
   }
 }

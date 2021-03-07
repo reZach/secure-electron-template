@@ -1,7 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import ROUTES from "Constants/routes";
-import { Link } from "react-router-dom";
 import { UNDO, REDO, CLEAR, GROUPBEGIN, GROUPEND } from "easy-redux-undo";
 import { increment, decrement } from "Redux/components/counter/counterSlice";
 import { add, remove } from "Redux/components/complex/complexSlice";
@@ -75,60 +73,117 @@ class UndoRedo extends React.Component {
 
   render() {
     return (
-      <div id="undoredo">
-        <Link to={ROUTES.WELCOME} className="left">
-          Go back
-        </Link>
-        <div className="undoredo">Undo/Redo</div>
-        <div>
-          <span>
-            Try out modifying, and then undo/redoing the redux history below!
-          </span>
-          <div>
-            <h3>State</h3>
+      <React.Fragment>
+        <section className="section">
+          <div className="container has-text-centered">
+            <h1 className="title is-1">Undo/Redo</h1>
+            <div className="subtitle">
+              Try out modifying, and then undo/redoing the redux history below!
+            </div>
+          </div>
+        </section>
+        <section className="section">
+          <div className="container">
+            <div className="columns">
+              <div className="column">
+                <div className="field is-horizontal">
+                  <div className="field-label is-normal">
+                    <label className="label">Counter</label>
+                  </div>
+                  <div className="field-body">
+                    <div className="field is-horizontal">
+                      <div className="control">
+                        <input
+                          className="input"
+                          value={this.props.counter.value}
+                          disabled={true}
+                        />
+                      </div>
+                      <button className="button is-primary" onClick={this.dec}>
+                        Decrement
+                      </button>
+                      <button className="button is-primary ml-2" onClick={this.inc}>
+                        Increment
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="column">
+                <div className="field is-horizontal">
+                  <div className="field-label is-normal">
+                    <label className="label">Complex</label>
+                  </div>
+                  <div className="field-body">
+                    <div className="field is-horizontal">
+                      <div className="control">
+                        <input
+                          className="input"
+                          value={this.props.complex.length}
+                          disabled={true}
+                        />
+                      </div>
+                      <button className="button is-primary" onClick={this.add}>
+                        Add
+                      </button>
+                      <button
+                        className="button is-primary ml-2"
+                        onClick={this.remove}>
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="columns">
+              <div className="column">
+                <label className="label">Controls</label>
+              </div>
+            </div>
+            <div className="columns">
+              <div className="column">
+                <div className="buttons">
+                  <button className="button is-info" onClick={this.undo}>
+                    Undo
+                  </button>
+                  <button className="button is-info" onClick={this.redo}>
+                    Redo
+                  </button>
+                  <button className="button is-info" onClick={this.undo2}>
+                    Undo 2
+                  </button>
+                  <button className="button is-info" onClick={this.redo2}>
+                    Redo 2
+                  </button>
+                  <button className="button is-info" onClick={this.clear}>
+                    Clear
+                  </button>
+                  <button
+                    className="button is-info"
+                    onClick={this.groupbegin}>
+                    Group begin
+                  </button>
+                  <button className="button is-info" onClick={this.groupend}>
+                    Group end
+                  </button>
+                </div>
+              </div>
+            </div>
             <div>
               <div>
-                <pre className="container">
+                <pre className="undo-container">
                   {JSON.stringify(this.props.present, null, 2)}
                 </pre>
               </div>
-              <span>Past length: [{this.props.past.length}]</span>
+              <strong>Undo/Redo state information</strong><br/>
+              <span>Past length: {this.props.past.length}</span>
               <br />
-              <span>Future length: [{this.props.future.length}]</span>
-            </div>
-            <h3>Counter</h3>
-            {this.props.counter.value}
-            <div>
-              <button onClick={this.dec}>dec</button>
-              <button onClick={this.inc}>inc</button>
-            </div>
-            <h3>Complex</h3>
-            {this.props.complex.length}
-            <div>
-              <button onClick={this.add}>add</button>
-              <button onClick={this.remove}>remove</button>
-            </div>
-            <h3>Controls</h3>
-            <div>
-              <div>
-                <button onClick={this.undo}>undo</button>
-                <button onClick={this.redo}>redo</button>
-              </div>
-              <div>
-                <button onClick={this.undo2}>undo 2</button>
-                <button onClick={this.redo2}>redo 2</button>
-              </div>
-              <div>
-                <button onClick={this.clear}>clear</button>
-              </div>
-              <div>
-                <button onClick={this.groupbegin}>group begin</button>
-                <button onClick={this.groupend}>group end</button>
-              </div>
-            </div>
+              <span>Future length: {this.props.future.length}</span>
+            </div>            
           </div>
-        </div>
-      </div>
+        </section>
+      </React.Fragment>
     );
   }
 }
@@ -138,7 +193,7 @@ const mapStateToProps = (state, props) => ({
   complex: state.undoable.present.complex,
   past: state.undoable.past,
   present: state.undoable.present,
-  future: state.undoable.future
+  future: state.undoable.future,
 });
 const mapDispatch = {
   increment,
@@ -149,7 +204,7 @@ const mapDispatch = {
   REDO,
   CLEAR,
   GROUPBEGIN,
-  GROUPEND
+  GROUPEND,
 };
 
 export default connect(mapStateToProps, mapDispatch)(UndoRedo);

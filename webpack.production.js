@@ -1,7 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CspHtmlWebpackPlugin = require("csp-html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const merge = require("webpack-merge");
+const { merge } = require("webpack-merge");
 const base = require("./webpack.config");
 const path = require("path");
 
@@ -11,9 +11,12 @@ module.exports = merge(base, {
   plugins: [
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "app/src/index-prod.html"),
-      filename: "index-prod.html"
+      template: path.resolve(__dirname, "app/src/index.html"),
+      filename: "index.html",
+      base: "app://rse"
     }),
+    // You can paste your CSP in this website https://csp-evaluator.withgoogle.com/
+    // for it to give you suggestions on how strong your CSP is
     new CspHtmlWebpackPlugin(
       {
         "base-uri": ["'self'"],

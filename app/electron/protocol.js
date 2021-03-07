@@ -53,7 +53,7 @@ function requestHandler(req, next) {
   const reqUrl = new URL(req.url);
   let reqPath = path.normalize(reqUrl.pathname);
   if (reqPath === "/") {
-    reqPath = "/index-prod.html";
+    reqPath = "/index.html";
   }
   const reqFilename = path.basename(reqPath);
   fs.readFile(path.join(DIST_PATH, reqPath), (err, data) => {
