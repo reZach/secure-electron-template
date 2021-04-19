@@ -1,5 +1,9 @@
 import React from "react";
 import ROUTES from "Constants/routes";
+import {
+  validateLicenseRequest,
+  validateLicenseResponse,
+} from "secure-electron-license-keys";
 
 class Nav extends React.Component {
   constructor(props) {
@@ -8,15 +12,45 @@ class Nav extends React.Component {
     this.history = props.history;
     this.state = {
       mobileMenuActive: false,
+      licenseModalActive: false,
     };
 
     this.toggleMenu = this.toggleMenu.bind(this);
+    this.toggleLicenseModal = this.toggleLicenseModal.bind(this);
     this.navigate = this.navigate.bind(this);
+  }
+
+  componentWillUnmount() {
+    window.api.licenseKeys.clearRendererBindings();
+  }
+
+  componentDidMount() {
+    // Set up binding in code whenever the context menu item
+    // of id "alert" is selected
+    window.api.licenseKeys.onReceive(
+      "validateLicenseResponse",
+      function (data) {
+        console.log("license response");
+        console.log(data);
+      }
+    );
   }
 
   toggleMenu(event) {
     this.setState({
       mobileMenuActive: !this.state.mobileMenuActive,
+    });
+  }
+
+  toggleLicenseModal(event) {
+    const previous = this.state.licenseModalActive;
+
+    if (!previous) {
+      window.api.licenseKeys.send(validateLicenseRequest);
+    }
+
+    this.setState({
+      licenseModalActive: !this.state.licenseModalActive,
     });
   }
 
@@ -31,6 +65,16 @@ class Nav extends React.Component {
       function () {
         this.history.push(url);
       }
+    );
+  }
+
+  renderLicenseModal() {
+    return (
+      <div className={`modal ${this.state.licenseModalActive ? "is-active" : ""}`}>
+        <div className="modal-background"></div>
+        <div className="modal-content">waef</div>
+        <button className="modal-close is-large" aria-label="close"></button>
+      </div>
     );
   }
 
@@ -96,6 +140,18 @@ class Nav extends React.Component {
                   className="navbar-item"
                   onClick={() => this.navigate(ROUTES.CONTEXTMENU)}>
                   Custom context menu
+                </a>
+              </div>
+            </div>
+          </div>
+          {this.renderLicenseModal()}
+          <div className="navbar-end">
+            <div className="navbar-item">
+              <div className="buttons">
+                <a
+                  className="button is-light"
+                  onClick={this.toggleLicenseModal}>
+                  Check license
                 </a>
               </div>
             </div>

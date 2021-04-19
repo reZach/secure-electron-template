@@ -10,7 +10,8 @@ const {
   default: installExtension,
   REDUX_DEVTOOLS,
   REACT_DEVELOPER_TOOLS
-} = require('electron-devtools-installer');
+} = require("electron-devtools-installer");
+const SecureElectronLicenseKeys = require("secure-electron-license-keys");
 const Protocol = require("./protocol");
 const MenuBuilder = require("./menu");
 const i18nextBackend = require("i18next-electron-fs-backend");
@@ -50,6 +51,7 @@ async function createWindow() {
   // NOTE - this config is not passcode protected
   // and stores plaintext values
   //let savedConfig = store.mainInitialStore(fs);
+  
 
   // Create the browser window.
   win = new BrowserWindow({
@@ -92,6 +94,9 @@ async function createWindow() {
       label: "Soft alert"
     }]
   });
+
+  // Setup bindings for offline license verification
+  SecureElectronLicenseKeys.mainBindings(ipcMain, win, fs);
 
   // Load app
   if (isDev) {
