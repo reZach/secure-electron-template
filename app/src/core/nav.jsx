@@ -13,6 +13,13 @@ class Nav extends React.Component {
     this.state = {
       mobileMenuActive: false,
       licenseModalActive: false,
+
+      // license-specific
+      licenseValid: false,
+      allowedMajorVersions: "",
+      allowedMinorVersions: "",
+      appVersion: "",
+      licenseExpiry: "",
     };
 
     this.toggleMenu = this.toggleMenu.bind(this);
@@ -25,15 +32,31 @@ class Nav extends React.Component {
   }
 
   componentDidMount() {
-    // Set up binding in code whenever the context menu item
-    // of id "alert" is selected
-    window.api.licenseKeys.onReceive(
-      "validateLicenseResponse",
-      function (data) {
-        console.log("license response");
-        console.log(data);
+    // Set up binding to listen when the license key is
+    // validated by the main process
+    const _ = this;
+
+    window.api.licenseKeys.onReceive(validateLicenseResponse, function (data) {
+      // If the license key/data is valid
+      if (data.success) {
+        // Here you would compare data.appVersion to
+        // data.major, data.minor and data.patch to
+        // ensure that the user's version of the app
+        // matches their license
+        _.setState({
+          licenseValid: true,
+          allowedMajorVersions: data.major,
+          allowedMinorVersions: data.minor,
+          allowedPatchVersions: data.patch,
+          appVersion: data.appVersion,
+          licenseExpiry: data.expire,
+        });
+      } else {
+        _.setState({
+          licenseValid: false,
+        });
       }
-    );
+    });
   }
 
   toggleMenu(event) {
@@ -45,6 +68,8 @@ class Nav extends React.Component {
   toggleLicenseModal(event) {
     const previous = this.state.licenseModalActive;
 
+    // Only send license request if the modal
+    // is not already open
     if (!previous) {
       window.api.licenseKeys.send(validateLicenseRequest);
     }
@@ -70,10 +95,53 @@ class Nav extends React.Component {
 
   renderLicenseModal() {
     return (
-      <div className={`modal ${this.state.licenseModalActive ? "is-active" : ""}`}>
+      <div
+        className={`modal ${this.state.licenseModalActive ? "is-active" : ""}`}>
         <div className="modal-background"></div>
-        <div className="modal-content">waef</div>
-        <button className="modal-close is-large" aria-label="close"></button>
+        <div className="modal-content">
+          {this.state.licenseValid ? (
+            <div className="box">
+              The license key for this product has been validated and the
+              following versions of this app are allowed for your use:
+              <div>
+                <strong>Major versions:</strong>{" "}
+                {this.state.allowedMajorVersions} <br />
+                <strong>Minor versions:</strong>{" "}
+                {this.state.allowedMinorVersions} <br />
+                <strong>Patch versions:</strong>{" "}
+                {this.state.allowedPatchVersions} <br />
+                <strong>Expires on:</strong>{" "}
+                {!this.state.licenseExpiry
+                  ? "never!"
+                  : this.state.licenseExpiry}{" "}
+                <br />(
+                <em>
+                  App version:
+                  {` v${this.state.appVersion.major}.${this.state.appVersion.minor}.${this.state.appVersion.patch}`}
+                </em>
+                )
+                <br />
+              </div>
+            </div>
+          ) : (
+            <div className="box">
+              <div>The license key is not valid.</div>
+              <div>If you'd like to create a license key, follow these steps:
+                <ol style={{marginLeft: "30px"}}>
+                  <li>Install this package globally (<strong>npm i secure-electron-license-keys-cli -g</strong>).</li>
+                  <li>Run <strong>secure-electron-license-keys-cli</strong>.</li>
+                  <li>Copy <strong>public.key</strong> and <strong>license.data</strong> into the <em>root</em> folder of this app.</li>
+                  <li>Re-run this app (ie. <strong>npm run dev</strong>).</li>
+                  <li>If you'd like to further customize your license keys, copy this link into your browser: <a href="https://github.com/reZach/secure-electron-license-keys-cli">https://github.com/reZach/secure-electron-license-keys-cli</a>.</li>
+                </ol>
+              </div>
+            </div>
+          )}
+        </div>
+        <button
+          className="modal-close is-large"
+          aria-label="close"
+          onClick={this.toggleLicenseModal}></button>
       </div>
     );
   }

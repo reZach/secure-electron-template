@@ -44,6 +44,7 @@ Built-in to this template are a number of popular frameworks already wired up to
 - [Context menu](https://github.com/reZach/secure-electron-context-menu) (supports custom context menus)
 - [Electron builder](https://www.electron.build/) (for packaging up your app)
 - [Easy redux undo](https://github.com/reZach/easy-redux-undo) (for undo/redoing your redux actions)
+- [License key validation](https://github.com/reZach/secure-electron-license-keys) (for validating a user has the proper license to use your app) **new!**
 
 
 ## Roadmap
