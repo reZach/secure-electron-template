@@ -10,7 +10,8 @@ const {
   default: installExtension,
   REDUX_DEVTOOLS,
   REACT_DEVELOPER_TOOLS
-} = require('electron-devtools-installer');
+} = require("electron-devtools-installer");
+const SecureElectronLicenseKeys = require("secure-electron-license-keys");
 const Protocol = require("./protocol");
 const MenuBuilder = require("./menu");
 const i18nextBackend = require("i18next-electron-fs-backend");
@@ -19,6 +20,7 @@ const Store = require("secure-electron-store").default;
 const ContextMenu = require("secure-electron-context-menu").default;
 const path = require("path");
 const fs = require("fs");
+const crypto = require("crypto");
 const isDev = process.env.NODE_ENV === "development";
 const port = 40992; // Hardcoded; needs to match webpack.development.js and package.json
 const selfHost = `http://localhost:${port}`;
@@ -91,6 +93,12 @@ async function createWindow() {
       id: "softAlert",
       label: "Soft alert"
     }]
+  });
+
+  // Setup bindings for offline license verification
+  SecureElectronLicenseKeys.mainBindings(ipcMain, win, fs, crypto, {
+    root: process.cwd(),
+    version: app.getVersion()
   });
 
   // Load app
@@ -197,6 +205,7 @@ app.on("window-all-closed", () => {
   } else {
     i18nextBackend.clearMainBindings(ipcMain);
     ContextMenu.clearMainBindings(ipcMain);
+    SecureElectronLicenseKeys.clearMainBindings(ipcMain);
   }
 });
 

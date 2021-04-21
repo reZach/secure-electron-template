@@ -25,5 +25,8 @@ No, but you can start with this template and follow the steps [outlined here](ht
 ## Can I use `yarn` to install dependencies?
 Yes, but you'll have to follow [a few steps](https://github.com/reZach/secure-electron-template/issues/62) to get it working.
 
+## How do I set up my own license keys?
+Please refer to [these instructions](https://github.com/reZach/secure-electron-license-keys) first. If you have further questions, you may post a question in the appropriate repo.
+
 #### Question not answered?
 Please [post an issue](https://github.com/reZach/secure-electron-template/issues/new) and we will add to this page with questions that you have!
