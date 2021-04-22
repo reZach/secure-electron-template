@@ -26,6 +26,9 @@ const intervalId = setInterval(function () {
         electronProcess.stdout.on("data", function(data) {
           process.stdout.write(data);
         });
+        electronProcess.stderr.on("data", function(data) {
+          process.stdout.write(data);
+        });
       } else if (log.indexOf("Failed to compile.") >= 0) {
 
         if (fs.existsSync(errorLogFilePath)) {

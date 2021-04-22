@@ -26,7 +26,7 @@ module.exports = {
         use: {
           loader: "html-loader",
           options: {
-            attributes: {
+            sources: {
               "list": [{
                 "tag": "img",
                 "attribute": "data-src",

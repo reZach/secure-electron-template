@@ -66,7 +66,8 @@ async function createWindow() {
       contextIsolation: true,
       enableRemoteModule: false,
       additionalArguments: [`storePath:${app.getPath("userData")}`],
-      preload: path.join(__dirname, "preload.js"), /* eng-disable PRELOAD_JS_CHECK */
+      preload: path.join(__dirname, "preload.js"),
+      /* eng-disable PRELOAD_JS_CHECK */
       disableBlinkFeatures: "Auxclick"
     }
   });
@@ -121,7 +122,7 @@ async function createWindow() {
       await installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS])
         .then((name) => console.log(`Added Extension:  ${name}`))
         .catch((err) => console.log("An error occurred: ", err))
-        .finally(() => {          
+        .finally(() => {
           require("electron-debug")(); // https://github.com/sindresorhus/electron-debug
           win.webContents.openDevTools();
         });
@@ -139,9 +140,9 @@ async function createWindow() {
   // https://electronjs.org/docs/tutorial/security#4-handle-session-permission-requests-from-remote-content
   const ses = session;
   const partition = "default";
-  ses.fromPartition(partition) /* eng-disable PERMISSION_REQUEST_HANDLER_JS_CHECK */    
+  ses.fromPartition(partition) /* eng-disable PERMISSION_REQUEST_HANDLER_JS_CHECK */
     .setPermissionRequestHandler((webContents, permission, permCallback) => {
-      let allowedPermissions = []; // Full list here: https://developer.chrome.com/extensions/declare_permissions#manifest
+      const allowedPermissions = []; // Full list here: https://developer.chrome.com/extensions/declare_permissions#manifest
 
       if (allowedPermissions.includes(permission)) {
         permCallback(true); // Approve permission request
@@ -219,7 +220,8 @@ app.on("activate", () => {
 
 // https://electronjs.org/docs/tutorial/security#12-disable-or-limit-navigation
 app.on("web-contents-created", (event, contents) => {
-  contents.on("will-navigate", (contentsEvent, navigationUrl) => { /* eng-disable LIMIT_NAVIGATION_JS_CHECK  */
+  contents.on("will-navigate", (contentsEvent, navigationUrl) => {
+    /* eng-disable LIMIT_NAVIGATION_JS_CHECK  */
     const parsedUrl = new URL(navigationUrl);
     const validOrigins = [selfHost];
 
@@ -260,19 +262,28 @@ app.on("web-contents-created", (event, contents) => {
   });
 
   // https://electronjs.org/docs/tutorial/security#13-disable-or-limit-creation-of-new-windows
-  contents.on("new-window", (contentsEvent, navigationUrl) => { /* eng-disable LIMIT_NAVIGATION_JS_CHECK */
-    const parsedUrl = new URL(navigationUrl);
+  // This code replaces the old "new-window" event handling;
+  // https://github.com/electron/electron/pull/24517#issue-447670981
+  contents.setWindowOpenHandler(({
+    url
+  }) => {
+    const parsedUrl = new URL(url);
     const validOrigins = [];
 
     // Log and prevent opening up a new window
     if (!validOrigins.includes(parsedUrl.origin)) {
       console.error(
-        `The application tried to open a new window at the following address: '${navigationUrl}'. This attempt was blocked.`
+        `The application tried to open a new window at the following address: '${url}'. This attempt was blocked.`
       );
 
-      contentsEvent.preventDefault();
-      return;
+      return {
+        action: "deny"
+      };
     }
+
+    return {
+      action: "allow"
+    };
   });
 });
 
