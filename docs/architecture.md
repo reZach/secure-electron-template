@@ -3,9 +3,10 @@ This template is laid out in order to maintain a clear separation-of-concerns (S
 
 ```
 app/
+dev-scripts/
 docs/
 resources/
-dev-scripts/
+test/
 ```
 
 #### app
