@@ -9,6 +9,9 @@ When this command is run, it will make use of code within the **dev-scripts** fo
 #### Running production
 You can test your production builds with the `npm run prod` command, this will load your application with electron and the production config of webpack. It is the production build that is used when packaging your application (below).
 
+#### Running E2E tests
+You can run E2E tests with the `npm run test` command.
+
 #### Packaging your application
 You can package up your application using any of the following commands:
 ```

@@ -11,14 +11,17 @@ dev-scripts/
 #### app
 Contains everything for your app. All of your js/css files will go here as well as the electron-specific code. You can go [here](https://github.com/reZach/secure-electron-template/blob/master/docs/app.md) to find more information about this directory.
 
+#### dev-scripts
+Due to limitations in running electron _after_ a webpack development server has been started [and successfully compiled], additional scripts that run the development Electron configuration are in this directory that ensure we only start our _development_ Electron configuration _after_ webpack has loaded completely.
+
 #### docs
 Houses documentation pages such as this one.
 
 #### resources
 Any resources your electron app needs in for building/distributing executables should go here - icons are a great example.
 
-#### dev-scripts
-Due to limitations in running electron _after_ a webpack development server has been started [and successfully compiled], additional scripts that run the development Electron configuration are in this directory that ensure we only start our _development_ Electron configuration _after_ webpack has loaded completely.
+#### test
+Contains [mocha](https://mochajs.org/) tests you may use for E2E (end-to-end) testing.
 
 ## configs
 At the root level we also have some configuration files.
