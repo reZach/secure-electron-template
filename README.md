@@ -40,6 +40,7 @@ Built-in to this template are a number of popular frameworks already wired up to
 - [Babel](https://babeljs.io/)
 - [Webpack](https://webpack.js.org/) (with [webpack-dev-server](https://github.com/webpack/webpack-dev-server))
 - [Electron builder](https://www.electron.build/) (for packaging up your app)
+- [Mocha](https://mochajs.org/)
 
 ## Bonus modules
 What would a template be without some helpful additions?
@@ -49,9 +50,6 @@ What would a template be without some helpful additions?
 - [Context menu](https://github.com/reZach/secure-electron-context-menu) (supports custom context menus)
 - [Easy redux undo](https://github.com/reZach/easy-redux-undo) (for undo/redoing your redux actions)
 - [License key validation](https://github.com/reZach/secure-electron-license-keys) (for validating a user has the proper license to use your app) **new!**
-
-## Roadmap
-There are a number of additions that I'd like to implement in this repository, namely test suites, but those are lower priority (but I welcome PRs!).
 
 ## Architecture
 For a more detailed view of the architecture of the template, please check out [here](https://github.com/reZach/secure-electron-template/blob/master/docs/architecture.md). I would _highly_ recommend reading this document to get yourself familiarized with this template.
