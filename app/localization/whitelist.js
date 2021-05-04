@@ -70,10 +70,10 @@ const Whitelist = (function() {
     buildSubmenu: function(channel, i18nextMainBackend) {
       let submenu = [];
 
-      for (let i = 0; i < keys.length; i++) {
+      for (const key of keys) {
         submenu.push({
-          label: whitelistMap[keys[i]],
-          click: clickFunction(channel, keys[i], i18nextMainBackend)
+          label: whitelistMap[key],
+          click: clickFunction(channel, key, i18nextMainBackend)
         });
       }
 
