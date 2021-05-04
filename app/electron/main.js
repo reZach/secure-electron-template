@@ -232,7 +232,6 @@ app.on("web-contents-created", (event, contents) => {
       );
 
       contentsEvent.preventDefault();
-      return;
     }
   });
 
@@ -247,7 +246,6 @@ app.on("web-contents-created", (event, contents) => {
       );
 
       contentsEvent.preventDefault();
-      return;
     }
   });
 
