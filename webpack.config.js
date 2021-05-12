@@ -1,3 +1,6 @@
+const {
+  CleanWebpackPlugin
+} = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 const path = require("path");
@@ -18,8 +21,7 @@ module.exports = {
     }
   },
   module: {
-    rules: [
-      {
+    rules: [{
         // loads .html files
         test: /\.(html)$/,
         include: [path.resolve(__dirname, "app/src")],
@@ -73,5 +75,6 @@ module.exports = {
     new webpack.ProvidePlugin({
       process: "process/browser.js",
     }),
+    new CleanWebpackPlugin()
   ]
 };
