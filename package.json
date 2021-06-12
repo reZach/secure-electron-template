@@ -1,6 +1,6 @@
 {
   "name": "secure-electron-template",
-  "version": "12.0.0",
+  "version": "12.1.0",
   "description": "The best way to build Electron apps with security in mind.",
   "private": true,
   "main": "app/electron/main.js",
@@ -78,13 +78,13 @@
     "last 2 Chrome versions"
   ],
   "devDependencies": {
-    "@babel/core": "^7.14.3",
+    "@babel/core": "^7.14.5",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
-    "@babel/plugin-transform-react-jsx": "^7.14.3",
-    "@babel/preset-env": "^7.14.4",
-    "@babel/preset-react": "^7.13.13",
+    "@babel/plugin-transform-react-jsx": "^7.14.5",
+    "@babel/preset-env": "^7.14.5",
+    "@babel/preset-react": "^7.14.5",
     "@doyensec/electronegativity": "^1.9.1",
-    "@google-cloud/translate": "^6.2.1",
+    "@google-cloud/translate": "^6.2.2",
     "babel-loader": "^8.2.2",
     "babel-plugin-module-resolver": "^4.1.0",
     "buffer": "^6.0.3",
@@ -95,7 +95,7 @@
     "csp-html-webpack-plugin": "^5.1.0",
     "css-loader": "^5.2.6",
     "css-minimizer-webpack-plugin": "^3.0.1",
-    "electron": "^13.0.1",
+    "electron": "^13.1.2",
     "electron-builder": "^22.11.3",
     "electron-debug": "^3.2.0",
     "html-loader": "^2.1.2",
@@ -108,13 +108,13 @@
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",
     "webpack": "^5.38.1",
-    "webpack-cli": "^4.7.0",
+    "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2",
-    "webpack-merge": "^5.7.3"
+    "webpack-merge": "^5.8.0"
   },
   "dependencies": {
     "@loadable/component": "^5.15.0",
-    "@reduxjs/toolkit": "^1.5.1",
+    "@reduxjs/toolkit": "^1.6.0",
     "bulma": "^0.9.2",
     "connected-react-router": "^6.9.1",
     "easy-redux-undo": "^1.0.4",

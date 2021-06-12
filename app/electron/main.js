@@ -120,7 +120,7 @@ async function createWindow() {
     // before the DOM is ready
     win.webContents.once("dom-ready", async () => {
       await installExtension([REDUX_DEVTOOLS, REACT_DEVELOPER_TOOLS])
-        .then((name) => console.log(`Added Extension:  ${name}`))
+        .then((name) => console.log(`Added Extension: ${name}`))
         .catch((err) => console.log("An error occurred: ", err))
         .finally(() => {
           require("electron-debug")(); // https://github.com/sindresorhus/electron-debug
@@ -228,7 +228,7 @@ app.on("web-contents-created", (event, contents) => {
     // Log and prevent the app from navigating to a new page if that page's origin is not whitelisted
     if (!validOrigins.includes(parsedUrl.origin)) {
       console.error(
-        `The application tried to redirect to the following address: '${parsedUrl}'. This origin is not whitelisted and the attempt to navigate was blocked.`
+        `The application tried to navigate to the following address: '${parsedUrl}'. This origin is not whitelisted and the attempt to navigate was blocked.`
       );
 
       contentsEvent.preventDefault();
