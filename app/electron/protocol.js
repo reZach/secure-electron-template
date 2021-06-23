@@ -25,7 +25,7 @@ const mimeTypes = {
   ".htm": "text/html",
   ".json": "application/json",
   ".css": "text/css",
-  ".svg": "application/svg+xml",
+  ".svg": "image/svg+xml",
   ".ico": "image/vnd.microsoft.icon",
   ".png": "image/png",
   ".jpg": "image/jpeg",
