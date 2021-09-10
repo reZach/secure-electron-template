@@ -28,5 +28,8 @@ Yes, but you'll have to follow [a few steps](https://github.com/reZach/secure-el
 ## How do I set up my own license keys?
 Please refer to [these instructions](https://github.com/reZach/secure-electron-license-keys) first. If you have further questions, you may post a question in the appropriate repo.
 
+## Can I use typescript with this template?
+I suggest following [this pull request](https://github.com/tyler-hitzeman/secure-electron-template-ts/pull/1) to guide you what changes you'll need to make.
+
 #### Question not answered?
 Please [post an issue](https://github.com/reZach/secure-electron-template/issues/new) and we will add to this page with questions that you have!

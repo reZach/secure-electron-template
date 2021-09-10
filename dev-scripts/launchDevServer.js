@@ -14,10 +14,12 @@ const intervalId = setInterval(function () {
         encoding: "utf8"
       });
 
-      // "Compiled successfully." is the string we need to find
+      // "compiled successfully" is the string we need to find
       // to know that webpack is done bundling everything and we
-      // can load our Electron app with no issues.
-      if (log.indexOf("Compiled successfully.") >= 0) {
+      // can load our Electron app with no issues. We split up the
+      // validation because the output contains non-standard characters.
+      const compiled = log.indexOf("compiled");
+      if (compiled >= 0 && log.indexOf("successfully", compiled) >= 0) {
         console.log("Webpack development server is ready, launching Electron app.");
         clearInterval(intervalId);
 
@@ -29,7 +31,7 @@ const intervalId = setInterval(function () {
         electronProcess.stderr.on("data", function(data) {
           process.stdout.write(data);
         });
-      } else if (log.indexOf("Failed to compile.") >= 0) {
+      } else if (log.indexOf("Module build failed") >= 0) {
 
         if (fs.existsSync(errorLogFilePath)) {
           const errorLog = fs.readFileSync(errorLogFilePath, {

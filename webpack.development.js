@@ -12,11 +12,13 @@ module.exports = merge(base, {
     host: "localhost",
     port: "40992",
     hot: true, // Hot-reload this server if changes are detected
-    compress: true, // Compress (gzip) files that are served
-    contentBase: path.resolve(__dirname, "app/dist"), // Where we serve the local dev server's files from
-    watchContentBase: true, // Watch the content base for changes
-    watchOptions: {
-      ignored: /node_modules/ // Ignore this path, probably not needed since we define contentBase above
+    compress: true, // Compress (gzip) files that are served        
+    static: {
+      directory: path.resolve(__dirname, "app/dist"), // Where we serve the local dev server's files from
+      watch: true, // Watch the directory for changes
+      staticOptions: {
+        ignored: /node_modules/ // Ignore this path, probably not needed since we define directory above
+      }
     }
   },
   plugins: [
