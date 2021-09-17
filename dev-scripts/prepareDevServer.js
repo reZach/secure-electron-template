@@ -5,7 +5,7 @@ const {
 const logFilePath = "./dev-scripts/webpack-dev-server.log";
 const errorLogFilePath = "./dev-scripts/webpack-dev-server-error.log";
 
-console.log("Preparing webpack development server.");
+console.log(`Preparing webpack development server. (Logging webpack output to '${logFilePath}')`);
 
 // Delete the old webpack-dev-server.log if it is present
 try {

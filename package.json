@@ -1,6 +1,6 @@
 {
   "name": "secure-electron-template",
-  "version": "13.0.1",
+  "version": "13.1.0",
   "description": "The best way to build Electron apps with security in mind.",
   "private": true,
   "main": "app/electron/main.js",
@@ -16,7 +16,7 @@
     "dist": "npm run test && npm run prod-build && electron-builder",
     "dist-mac": "npm run test && npm run prod-build && electron-builder --mac",
     "dist-linux": "npm run test && npm run prod-build && electron-builder --linux",
-    "dist-windows": "npm run test && npm run prod-build && electron-builder --windows",
+    "dist-windows": "npm run prod-build && electron-builder --windows",
     "dist-all": "npm run test && npm run prod-build && electron-builder --mac --linux --windows",
     "test": "mocha"
   },

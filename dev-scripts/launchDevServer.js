@@ -5,6 +5,8 @@ const {
 const logFilePath = "./dev-scripts/webpack-dev-server.log";
 const errorLogFilePath = "./dev-scripts/webpack-dev-server-error.log";
 const interval = 100;
+const showHint = 600 * 3; // show hint after 3 minutes (60 sec * 3)
+let hintCounter = 1;
 
 // Poll webpack-dev-server.log until the webpack bundle has compiled successfully
 const intervalId = setInterval(function () {
@@ -45,6 +47,17 @@ const intervalId = setInterval(function () {
           return process.exit(1);
         } else {
           console.log("Webpack failed to compile, but the error is unknown.")
+          clearInterval(intervalId);
+
+          return process.exit(1);
+        }
+      } else {
+        hintCounter++;
+
+        // Show hint so user is not waiting/does not know where to
+        // look for an error if it has been thrown and/or we are stuck
+        if (hintCounter > showHint){
+          console.error(`Webpack is likely failing for an unknown reason, please check '${errorLogFilePath}' for more details.`);
           clearInterval(intervalId);
 
           return process.exit(1);
