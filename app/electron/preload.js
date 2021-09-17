@@ -11,7 +11,7 @@ const store = new Store();
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld("api", {
-  i18nextElectronBackend: i18nextBackend.preloadBindings(ipcRenderer),
+  i18nextElectronBackend: i18nextBackend.preloadBindings(ipcRenderer, process),
   store: store.preloadBindings(ipcRenderer, fs),
   contextMenu: ContextMenu.preloadBindings(ipcRenderer),
   licenseKeys: SecureElectronLicenseKeys.preloadBindings(ipcRenderer)

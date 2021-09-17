@@ -6,10 +6,9 @@ const whitelist = require("./whitelist");
 // On Mac, the folder for resources isn't
 // in the same directory as Linux/Windows;
 // https://www.electron.build/configuration/contents#extrafiles
-const path = require("path");
-const isMac = process.platform === "darwin";
-const isDev = process.env.NODE_ENV === "development";
-const prependPath = isMac && !isDev ? path.join(process.resourcesPath, "..") : ".";
+const isMac = window.api.i18nextElectronBackend.clientOptions.platform === "darwin";
+const isDev = window.api.i18nextElectronBackend.clientOptions.environment === "development";
+const prependPath = isMac && !isDev ? window.api.i18nextElectronBackend.clientOptions.resourcesPath : ".";
 
 i18n
   .use(i18nBackend)
