@@ -137,7 +137,7 @@ async function createWindow() {
     win = null;
   });
 
-  // https://electronjs.org/docs/tutorial/security#4-handle-session-permission-requests-from-remote-content
+  // https://www.electronjs.org/docs/latest/tutorial/security#5-handle-session-permission-requests-from-remote-content
   const ses = session;
   const partition = "default";
   ses.fromPartition(partition) /* eng-disable PERMISSION_REQUEST_HANDLER_JS_CHECK */
@@ -155,7 +155,7 @@ async function createWindow() {
       }
     });
 
-  // https://electronjs.org/docs/tutorial/security#1-only-load-secure-content;
+  // https://www.electronjs.org/docs/latest/tutorial/security#1-only-load-secure-content
   // The below code can only run when a scheme and host are defined, I thought
   // we could use this over _all_ urls
   // ses.fromPartition(partition).webRequest.onBeforeRequest({urls:["http://localhost./*"]}, (listener) => {
@@ -218,7 +218,7 @@ app.on("activate", () => {
   }
 });
 
-// https://electronjs.org/docs/tutorial/security#12-disable-or-limit-navigation
+// https://www.electronjs.org/docs/latest/tutorial/security#13-disable-or-limit-navigation
 app.on("web-contents-created", (event, contents) => {
   contents.on("will-navigate", (contentsEvent, navigationUrl) => {
     /* eng-disable LIMIT_NAVIGATION_JS_CHECK  */
@@ -249,7 +249,7 @@ app.on("web-contents-created", (event, contents) => {
     }
   });
 
-  // https://electronjs.org/docs/tutorial/security#11-verify-webview-options-before-creation
+  // https://www.electronjs.org/docs/latest/tutorial/security#12-verify-webview-options-before-creation
   contents.on("will-attach-webview", (contentsEvent, webPreferences, params) => {
     // Strip away preload scripts if unused or verify their location is legitimate
     delete webPreferences.preload;
@@ -259,7 +259,7 @@ app.on("web-contents-created", (event, contents) => {
     webPreferences.nodeIntegration = false;
   });
 
-  // https://electronjs.org/docs/tutorial/security#13-disable-or-limit-creation-of-new-windows
+  // https://www.electronjs.org/docs/latest/tutorial/security#14-disable-or-limit-creation-of-new-windows
   // This code replaces the old "new-window" event handling;
   // https://github.com/electron/electron/pull/24517#issue-447670981
   contents.setWindowOpenHandler(({
@@ -287,6 +287,7 @@ app.on("web-contents-created", (event, contents) => {
 
 // Filter loading any module via remote;
 // you shouldn't be using remote at all, though
+// TODO <NewEXE> What to do with this legacy link:
 // https://electronjs.org/docs/tutorial/security#16-filter-the-remote-module
 app.on("remote-require", (event, webContents, moduleName) => {
   event.preventDefault();
