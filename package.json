@@ -1,6 +1,6 @@
 {
   "name": "secure-electron-template",
-  "version": "15.0.0",
+  "version": "15.0.1",
   "description": "The best way to build Electron apps with security in mind.",
   "private": true,
   "main": "app/electron/main.js",
@@ -119,7 +119,7 @@
     "electron-devtools-installer": "^3.2.0",
     "i18next": "^20.6.1",
     "i18next-electron-fs-backend": "^2.0.0",
-    "i18next-fs-backend": "^1.1.1",
+    "i18next-fs-backend": "^1.1.4",
     "lodash": "4.17.21",
     "lodash.merge": "^4.6.2",
     "process": "^0.11.10",
