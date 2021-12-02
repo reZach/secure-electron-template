@@ -1,4 +1,4 @@
-const i18n = require("i18next").default;
+const i18n = require("i18next");
 const reactI18Next = require("react-i18next");
 const i18nBackend = require("i18next-electron-fs-backend").default;
 const whitelist = require("./whitelist");
@@ -25,7 +25,7 @@ i18n
     saveMissingTo: "current",
     lng: "en",
     fallbackLng: false, // set to false when generating translation files locally
-    whitelist: whitelist.langs
+    supportedLngs: whitelist.langs
   });
 
 window.api.i18nextElectronBackend.onLanguageChange((args) => {

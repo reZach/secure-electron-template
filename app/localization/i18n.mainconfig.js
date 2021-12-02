@@ -23,7 +23,7 @@ i18n
     saveMissingTo: "current",
     lng: "en",
     fallbackLng: false, // set to false when generating translation files locally
-    whitelist: whitelist.langs
+    supportedLngs: whitelist.langs
   });
 
 module.exports = i18n;
