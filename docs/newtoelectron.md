@@ -167,6 +167,134 @@ contextBridge.exposeInMainWorld(
 
 We expose an `api` property on the window object with two functions, **send** and **receive**. These functions allow us to talk to (ie. send messages to) the main ipc process and react to it's responses. Now, the renderer process has [indirect] access to Node apis!
 
+## Can you explain what these "channels" are for?
+
+If you noticed in the previous code blocks, we are defining `validChannels`. `validChannels` are not an Electron concept, but a safelist of named identifiers in order that only necessary methods of a `require`'d module are available to be used in code. In other words, instead of allowing _all_ of the methods [`fs`](https://nodejs.dev/learn/the-nodejs-fs-module) has, we only allow features/methods we need. This follows the principle of [least privilege](https://www.cyberark.com/what-is/least-privilege/) - and is more secure.
+
+Notice in this example how we make use of `fs` in our **main.js** file.
+
+```javascript
+const {
+  app,
+  BrowserWindow,
+  ipcMain
+} = require("electron");
+const path = require("path");
+const fs = require("fs");
+
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+let win;
+
+async function createWindow() {
+
+  // Create the browser window.
+  win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: false, // is default value after Electron v5
+      contextIsolation: true, // protect against prototype pollution
+      enableRemoteModule: false, // turn off remote
+      preload: path.join(__dirname, "preload.js") // use a preload script
+    }
+  });
+
+  // Load app
+  win.loadFile(path.join(__dirname, "dist/index.html"));
+
+  // rest of code..
+}
+
+app.on("ready", createWindow);
+
+ipcMain.on("toMain", (event, args) => {
+  fs.readFile("path/to/file", (error, data) => {
+    // Do something with file contents
+
+    // Send result back to renderer process
+    win.webContents.send("fromMain", responseObj);
+  });
+});
+```
+
+We _only_ allow the [`.readFile`](https://nodejs.org/api/fs.html#fsreadfilepath-options-callback) method to be called. However, if our **preload**/**main** file looked something like this...
+
+**preload.js**
+```javascript
+const {
+    contextBridge,
+    ipcRenderer
+} = require("electron");
+
+// POOR example of a secure way to send IPC messages
+contextBridge.exposeInMainWorld(
+    "api", {
+        send: (channel, data) => {
+            ipcRenderer.send(channel, data);
+        },
+        receive: (channel, func) => {
+            // Deliberately strip event as it includes `sender` 
+            ipcRenderer.on(channel, (event, ...args) => func(...args));
+        }
+    }
+);
+```
+
+**main.js**
+```javascript
+const {
+  app,
+  BrowserWindow,
+  ipcMain
+} = require("electron");
+const path = require("path");
+const fs = require("fs");
+
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+let win;
+
+async function createWindow() {
+
+  // Create the browser window.
+  win = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: false, // is default value after Electron v5
+      contextIsolation: true, // protect against prototype pollution
+      enableRemoteModule: false, // turn off remote
+      preload: path.join(__dirname, "preload.js") // use a preload script
+    }
+  });
+
+  // Load app
+  win.loadFile(path.join(__dirname, "dist/index.html"));
+
+  // rest of code..
+}
+
+app.on("ready", createWindow);
+
+// Code would only be hit if channel was "fs"
+ipcMain.on("fs", (event, args) => {
+  var result = true;
+
+  // We allow _any_ methods to be called here
+  // dynamically. This example is what we should
+  // NOT be doing.
+  fs[args.method.toString()].apply(null, args.arguments);  
+
+  // Send result back to renderer process
+  win.webContents.send("fromfs", result); // return result to renderer process
+});
+```
+
+Besides not being fully tested, the _idea_ is that the above code would allow _any_ method from `fs` to be called. This is a _bad security practice_ because it allows our code to call [`.copyFile`](https://nodejs.org/api/fs.html#fscopyfilesrc-dest-mode-callback), [`.mkdir`](https://nodejs.org/api/fs.html#fsmkdirpath-options-callback), [`.rmdir`](https://nodejs.org/api/fs.html#fsrmdirpath-options-callback) or potentially any other method that `fs` has access to call! This security breach would happen if the front-end code was compromised in any way (ie. if IPC messages were sent from our renderer process).
+
+The general idea behind a safelist of channels is that we **define** what methods our code/app should support [through matching channel names in our preload/main files], instead of allowing _any_ methods that may not be used/introduce a possible vulnerability in our app.
+
 ## What the preload.js _used_ to look like (advanced info)
 
 It's _important_ to recognize that older solutions before contextBridge were to set properties on the `window`, ie:
