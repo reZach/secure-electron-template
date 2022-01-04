@@ -29,7 +29,6 @@ const selfHost = `http://localhost:${port}`;
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 let menuBuilder;
-let i18nInitialized = false;
 
 async function createWindow() {
 
@@ -171,9 +170,7 @@ async function createWindow() {
   
   // Set up necessary bindings to update the menu items
   // based on the current language selected
-  i18nextMainBackend.on("initialized", (loaded) => {
-    i18nInitialized = true;
-        
+  i18nextMainBackend.on("initialized", (loaded) => {            
     i18nextMainBackend.changeLanguage("en");
     i18nextMainBackend.off("initialized"); // Remove listener to this event as it's not needed anymore   
   });
@@ -185,7 +182,7 @@ async function createWindow() {
   // below code until AFTER the i18n framework has finished its
   // "initialized" event.
   i18nextMainBackend.on("languageChanged", (lng) => {    
-    if (i18nInitialized){
+    if (i18nextMainBackend.isInitialized){
       menuBuilder.buildMenu(i18nextMainBackend);
     }
   });
