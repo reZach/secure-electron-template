@@ -32,15 +32,16 @@ const mimeTypes = {
   ".map": "text/plain"
 };
 
-function charset(mimeType) {
-  return [".html", ".htm", ".js", ".mjs"].some((m) => m === mimeType) ?
+function charset(mimeExt) {
+  return [".html", ".htm", ".js", ".mjs"].some((m) => m === mimeExt) ?
     "utf-8" :
     null;
 }
 
 function mime(filename) {
-  const type = mimeTypes[path.extname(`${filename || ""}`).toLowerCase()];
-  return type ? type : null;
+  const mimeExt = path.extname(`${filename || ""}`).toLowerCase();
+  const mimeType = mimeTypes[mimeExt];
+  return mimeType ? { mimeExt, mimeType } : { mimeExt: null, mimeType: null };
 }
 
 function requestHandler(req, next) {
@@ -51,12 +52,12 @@ function requestHandler(req, next) {
   }
   const reqFilename = path.basename(reqPath);
   fs.readFile(path.join(DIST_PATH, reqPath), (err, data) => {
-    const mimeType = mime(reqFilename);
+    const { mimeExt, mimeType } = mime(reqFilename);
     if (!err && mimeType !== null) {
       next({
-        mimeType: mimeType,
-        charset: charset(mimeType),
-        data: data
+        mimeType,
+        charset: charset(mimeExt),
+        data
       });
     } else {
       console.error(err);
