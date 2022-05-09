@@ -1,5 +1,6 @@
-# Are you new to electron?
+> **Update 2022**: A more comprehensive guide explaining Electron and secure practices can be [found here](https://www.debugandrelease.com/the-ultimate-electron-guide/).
 
+# Are you new to electron?
 Welcome, we are glad you are here and decided to learn more about electron. We'll be giving you a primer so you'll be well on your way to understanding electron and how you can write your apps with this template.
 
 ## Understanding web languages
