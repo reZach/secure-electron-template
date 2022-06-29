@@ -65,7 +65,7 @@ async function createWindow() {
       nodeIntegrationInSubFrames: false,
       contextIsolation: true,
       enableRemoteModule: false,
-      additionalArguments: [`storePath:${app.getPath("userData")}`],
+      additionalArguments: [`--storePath=${store.sanitizePath(app.getPath("userData"))}`],
       preload: path.join(__dirname, "preload.js"),
       /* eng-disable PRELOAD_JS_CHECK */
       disableBlinkFeatures: "Auxclick"
@@ -291,28 +291,4 @@ app.on("web-contents-created", (event, contents) => {
       action: "allow"
     };
   });
-});
-
-// Filter loading any module via remote;
-// you shouldn't be using remote at all, though
-// https://electronjs.org/docs/tutorial/security#16-filter-the-remote-module
-app.on("remote-require", (event, webContents, moduleName) => {
-  event.preventDefault();
-});
-
-// built-ins are modules such as "app"
-app.on("remote-get-builtin", (event, webContents, moduleName) => {
-  event.preventDefault();
-});
-
-app.on("remote-get-global", (event, webContents, globalName) => {
-  event.preventDefault();
-});
-
-app.on("remote-get-current-window", (event, webContents) => {
-  event.preventDefault();
-});
-
-app.on("remote-get-current-web-contents", (event, webContents) => {
-  event.preventDefault();
 });
