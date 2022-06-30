@@ -51,6 +51,7 @@ Built-in to this template are a number of popular frameworks already wired up to
 
 - [Electron](https://electronjs.org/)
 - [React](https://reactjs.org/)
+- [Typescript](https://www.typescriptlang.org)
 - [Redux](https://redux.js.org/) (with [Redux toolkit](https://redux-toolkit.js.org/))
 - [Babel](https://babeljs.io/)
 - [Webpack](https://webpack.js.org/) (with [webpack-dev-server](https://github.com/webpack/webpack-dev-server))
