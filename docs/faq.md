@@ -14,7 +14,7 @@ Specifically, you can drop:
     * CODE_OF_CONDUCT.md
     * README.md
 
-_Note: you should keep the LICENSE file in your project.
+> Note: you should keep the LICENSE file in your project.
 
 ## How do I use Node's fs in this template?
 Please check out [this guide](https://github.com/reZach/secure-electron-template/blob/master/docs/newtoelectron.md).
@@ -29,7 +29,7 @@ Yes, but you'll have to follow [a few steps](https://github.com/reZach/secure-el
 Please refer to [these instructions](https://github.com/reZach/secure-electron-license-keys) first. If you have further questions, you may post a question in the appropriate repo.
 
 ## Can I use typescript with this template?
-I suggest following [this pull request](https://github.com/tyler-hitzeman/secure-electron-template-ts/pull/1) to guide you what changes you'll need to make.
+Yes, you can! Simply convert any of the files in the app/src directory to a Typescript extension. If you desire to convert some of the Electron-related files to Typescript, I'd suggest you pull inspiration from the [discussion here](https://github.com/reZach/secure-electron-template/issues/47).
 
 #### Question not answered?
 Please [post an issue](https://github.com/reZach/secure-electron-template/issues/new) and we will add to this page with questions that you have!

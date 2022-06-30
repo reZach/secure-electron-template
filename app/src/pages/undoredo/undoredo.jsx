@@ -27,47 +27,47 @@ class UndoRedo extends React.Component {
     this.groupend = this.groupend.bind(this);
   }
 
-  inc(event) {
+  inc(_event) {
     this.props.increment();
   }
 
-  dec(event) {
+  dec(_event) {
     this.props.decrement();
   }
 
-  add(event) {
+  add(_event) {
     this.props.add();
   }
 
-  remove(event) {
+  remove(_event) {
     this.props.remove();
   }
 
-  undo(event) {
+  undo(_event) {
     this.props.UNDO();
   }
 
-  redo(event) {
+  redo(_event) {
     this.props.REDO();
   }
 
-  undo2(event) {
+  undo2(_event) {
     this.props.UNDO(2);
   }
 
-  redo2(event) {
+  redo2(_event) {
     this.props.REDO(2);
   }
 
-  clear(event) {
+  clear(_event) {
     this.props.CLEAR();
   }
 
-  groupbegin(event) {
+  groupbegin(_event) {
     this.props.GROUPBEGIN();
   }
 
-  groupend(event) {
+  groupend(_event) {
     this.props.GROUPEND();
   }
 
@@ -188,7 +188,7 @@ class UndoRedo extends React.Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = (state, _props) => ({
   counter: state.undoable.present.counter,
   complex: state.undoable.present.complex,
   past: state.undoable.past,

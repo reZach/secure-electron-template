@@ -25,7 +25,7 @@ class Motd extends React.Component {
 
   onChangeMessage(event) {
     const { value } = event.target;
-    this.setState((state) => ({
+    this.setState((_state) => ({
       message: value,
     }));
   }
@@ -36,7 +36,7 @@ class Motd extends React.Component {
     window.api.store.send(writeConfigRequest, "motd", this.state.message); // save message to store (persist)
 
     // reset
-    this.setState((state) => ({
+    this.setState((_state) => ({
       message: "",
     }));
   }
@@ -75,7 +75,7 @@ class Motd extends React.Component {
   }
 }
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = (state, _props) => ({
   home: state.home,
 });
 const mapDispatch = { changeMessage };
