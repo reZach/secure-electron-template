@@ -1,141 +1,137 @@
 {
-  "name": "secure-electron-template",
-  "version": "18.0.1",
-  "description": "The best way to build Electron apps with security in mind.",
-  "private": true,
-  "main": "app/electron/main.js",
-  "scripts": {
-    "postinstall": "electron-builder install-app-deps",
-    "audit-app": "npx electronegativity -i ./ -x LimitNavigationGlobalCheck,PermissionRequestHandlerGlobalCheck",
-    "translate": "node ./app/localization/translateMissing.js",
-    "dev-server": "cross-env NODE_ENV=development webpack serve --config ./webpack.development.js > dev-scripts/webpack-dev-server.log 2> dev-scripts/webpack-dev-server-error.log",
-    "dev": "concurrently --success first \"node dev-scripts/prepareDevServer.js\" \"node dev-scripts/launchDevServer.js\" -k",
-    "prod-build": "cross-env NODE_ENV=production npx webpack --mode=production --config ./webpack.production.js",
-    "prod": "npm run prod-build && electron .",
-    "pack": "electron-builder --dir",
-    "dist": "npm run test && npm run prod-build && electron-builder",
-    "dist-mac": "npm run test && npm run prod-build && electron-builder --mac",
-    "dist-linux": "npm run test && npm run prod-build && electron-builder --linux",
-    "dist-windows": "npm run prod-build && electron-builder --windows",
-    "dist-all": "npm run test && npm run prod-build && electron-builder --mac --linux --windows",
-    "test": "mocha"
-  },
-  "build": {
-    "productName": "YourProductName",
-    "appId": "com.yourcompany|electron.yourproductname",
-    "directories": {
-      "buildResources": "resources"
+    "name": "secure-electron-template",
+    "version": "18.0.1",
+    "description": "The best way to build Electron apps with security in mind.",
+    "private": true,
+    "main": "app/electron/main.js",
+    "scripts": {
+      "postinstall": "electron-builder install-app-deps",
+      "audit-app": "npx electronegativity -i ./ -x LimitNavigationGlobalCheck,PermissionRequestHandlerGlobalCheck",
+      "translate": "node ./app/localization/translateMissing.js",
+      "dev-server": "cross-env NODE_ENV=development webpack serve --config ./webpack.development.js > dev-scripts/webpack-dev-server.log 2> dev-scripts/webpack-dev-server-error.log",
+      "dev": "concurrently --success first \"node dev-scripts/prepareDevServer.js\" \"node dev-scripts/launchDevServer.js\" -k",
+      "prod-build": "cross-env NODE_ENV=production npx webpack --mode=production --config ./webpack.production.js",
+      "prod": "npm run prod-build && electron .",
+      "pack": "electron-builder --dir"
     },
-    "files": [
-      "app/dist/**/*",
-      "app/electron/**/*",
-      "app/localization/!(locales)",
-      "LICENSE"
-    ],
-    "extraFiles": [
-      "app/localization/locales/**/*",
-      "license.data",
-      "public.key"
-    ],
-    "win": {
-      "target": [
-        "nsis",
-        "msi"
-      ]
+    "build": {
+      "productName": "YourProductName",
+      "appId": "com.yourcompany|electron.yourproductname",
+      "directories": {
+        "buildResources": "resources"
+      },
+      "files": [
+        "app/dist/**/*",
+        "app/electron/**/*",
+        "app/localization/!(locales)",
+        "LICENSE"
+      ],
+      "extraFiles": [
+        "app/localization/locales/**/*",
+        "license.data",
+        "public.key"
+      ],
+      "win": {
+        "target": [
+          "nsis",
+          "msi"
+        ]
+      },
+      "linux": {
+        "target": [
+          "deb",
+          "rpm",
+          "snap",
+          "AppImage"
+        ]
+      }
     },
-    "linux": {
-      "target": [
-        "deb",
-        "rpm",
-        "snap",
-        "AppImage"
-      ]
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/reZach/secure-electron-template.git"
+    },
+    "keywords": [
+      "electron",
+      "security",
+      "secure",
+      "template",
+      "javascript",
+      "react",
+      "redux",
+      "webpack",
+      "i18n",
+      "boilerplate"
+    ],
+    "author": "reZach",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/reZach/secure-electron-template/issues"
+    },
+    "homepage": "https://github.com/reZach/secure-electron-template#readme",
+    "browserslist": [
+      "last 2 Chrome versions"
+    ],
+    "devDependencies": {
+      "@babel/core": "^7.18.6",
+      "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+      "@babel/plugin-transform-react-jsx": "^7.18.6",
+      "@babel/preset-env": "^7.18.6",
+      "@babel/preset-react": "^7.18.6",
+      "@babel/preset-typescript": "^7.18.6",
+      "@doyensec/electronegativity": "^1.9.1",
+      "@google-cloud/translate": "^6.3.1",
+      "@types/react": "^18.0.4",
+      "@types/react-dom": "^18.0.5",
+      "babel-loader": "^8.2.5",
+      "babel-plugin-module-resolver": "^4.1.0",
+      "buffer": "^6.0.3",
+      "clean-webpack-plugin": "^4.0.0",
+      "concurrently": "^7.2.2",
+      "cross-env": "^7.0.3",
+      "crypto-browserify": "^3.12.0",
+      "csp-html-webpack-plugin": "^5.1.0",
+      "css-loader": "^6.7.1",
+      "css-minimizer-webpack-plugin": "^4.0.0",
+      "electron": "^19.0.6",
+      "electron-builder": "^23.1.0",
+      "electron-debug": "^3.2.0",
+      "html-loader": "^3.1.2",
+      "html-webpack-plugin": "^5.5.0",
+      "mini-css-extract-plugin": "^2.6.1",
+      "mocha": "^10.0.0",
+      "path-browserify": "^1.0.1",
+      "spectron": "^19.0.0",
+      "stream-browserify": "^3.0.0",
+      "typescript": "4.7.4",
+      "webpack": "^5.73.0",
+      "webpack-cli": "^4.10.0",
+      "webpack-dev-server": "^4.9.3",
+      "webpack-merge": "^5.8.0"
+    },
+    "dependencies": {
+      "@loadable/component": "^5.15.2",
+      "@reduxjs/toolkit": "^1.8.2",
+      "bulma": "^0.9.4",
+      "connected-react-router": "^6.9.2",
+      "easy-redux-undo": "^1.0.5",
+      "electron-devtools-installer": "^3.2.0",
+      "i18next": "^21.8.11",
+      "i18next-electron-fs-backend": "^2.0.0",
+      "i18next-fs-backend": "^1.1.4",
+      "lodash": "4.17.21",
+      "lodash.merge": "^4.6.2",
+      "process": "^0.11.10",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0",
+      "react-i18next": "^11.17.4",
+      "react-redux": "^8.0.2",
+      "react-router": "^6.3.0",
+      "react-router-dom": "^6.3.0",
+      "redux": "^4.2.0",
+      "redux-first-history": "^5.0.12",
+      "secure-electron-context-menu": "^1.3.3",
+      "secure-electron-license-keys": "^1.1.2",
+      "secure-electron-store": "^4.0.2"
     }
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/reZach/secure-electron-template.git"
-  },
-  "keywords": [
-    "electron",
-    "security",
-    "secure",
-    "template",
-    "javascript",
-    "react",
-    "redux",
-    "webpack",
-    "i18n",
-    "boilerplate"
-  ],
-  "author": "reZach",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/reZach/secure-electron-template/issues"
-  },
-  "homepage": "https://github.com/reZach/secure-electron-template#readme",
-  "browserslist": [
-    "last 2 Chrome versions"
-  ],
-  "devDependencies": {
-    "@babel/core": "^7.18.6",
-    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
-    "@babel/plugin-transform-react-jsx": "^7.18.6",
-    "@babel/preset-env": "^7.18.6",
-    "@babel/preset-react": "^7.18.6",
-    "@babel/preset-typescript": "^7.18.6",
-    "@doyensec/electronegativity": "^1.9.1",
-    "@google-cloud/translate": "^6.3.1",
-    "@types/react": "^18.0.4",
-    "@types/react-dom": "^18.0.5",
-    "babel-loader": "^8.2.5",
-    "babel-plugin-module-resolver": "^4.1.0",
-    "buffer": "^6.0.3",
-    "clean-webpack-plugin": "^4.0.0",
-    "concurrently": "^7.2.2",
-    "cross-env": "^7.0.3",
-    "crypto-browserify": "^3.12.0",
-    "csp-html-webpack-plugin": "^5.1.0",
-    "css-loader": "^6.7.1",
-    "css-minimizer-webpack-plugin": "^4.0.0",
-    "electron": "^19.0.6",
-    "electron-builder": "^23.1.0",
-    "electron-debug": "^3.2.0",
-    "html-loader": "^3.1.2",
-    "html-webpack-plugin": "^5.5.0",
-    "mini-css-extract-plugin": "^2.6.1",
-    "mocha": "^10.0.0",
-    "path-browserify": "^1.0.1",
-    "spectron": "^19.0.0",
-    "stream-browserify": "^3.0.0",
-    "typescript": "4.7.4",
-    "webpack": "^5.73.0",
-    "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.9.3",
-    "webpack-merge": "^5.8.0"
-  },
-  "dependencies": {
-    "@loadable/component": "^5.15.2",
-    "@reduxjs/toolkit": "^1.8.2",
-    "bulma": "^0.9.4",
-    "connected-react-router": "^6.9.2",
-    "easy-redux-undo": "^1.0.5",
-    "electron-devtools-installer": "^3.2.0",
-    "i18next": "^21.8.11",
-    "i18next-electron-fs-backend": "^2.0.0",
-    "i18next-fs-backend": "^1.1.4",
-    "lodash": "4.17.21",
-    "lodash.merge": "^4.6.2",
-    "process": "^0.11.10",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-i18next": "^11.15.3",
-    "react-redux": "^7.2.6",
-    "react-router": "^5.2.1",
-    "react-router-dom": "^5.3.0",
-    "redux": "^4.2.0",
-    "secure-electron-context-menu": "^1.3.3",
-    "secure-electron-license-keys": "^1.1.2",
-    "secure-electron-store": "^4.0.2"
   }
-}
+  
