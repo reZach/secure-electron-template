@@ -1,4 +1,8 @@
 {
   "WELCOME": "/",
-  "ABOUT": "/about"
+  "ABOUT": "/about",
+  "MOTD": "/motd",
+  "LOCALIZATION": "/localization",
+  "UNDOREDO": "/undoredo",
+  "CONTEXTMENU": "/contextmenu"
 }
