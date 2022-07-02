@@ -7,7 +7,7 @@ const {
   REDUX_DEVTOOLS,
   REACT_DEVELOPER_TOOLS
 } = require("electron-devtools-installer");
-const isDev = process.env.NODE_ENV === "development"; 
+const isDev = process.env.NODE_ENV === "development";
 const port = 40992; // Hardcoded; needs to match webpack.development.js and package.json
 const selfHost = `http://localhost:${port}`;
 
