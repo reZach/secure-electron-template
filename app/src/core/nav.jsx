@@ -1,5 +1,6 @@
 import React from "react";
 import ROUTES from "Constants/routes";
+import { useNavigate } from "react-router-dom";
 import {
   validateLicenseRequest,
   validateLicenseResponse,
@@ -9,7 +10,6 @@ class Nav extends React.Component {
   constructor(props) {
     super(props);
 
-    this.history = props.history;
     this.state = {
       mobileMenuActive: false,
       licenseModalActive: false,
@@ -59,13 +59,13 @@ class Nav extends React.Component {
     });
   }
 
-  toggleMenu(event) {
+  toggleMenu(_event) {
     this.setState({
       mobileMenuActive: !this.state.mobileMenuActive,
     });
   }
 
-  toggleLicenseModal(event) {
+  toggleLicenseModal(_event) {
     const previous = this.state.licenseModalActive;
 
     // Only send license request if the modal
@@ -88,7 +88,7 @@ class Nav extends React.Component {
         mobileMenuActive: false,
       },
       function () {
-        this.history.push(url);
+        this.props.navigate(url);
       }
     );
   }
@@ -249,4 +249,9 @@ class Nav extends React.Component {
   }
 }
 
-export default Nav;
+function WithNavigate(props){
+  const navigate = useNavigate();
+  return <Nav {...props} navigate={navigate} />
+}
+
+export default WithNavigate;
