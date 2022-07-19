@@ -65,7 +65,13 @@ module.exports = {
       // loads common image formats
       {
         test: /\.(eot|woff|woff2|ttf|svg|png|jpg|gif)$/,
-        type: "asset/inline"
+        include: [
+          path.resolve(__dirname, "resources/images")
+        ],
+        generator: {
+          filename: 'assets/[hash][ext][query]'
+        },
+        type: "asset/resource"
       }
     ]
   },

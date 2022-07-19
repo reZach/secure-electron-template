@@ -4,5 +4,6 @@
   "MOTD": "/motd",
   "LOCALIZATION": "/localization",
   "UNDOREDO": "/undoredo",
-  "CONTEXTMENU": "/contextmenu"
+  "CONTEXTMENU": "/contextmenu",
+  "IMAGE": "/image"
 }
