@@ -28,6 +28,7 @@ class Welcome extends React.Component {
               <Link to={ROUTES.LOCALIZATION}>Changing locales.</Link> <br />
               <Link to={ROUTES.UNDOREDO}>Undo/redoing actions.</Link> <br />
               <Link to={ROUTES.CONTEXTMENU}>Custom context menu.</Link> <br />
+              <Link to={ROUTES.IMAGE}>Sample image loaded.</Link> <br />
             </div>
           </div>
         </section>

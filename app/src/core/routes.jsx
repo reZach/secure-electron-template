@@ -24,6 +24,9 @@ const UndoRedo = loadable(() =>
 const ContextMenu = loadable(() =>
   import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/contextmenu/contextmenu")
 );
+const Image = loadable(() =>
+  import(/* webpackChunkName: "ContextMenuChunk" */ "Pages/image/image")
+);
 
 class AppRoutes extends React.Component {
   render() {    
@@ -35,6 +38,7 @@ class AppRoutes extends React.Component {
         <Route path={ROUTES.LOCALIZATION} element={<Localization />}></Route>
         <Route path={ROUTES.UNDOREDO} element={<UndoRedo />}></Route>
         <Route path={ROUTES.CONTEXTMENU} element={<ContextMenu />}></Route>
+        <Route path={ROUTES.IMAGE} element={<Image />}></Route>
       </Routes>
     );
   }

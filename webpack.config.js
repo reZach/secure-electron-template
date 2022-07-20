@@ -64,7 +64,18 @@ module.exports = {
       },
       // loads common image formats
       {
-        test: /\.(eot|woff|woff2|ttf|svg|png|jpg|gif)$/,
+        test: /\.(svg|png|jpg|gif)$/,
+        include: [
+          path.resolve(__dirname, "resources/images")
+        ],
+        type: "asset/inline"
+      },
+      // loads common font formats
+      {
+        test: /\.(eot|woff|woff2|ttf)$/,
+        include: [
+          path.resolve(__dirname, "resources/fonts")
+        ],
         type: "asset/inline"
       }
     ]
