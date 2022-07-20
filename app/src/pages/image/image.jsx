@@ -1,15 +1,22 @@
 import React from "react";
 
 import img from "Images/testimage.png";
-// https://stackoverflow.com/questions/59736269/electron-how-to-resolve-css-url-in-prod
 
 class Image extends React.Component {
   render() {
     return (
-      <React.Fragment>
-        <img src={img} />
-        
-      </React.Fragment>
+      <section className="section">
+        <div className="container">
+          <h1 className="title is-1">Loading images</h1>
+        </div>
+        <div className="container mt-2">
+          This page is to demonstrate that we can load an image hosted from a
+          directory in our project.
+        </div>
+        <div className="container mt-2">
+          <img src={img} />
+        </div>
+      </section>
     );
   }
 }
