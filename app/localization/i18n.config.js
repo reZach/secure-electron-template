@@ -17,7 +17,7 @@ i18n
     backend: {
       loadPath: prependPath + "/app/localization/locales/{{lng}}/{{ns}}.json",
       addPath: prependPath + "/app/localization/locales/{{lng}}/{{ns}}.missing.json",
-      ipcRenderer: window.api.i18nextElectronBackend
+      contextBridgeApiKey: "api" // needs to match first parameter of contextBridge.exposeInMainWorld in preload file; defaults to "api"
     },
     debug: false,
     namespace: "translation",
@@ -29,7 +29,7 @@ i18n
   });
 
 window.api.i18nextElectronBackend.onLanguageChange((args) => {
-  i18n.changeLanguage(args.lng, (error, t) => {
+  i18n.changeLanguage(args.lng, (error, _t) => {
     if (error) {
       console.error(error);
     }
