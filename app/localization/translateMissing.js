@@ -128,7 +128,7 @@ async function updateTranslations() {
     }
   } catch (e) {
     console.error("Failed due to fatal error");
-    console.error(error);
+    console.error(e);
   }
 }
 
