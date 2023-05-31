@@ -266,7 +266,10 @@ app.on("web-contents-created", (event, contents) => {
     // Disable Node.js integration
     webPreferences.nodeIntegration = false;
   });
-
+  // enable i18next translations in popup window
+  contents.on("did-create-window", (window) => {
+    i18nextBackend.mainBindings(ipcMain, window, fs);
+  });
   // https://electronjs.org/docs/tutorial/security#13-disable-or-limit-creation-of-new-windows
   // This code replaces the old "new-window" event handling;
   // https://github.com/electron/electron/pull/24517#issue-447670981
