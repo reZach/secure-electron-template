@@ -180,7 +180,8 @@ class Nav extends React.Component {
             data-target="navbarBasicExample"
             aria-label="menu"
             aria-expanded="false"
-            onClick={this.toggleMenu}>
+            onClick={this.toggleMenu}
+            onKeyDown={this.toggleMenu}>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -194,13 +195,15 @@ class Nav extends React.Component {
           <div className="navbar-start">
             <a
               className="navbar-item"
-              onClick={() => this.navigate(ROUTES.WELCOME)}>
+              onClick={() => this.navigate(ROUTES.WELCOME)}
+              onKeyDown={() => this.navigate(ROUTES.WELCOME)}>
               Home
             </a>
 
             <a
               className="navbar-item"
-              onClick={() => this.navigate(ROUTES.ABOUT)}>
+              onClick={() => this.navigate(ROUTES.ABOUT)}
+              onKeyDown={() => this.navigate(ROUTES.ABOUT)}>
               About
             </a>
 
@@ -210,27 +213,32 @@ class Nav extends React.Component {
               <div className="navbar-dropdown">
                 <a
                   className="navbar-item"
-                  onClick={() => this.navigate(ROUTES.MOTD)}>
+                  onClick={() => this.navigate(ROUTES.MOTD)}
+                  onKeyDown={() => this.navigate(ROUTES.MOTD)}>
                   Using the Electron store
                 </a>
                 <a
                   className="navbar-item"
-                  onClick={() => this.navigate(ROUTES.LOCALIZATION)}>
+                  onClick={() => this.navigate(ROUTES.LOCALIZATION)}
+                  onKeyDown={() => this.navigate(ROUTES.LOCALIZATION)}>
                   Changing locales
                 </a>
                 <a
                   className="navbar-item"
-                  onClick={() => this.navigate(ROUTES.UNDOREDO)}>
+                  onClick={() => this.navigate(ROUTES.UNDOREDO)}
+                  onKeyDown={() => this.navigate(ROUTES.UNDOREDO)}>
                   Undo/redoing actions
                 </a>
                 <a
                   className="navbar-item"
-                  onClick={() => this.navigate(ROUTES.CONTEXTMENU)}>
+                  onClick={() => this.navigate(ROUTES.CONTEXTMENU)}
+                  onKeyDown={() => this.navigate(ROUTES.CONTEXTMENU)}>
                   Custom context menu
                 </a>
                 <a
                   className="navbar-item"
-                  onClick={() => this.navigate(ROUTES.IMAGE)}>
+                  onClick={() => this.navigate(ROUTES.IMAGE)}
+                  onKeyDown={() => this.navigate(ROUTES.IMAGE)}>
                   Sample image loaded
                 </a>
               </div>
@@ -242,7 +250,8 @@ class Nav extends React.Component {
               <div className="buttons">
                 <a
                   className="button is-light"
-                  onClick={this.toggleLicenseModal}>
+                  onClick={this.toggleLicenseModal}
+                  onKeyDown={this.toggleLicenseModal}>
                   Check license
                 </a>
               </div>
