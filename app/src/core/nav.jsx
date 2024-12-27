@@ -1,6 +1,6 @@
 import React from "react";
 import ROUTES from "Constants/routes";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import {
   validateLicenseRequest,
   validateLicenseResponse,

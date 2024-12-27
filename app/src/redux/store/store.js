@@ -2,8 +2,7 @@ import {
   combineReducers
 } from "redux";
 import {
-  configureStore,
-  getDefaultMiddleware
+  configureStore
 } from "@reduxjs/toolkit";
 import {
   createHashHistory
@@ -35,9 +34,7 @@ export const store = configureStore({
       })
     )
   }),
-  middleware: [...getDefaultMiddleware({
-    serializableCheck: false
-  }), routerMiddleware]
+  middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false }).concat(routerMiddleware)
 });
 
 export const history = createReduxHistory(store);
