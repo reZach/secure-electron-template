@@ -1,15 +1,43 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import { createHashHistory } from "history";
-import { routerMiddleware } from "connected-react-router";
-import rootReducer from "../reducers/rootReducer";
+import {
+  combineReducers
+} from "redux";
+import {
+  configureStore,
+  getDefaultMiddleware
+} from "@reduxjs/toolkit";
+import {
+  createHashHistory
+} from "history";
+import {
+  createReduxHistoryContext
+} from "redux-first-history";
+import undoable from "easy-redux-undo";
+import homeReducer from "../components/home/homeSlice";
+import counterReducer from "../components/counter/counterSlice";
+import complexReducer from "../components/complex/complexSlice";
 
-export const history = createHashHistory();
-
-const store = configureStore({
-  reducer: rootReducer(history),
-  middleware: [...getDefaultMiddleware({
-    serializableCheck: false
-  }), routerMiddleware(history)]
+const {
+  routerMiddleware,
+  createReduxHistory,
+  routerReducer
+} = createReduxHistoryContext({
+  history: createHashHistory()
 });
 
-export default store;
+export const store = configureStore({
+  reducer: combineReducers({
+    router: routerReducer,
+    home: homeReducer,
+    undoable: undoable(
+      combineReducers({
+        counter: counterReducer,
+        complex: complexReducer
+      })
+    )
+  }),
+  middleware: [...getDefaultMiddleware({
+    serializableCheck: false
+  }), routerMiddleware]
+});
+
+export const history = createReduxHistory(store);

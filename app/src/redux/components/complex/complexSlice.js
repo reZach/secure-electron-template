@@ -23,7 +23,7 @@ const complexSlice = createSlice({
     }
   }],
   reducers: {
-    add(state, action) {
+    add(state, _action) {
       state.push({
           id: state.length + 1,
           food: {
@@ -32,9 +32,9 @@ const complexSlice = createSlice({
           }
       });
     },
-    remove(state, action) {
-        let index = Math.floor(Math.random() * state.length);
-        state.splice(index, 1);
+    remove(state, _action) {
+        const randIndex = Math.floor(Math.random() * state.length);
+        state.splice(randIndex, 1);
     }
   }
 });

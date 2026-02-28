@@ -1,13 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import ROUTES from "Constants/routes";
-import { Link } from "react-router-dom";
 import { changeMessage } from "Redux/components/home/homeSlice";
 import {
   writeConfigRequest,
   useConfigInMainRequest,
 } from "secure-electron-store";
-import "./motd.css";
 
 class Motd extends React.Component {
   constructor(props) {
@@ -28,7 +25,7 @@ class Motd extends React.Component {
 
   onChangeMessage(event) {
     const { value } = event.target;
-    this.setState((state) => ({
+    this.setState((_state) => ({
       message: value,
     }));
   }
@@ -39,37 +36,46 @@ class Motd extends React.Component {
     window.api.store.send(writeConfigRequest, "motd", this.state.message); // save message to store (persist)
 
     // reset
-    this.setState((state) => ({
+    this.setState((_state) => ({
       message: "",
     }));
   }
 
   render() {
     return (
-      <div id="motd">
-        <Link to={ROUTES.WELCOME} className="left">
-          Go back
-        </Link>
-        <div className="motd">{this.props.home.message}</div>
-        <div>
-          <form onSubmit={this.onSubmitMessage}>
-            <input
-              placeholder="New message of the day"
-              value={this.state.message}
-              onChange={this.onChangeMessage}></input>
-            <input type="submit" value="Save"></input>
-          </form>
-          <div className="tip">
-            Your message of the day will persist
-            <br /> if you close and re-open the app.
+      <React.Fragment>
+        <section className="section">
+          <div className="container has-text-centered">
+            <h1 className="title is-1">{this.props.home.message}</h1>
+            <div className="subtitle">
+              Your message of the day will persist
+              <br /> if you close and re-open the app.
+            </div>
           </div>
-        </div>
-      </div>
+        </section>
+        <section className="section">
+          <div className="container">
+            <form className="mb-4" onSubmit={this.onSubmitMessage}>
+              <div className="field is-horizontal">
+                <input
+                  placeholder="New message of the day"
+                  className="input"
+                  value={this.state.message}
+                  onChange={this.onChangeMessage}></input>
+                <input
+                  className="button is-primary"
+                  type="submit"
+                  value="Save"></input>
+              </div>
+            </form>
+          </div>
+        </section>
+      </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = (state, _props) => ({
   home: state.home,
 });
 const mapDispatch = { changeMessage };

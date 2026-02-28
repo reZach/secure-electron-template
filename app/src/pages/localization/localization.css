@@ -1,22 +1,3 @@
-#localization {
-    display: grid;
-    height: 100%;
-    justify-items: center;
-    grid-template-columns: auto;
-    grid-template-rows: 40px 2fr 4fr 2fr 1fr 40px;     
-}
-
-.localization {
-    font-size: 50px;
-    text-align: center;
-    grid-column: 1;
-    grid-row: 2;
-}
-
-.translation {    
-    font-size: 30px;
-}
-
 .italics {
     font-style: italic;
 }

@@ -1,9 +1,26 @@
 # secure-electron-template
-A current electron app template with the most popular frameworks, designed and built with security in mind. (If you are curious about what makes an electron app secure, please check out [this page](https://github.com/reZach/secure-electron-template/blob/master/docs/secureapps.md))
+A current electron app template with the most popular frameworks, designed and built with security in mind. (If you are curious about what makes an electron app secure, please check out [this page](https://github.com/reZach/secure-electron-template/blob/master/docs/secureapps.md)).
 
-![Banner](https://github.com/reZach/secure-electron-template/blob/master/docs/imgs/banner-image.png "Banner")
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=reZach_secure-electron-template&metric=alert_status)](https://sonarcloud.io/dashboard?id=reZach_secure-electron-template)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=reZach_secure-electron-template&metric=security_rating)](https://sonarcloud.io/dashboard?id=reZach_secure-electron-template)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=reZach_secure-electron-template&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=reZach_secure-electron-template)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=reZach_secure-electron-template&metric=bugs)](https://sonarcloud.io/dashboard?id=reZach_secure-electron-template)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=reZach_secure-electron-template&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=reZach_secure-electron-template)
 
-_Banner built with [banner-maker](https://github.com/banner-maker/banner-maker)!_
+## How to get started
+To get started, clone the repository by clicking the [![Use this template](https://github.com/reZach/secure-electron-template/blob/master/docs/imgs/usethistemplate.png "Use this template")](https://github.com/reZach/secure-electron-template/generate) button, or through the command line (`git clone https://github.com/reZach/secure-electron-template.git`). 
+
+Once cloned, install the dependencies for the repo by running the following commands (you do _not_ have to run the first command if your command line is already inside the newly cloned repository):
+
+```
+cd secure-electron-template
+npm i
+npm run dev
+```
+
+> Are you using `yarn`? You'll want to [read this issue](https://github.com/reZach/secure-electron-template/issues/62).
+
+When you'd like to test your app in production, or package it for distribution, please navigate to [this page](https://github.com/reZach/secure-electron-template/blob/master/docs/scripts.md) for more details on how to do this.
 
 ## Demo
 ![Demo](https://github.com/reZach/secure-electron-template/blob/master/docs/imgs/intro.gif "Demo")
@@ -11,7 +28,7 @@ _Banner built with [banner-maker](https://github.com/banner-maker/banner-maker)!
 ## Features
 Taken from the [best-practices](https://electronjs.org/docs/tutorial/security) official page, here is what this repository offers!
 
-1. [Only load secure content](https://electronjs.org/docs/tutorial/security#1-only-load-secure-content) - (Need help!)
+1. [Only load secure content](https://electronjs.org/docs/tutorial/security#1-only-load-secure-content) - ✅ (But the developer is responsible for loading secure assets only 🙂)
 2. [Do not enable node.js integration for remote content](https://electronjs.org/docs/tutorial/security#2-do-not-enable-nodejs-integration-for-remote-content) - ✅
 3. [Enable context isolation for remote content](https://electronjs.org/docs/tutorial/security#3-enable-context-isolation-for-remote-content) - ✅
 4. [Handle session permission requests from remote content](https://electronjs.org/docs/tutorial/security#4-handle-session-permission-requests-from-remote-content) - ✅
@@ -34,37 +51,28 @@ Built-in to this template are a number of popular frameworks already wired up to
 
 - [Electron](https://electronjs.org/)
 - [React](https://reactjs.org/)
+- [Typescript](https://www.typescriptlang.org)
 - [Redux](https://redux.js.org/) (with [Redux toolkit](https://redux-toolkit.js.org/))
 - [Babel](https://babeljs.io/)
 - [Webpack](https://webpack.js.org/) (with [webpack-dev-server](https://github.com/webpack/webpack-dev-server))
+- [Electron builder](https://www.electron.build/) (for packaging up your app)
+- [Mocha](https://mochajs.org/)
+
+## Bonus modules
+What would a template be without some helpful additions?
+
 - [i18next](https://www.i18next.com/) (with [this plugin](https://github.com/reZach/i18next-electron-fs-backend) for localization).
 - [Store](https://github.com/reZach/secure-electron-store) (for saving config/data)
 - [Context menu](https://github.com/reZach/secure-electron-context-menu) (supports custom context menus)
-- [Electron builder](https://www.electron.build/) (for packaging up your app)
 - [Easy redux undo](https://github.com/reZach/easy-redux-undo) (for undo/redoing your redux actions)
-
-
-## Roadmap
-There are a number of additions that I'd like to implement in this repository, namely [auto-updating](https://www.electron.build/auto-update) and more release-focused enhancements and test suites, but those are lower priority (but I welcome PRs!).
+- [License key validation](https://github.com/reZach/secure-electron-license-keys) (for validating a user has the proper license to use your app) **new!**
 
 ## Architecture
 For a more detailed view of the architecture of the template, please check out [here](https://github.com/reZach/secure-electron-template/blob/master/docs/architecture.md). I would _highly_ recommend reading this document to get yourself familiarized with this template.
 
-## How to get started
-To get started, clone the repository by clicking the ![Use this template](https://github.com/reZach/secure-electron-template/blob/master/docs/imgs/usethistemplate.png "Use this template") button, or through the command line (`git clone https://github.com/reZach/secure-electron-template.git`). 
-
-Once cloned, install the dependencies for the repo by running the following commands (you do _not_ have to run the first command if your command line is already inside the newly cloned respository):
-
-```
-cd secure-electron-template
-npm i
-npm run dev
-```
-
-When you'd like to test your app in production, or package it for distribution, please navigate to [this page](https://github.com/reZach/secure-electron-template/blob/master/docs/scripts.md) for more details on how to do this.
-
 ## FAQ
 Please see [our faq](https://github.com/reZach/secure-electron-template/blob/master/docs/faq.md) for any common questions you might have.
+**NEW TO ELECTRON?** Please visit [this page](https://github.com/reZach/secure-electron-template/blob/master/docs/newtoelectron.md).
 
 ## Show us your apps!
 If you've built any applications with our template, we'd [love to see them!](https://github.com/reZach/secure-electron-template/blob/master/docs/yourapps.md).
